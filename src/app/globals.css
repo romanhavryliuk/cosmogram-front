@@ -1,5 +1,25 @@
-/* Тільки reset і базові налаштування документа.
+/* Токени, reset і базові налаштування документа.
    Стилі компонентів — у сусідніх *.module.css. */
+
+:root {
+  --void: #06060f;
+  --void-2: #0a0a1c;
+  --ink: #10112a;
+  --ink-2: #171838;
+  --nebula-violet: #5b2a86;
+  --nebula-magenta: #7a2f5e;
+  --parchment: #ede6d6;
+  --parchment-dim: #b9b2c9;
+  --gold: #d9b34d;
+  --gold-soft: #f0d98a;
+  --gold-dim: #8d762a;
+  --teal: #5ea393;
+  --teal-dim: #35544b;
+  --muted: #8a86a8;
+  --line: rgba(217, 179, 77, 0.14);
+  --glow-gold: 0 0 40px rgba(217, 179, 77, 0.25);
+  --glow-violet: 0 0 60px rgba(91, 42, 134, 0.35);
+}
 
 *,
 *::before,
@@ -7,10 +27,20 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
   min-height: 100vh;
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: var(--void);
+  color: var(--parchment);
+  font-family: var(--font-body), 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
   line-height: 1.5;
 }
 
@@ -23,6 +53,13 @@ ul,
 ol,
 figure {
   margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-weight: 500;
 }
 
 ul,
@@ -43,4 +80,20 @@ button {
 img,
 svg {
   max-width: 100%;
+}
+
+.mono {
+  font-family: var(--font-mono), 'IBM Plex Mono', monospace;
+  letter-spacing: 0.02em;
+}
+
+.display {
+  font-family: var(--font-display), 'Fraunces', serif;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 3px;
+  border-radius: 2px;
 }

@@ -1,0 +1,1 @@
+export { PythagoreanSquare } from './PythagoreanSquare';

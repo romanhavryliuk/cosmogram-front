@@ -1,3 +1,11 @@
+import { Hero } from '@/components/hero/Hero';
+import { HowItWorks } from '@/components/how-it-works/HowItWorks';
+
 export default function HomePage() {
-  return <h1>Home</h1>;
+  return (
+    <>
+      <Hero />
+      <HowItWorks />
+    </>
+  );
 }
