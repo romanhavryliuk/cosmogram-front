@@ -1,4 +1,7 @@
 import type { ElementType, ReactNode } from 'react';
+import clsx from 'clsx';
+
+import styles from './Container.module.css';
 
 interface ContainerProps {
   children: ReactNode;
@@ -11,5 +14,5 @@ export const Container = ({
   className,
   as: Tag = 'div',
 }: ContainerProps) => {
-  return <Tag className={className}>{children}</Tag>;
+  return <Tag className={clsx(styles.wrap, className)}>{children}</Tag>;
 };

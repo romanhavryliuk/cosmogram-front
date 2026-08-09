@@ -1,0 +1,77 @@
+.wrapper {
+  position: relative;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.trigger:hover {
+  color: var(--gold-soft);
+}
+
+.chevron {
+  width: 8px;
+  height: 5px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.trigger[aria-expanded='true'] .chevron {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 10;
+  min-width: 64px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: rgba(10, 10, 28, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  box-shadow: var(--glow-violet);
+}
+
+.option {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  color: var(--parchment-dim);
+  font-family: inherit;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.option:hover,
+.option:focus-visible {
+  background: rgba(217, 179, 77, 0.1);
+  color: var(--gold-soft);
+}
+
+.optionActive {
+  color: var(--gold-soft);
+}
+
+@media (min-width: 768px) {
+  .trigger {
+    font-size: 14px;
+  }
+}

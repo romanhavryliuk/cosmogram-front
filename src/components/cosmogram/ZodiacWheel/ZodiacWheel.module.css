@@ -1,0 +1,28 @@
+.spin {
+  animation: spin 140s linear infinite;
+}
+
+.glyphSpin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: counterSpin 140s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes counterSpin {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin,
+  .glyphSpin {
+    animation: none;
+  }
+}
