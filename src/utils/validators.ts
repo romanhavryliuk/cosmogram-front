@@ -3,6 +3,7 @@ import { z } from 'zod';
 import type { Dictionary } from '@/i18n/dictionaries';
 
 type ValidationMessages = Dictionary['auth']['validation'];
+type BirthValidationMessages = Dictionary['birthForm']['validation'];
 
 export const createLoginSchema = (t: ValidationMessages) =>
   z.object({
@@ -27,31 +28,38 @@ export const createRegisterSchema = (t: ValidationMessages) =>
       path: ['confirmPassword'],
     });
 
-export const birthPlaceSchema = z.object({
-  label: z.string().min(1, 'Оберіть місце народження'),
-  latitude: z.number().min(-90).max(90),
-  longitude: z.number().min(-180).max(180),
-  timezone: z.string().min(1),
-});
+/**
+ * Місце народження приходить готовим об'єктом з геокодера, тому валідуємо
+ * лише те, що юзер справді обрав підказку, а не залишив вільний текст.
+ */
+const createBirthPlaceSchema = (t: BirthValidationMessages) =>
+  z.object(
+    {
+      label: z.string().min(1, t.placeRequired),
+      latitude: z.number().min(-90).max(90),
+      longitude: z.number().min(-180).max(180),
+      timezone: z.string().min(1, t.placeRequired),
+    },
+    // Поле порожнє або юзер набрав текст, не обравши підказку
+    { required_error: t.placeRequired, invalid_type_error: t.placeRequired },
+  );
 
-export const birthDataSchema = z.object({
-  name: z.string().min(2, "Введіть ім'я").max(32, "Ім'я задовге"),
-  birthDate: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Дата у форматі РРРР-ММ-ДД')
-    .refine((value) => !Number.isNaN(Date.parse(value)), 'Некоректна дата')
-    .refine(
-      (value) => new Date(value) <= new Date(),
-      'Дата народження не може бути в майбутньому',
-    ),
-  birthTime: z
-    .string()
-    .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Час у форматі ГГ:ХХ'),
-  place: birthPlaceSchema,
-});
+export const createBirthDataSchema = (t: BirthValidationMessages) =>
+  z.object({
+    name: z.string().min(2, t.nameMin).max(32, t.nameMax),
+    birthDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, t.dateFormat)
+      .refine((value) => !Number.isNaN(Date.parse(value)), t.dateInvalid)
+      .refine((value) => new Date(value) <= new Date(), t.dateFuture),
+    birthTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, t.timeFormat),
+    place: createBirthPlaceSchema(t),
+  });
 
 export type LoginFormValues = z.infer<ReturnType<typeof createLoginSchema>>;
 export type RegisterFormValues = z.infer<
   ReturnType<typeof createRegisterSchema>
 >;
-export type BirthDataFormValues = z.infer<typeof birthDataSchema>;
+export type BirthDataFormValues = z.infer<
+  ReturnType<typeof createBirthDataSchema>
+>;

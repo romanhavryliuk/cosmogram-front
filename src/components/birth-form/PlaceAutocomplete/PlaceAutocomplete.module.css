@@ -1,0 +1,35 @@
+.wrap {
+  position: relative;
+}
+
+.list {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  left: 0;
+  z-index: 5;
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--void-2);
+  box-shadow: 0 12px 32px rgba(6, 6, 15, 0.7);
+}
+
+.option {
+  padding: 11px 16px;
+  color: var(--parchment-dim);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.optionActive {
+  background: rgba(217, 179, 77, 0.1);
+  color: var(--parchment);
+}
+
+.hint {
+  padding: 11px 16px;
+  color: var(--muted);
+  font-size: 13px;
+}

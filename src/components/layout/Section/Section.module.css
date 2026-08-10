@@ -1,0 +1,36 @@
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 52px 0;
+  border-top: 1px solid var(--line);
+}
+
+.head {
+  margin-bottom: 36px;
+}
+
+.tag {
+  color: var(--gold-dim);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.title {
+  margin-top: 8px;
+  color: var(--parchment);
+  font-size: 26px;
+}
+
+@media (min-width: 768px) {
+  .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 44px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+}

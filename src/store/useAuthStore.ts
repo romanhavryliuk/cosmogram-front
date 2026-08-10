@@ -84,17 +84,27 @@ export const useAuthStore = create<AuthState>()(
       name: 'cosmogram-auth',
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ user: state.user, tokens: state.tokens }),
-      onRehydrateStorage: () => (state) => {
-        // Після підйому з localStorage віддаємо токени в axios
-        setTokens(state?.tokens ?? null);
-        useAuthStore.setState({
-          isAuthenticated: Boolean(state?.tokens),
-          isHydrating: false,
-        });
-      },
     },
   ),
 );
+
+/**
+ * persist гідратує синхронно ще всередині create(), коли константа useAuthStore
+ * не присвоєна — тому onRehydrateStorage там падає на TDZ, а помилку persist
+ * ковтає. Тож синхронізуємо стан одразу після створення стора.
+ *
+ * На сервері localStorage немає, гідратації не було — прапорець лишаємо піднятим,
+ * інакше SSR і перший клієнтський рендер розійдуться.
+ */
+if (typeof window !== 'undefined') {
+  const { tokens } = useAuthStore.getState();
+
+  setTokens(tokens);
+  useAuthStore.setState({
+    isAuthenticated: Boolean(tokens),
+    isHydrating: false,
+  });
+}
 
 // Протух refresh-токен -> інтерсептор гасить сесію
 setUnauthorizedHandler(() => {

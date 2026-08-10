@@ -1,0 +1,1 @@
+export { BirthDataSection } from './BirthDataSection';
