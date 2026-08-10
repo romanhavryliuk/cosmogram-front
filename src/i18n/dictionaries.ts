@@ -3,7 +3,9 @@ import type { Locale } from './locales';
 export type Dictionary = {
   nav: {
     login: string;
+    signUp: string;
     howItWorks: string;
+    menu: string;
   };
   hero: {
     eyebrow: string;
@@ -19,12 +21,50 @@ export type Dictionary = {
     heading: string;
     steps: { num: string; title: string; text: string }[];
   };
+  auth: {
+    login: {
+      title: string;
+      emailLabel: string;
+      passwordLabel: string;
+      submitCta: string;
+      submitLoadingCta: string;
+      switchText: string;
+      switchLinkText: string;
+      genericError: string;
+    };
+    register: {
+      title: string;
+      nameLabel: string;
+      emailLabel: string;
+      passwordLabel: string;
+      confirmPasswordLabel: string;
+      submitCta: string;
+      submitLoadingCta: string;
+      switchText: string;
+      switchLinkText: string;
+      genericError: string;
+    };
+    validation: {
+      emailRequired: string;
+      emailInvalid: string;
+      passwordRequired: string;
+      passwordMin: string;
+      passwordLetter: string;
+      passwordDigit: string;
+      nameMin: string;
+      nameMax: string;
+      confirmPasswordRequired: string;
+      passwordMismatch: string;
+    };
+  };
 };
 
 const en: Dictionary = {
   nav: {
     login: 'Sign In',
+    signUp: 'Sign Up',
     howItWorks: 'How It Works',
+    menu: 'Menu',
   },
   hero: {
     eyebrow: 'Astrology + Numerology',
@@ -56,12 +96,50 @@ const en: Dictionary = {
       },
     ],
   },
+  auth: {
+    login: {
+      title: 'Sign In',
+      emailLabel: 'Email',
+      passwordLabel: 'Password',
+      submitCta: 'Sign In →',
+      submitLoadingCta: 'Signing in…',
+      switchText: "Don't have an account?",
+      switchLinkText: 'Sign up',
+      genericError: 'Incorrect email or password',
+    },
+    register: {
+      title: 'Registration',
+      nameLabel: 'Name',
+      emailLabel: 'Email',
+      passwordLabel: 'Password',
+      confirmPasswordLabel: 'Confirm Password',
+      submitCta: 'Create Account →',
+      submitLoadingCta: 'Creating account…',
+      switchText: 'Already have an account?',
+      switchLinkText: 'Sign in',
+      genericError: 'Something went wrong. Please try again.',
+    },
+    validation: {
+      emailRequired: 'Enter your email',
+      emailInvalid: 'Invalid email',
+      passwordRequired: 'Enter your password',
+      passwordMin: 'Password must be at least 8 characters',
+      passwordLetter: 'Password must contain a letter',
+      passwordDigit: 'Password must contain a digit',
+      nameMin: 'Name must be at least 2 characters',
+      nameMax: 'Name is too long',
+      confirmPasswordRequired: 'Confirm your password',
+      passwordMismatch: "Passwords don't match",
+    },
+  },
 };
 
 const uk: Dictionary = {
   nav: {
     login: 'Вхід',
+    signUp: 'Реєстрація',
     howItWorks: 'Як це працює',
+    menu: 'Меню',
   },
   hero: {
     eyebrow: 'Астрологія + нумерологія',
@@ -93,12 +171,50 @@ const uk: Dictionary = {
       },
     ],
   },
+  auth: {
+    login: {
+      title: 'Вхід',
+      emailLabel: 'Email',
+      passwordLabel: 'Пароль',
+      submitCta: 'Увійти →',
+      submitLoadingCta: 'Входимо…',
+      switchText: 'Немає акаунта?',
+      switchLinkText: 'Зареєструйся',
+      genericError: 'Невірний email або пароль',
+    },
+    register: {
+      title: 'Реєстрація',
+      nameLabel: "Ім'я",
+      emailLabel: 'Email',
+      passwordLabel: 'Пароль',
+      confirmPasswordLabel: 'Підтвердіть пароль',
+      submitCta: 'Створити акаунт →',
+      submitLoadingCta: 'Створюємо акаунт…',
+      switchText: 'Вже є акаунт?',
+      switchLinkText: 'Увійти',
+      genericError: 'Щось пішло не так. Спробуйте ще раз.',
+    },
+    validation: {
+      emailRequired: 'Введіть email',
+      emailInvalid: 'Некоректний email',
+      passwordRequired: 'Введіть пароль',
+      passwordMin: 'Пароль має містити щонайменше 8 символів',
+      passwordLetter: 'Пароль має містити літеру',
+      passwordDigit: 'Пароль має містити цифру',
+      nameMin: "Ім'я має містити щонайменше 2 символи",
+      nameMax: "Ім'я задовге",
+      confirmPasswordRequired: 'Підтвердіть пароль',
+      passwordMismatch: 'Паролі не збігаються',
+    },
+  },
 };
 
 const pl: Dictionary = {
   nav: {
     login: 'Zaloguj się',
+    signUp: 'Zarejestruj się',
     howItWorks: 'Jak to działa',
+    menu: 'Menu',
   },
   hero: {
     eyebrow: 'Astrologia + numerologia',
@@ -129,6 +245,42 @@ const pl: Dictionary = {
         text: 'Otrzymujesz wizualną kartę — pobierz jako PDF lub udostępnij jako obraz.',
       },
     ],
+  },
+  auth: {
+    login: {
+      title: 'Zaloguj się',
+      emailLabel: 'Email',
+      passwordLabel: 'Hasło',
+      submitCta: 'Zaloguj się →',
+      submitLoadingCta: 'Logowanie…',
+      switchText: 'Nie masz konta?',
+      switchLinkText: 'Zarejestruj się',
+      genericError: 'Nieprawidłowy email lub hasło',
+    },
+    register: {
+      title: 'Rejestracja',
+      nameLabel: 'Imię',
+      emailLabel: 'Email',
+      passwordLabel: 'Hasło',
+      confirmPasswordLabel: 'Potwierdź hasło',
+      submitCta: 'Utwórz konto →',
+      submitLoadingCta: 'Tworzymy konto…',
+      switchText: 'Masz już konto?',
+      switchLinkText: 'Zaloguj się',
+      genericError: 'Coś poszło nie tak. Spróbuj ponownie.',
+    },
+    validation: {
+      emailRequired: 'Podaj email',
+      emailInvalid: 'Nieprawidłowy email',
+      passwordRequired: 'Podaj hasło',
+      passwordMin: 'Hasło musi mieć co najmniej 8 znaków',
+      passwordLetter: 'Hasło musi zawierać literę',
+      passwordDigit: 'Hasło musi zawierać cyfrę',
+      nameMin: 'Imię musi mieć co najmniej 2 znaki',
+      nameMax: 'Imię jest za długie',
+      confirmPasswordRequired: 'Potwierdź hasło',
+      passwordMismatch: 'Hasła nie są identyczne',
+    },
   },
 };
 

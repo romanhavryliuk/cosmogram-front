@@ -1,3 +1,10 @@
+'use client';
+
+import { RegisterForm } from '@/components/auth/RegisterForm';
+import { useAuth } from '@/hooks/useAuth';
+
 export default function RegisterPage() {
-  return <h1>Register</h1>;
+  useAuth({ redirectIfAuthenticated: true });
+
+  return <RegisterForm />;
 }

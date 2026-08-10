@@ -1,35 +1,31 @@
 import { z } from 'zod';
 
-export const emailSchema = z
-  .string()
-  .min(1, 'Введіть email')
-  .email('Некоректний email');
+import type { Dictionary } from '@/i18n/dictionaries';
 
-export const passwordSchema = z
-  .string()
-  .min(8, 'Пароль має містити щонайменше 8 символів')
-  .regex(/[a-zA-Z]/, 'Пароль має містити літеру')
-  .regex(/\d/, 'Пароль має містити цифру');
+type ValidationMessages = Dictionary['auth']['validation'];
 
-export const loginSchema = z.object({
-  email: emailSchema,
-  password: z.string().min(1, 'Введіть пароль'),
-});
-
-export const registerSchema = z
-  .object({
-    name: z
-      .string()
-      .min(2, "Ім'я має містити щонайменше 2 символи")
-      .max(32, "Ім'я задовге"),
-    email: emailSchema,
-    password: passwordSchema,
-    confirmPassword: z.string().min(1, 'Підтвердіть пароль'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Паролі не збігаються',
-    path: ['confirmPassword'],
+export const createLoginSchema = (t: ValidationMessages) =>
+  z.object({
+    email: z.string().min(1, t.emailRequired).email(t.emailInvalid),
+    password: z.string().min(1, t.passwordRequired),
   });
+
+export const createRegisterSchema = (t: ValidationMessages) =>
+  z
+    .object({
+      name: z.string().min(2, t.nameMin).max(32, t.nameMax),
+      email: z.string().min(1, t.emailRequired).email(t.emailInvalid),
+      password: z
+        .string()
+        .min(8, t.passwordMin)
+        .regex(/[a-zA-Z]/, t.passwordLetter)
+        .regex(/\d/, t.passwordDigit),
+      confirmPassword: z.string().min(1, t.confirmPasswordRequired),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t.passwordMismatch,
+      path: ['confirmPassword'],
+    });
 
 export const birthPlaceSchema = z.object({
   label: z.string().min(1, 'Оберіть місце народження'),
@@ -54,6 +50,8 @@ export const birthDataSchema = z.object({
   place: birthPlaceSchema,
 });
 
-export type LoginFormValues = z.infer<typeof loginSchema>;
-export type RegisterFormValues = z.infer<typeof registerSchema>;
+export type LoginFormValues = z.infer<ReturnType<typeof createLoginSchema>>;
+export type RegisterFormValues = z.infer<
+  ReturnType<typeof createRegisterSchema>
+>;
 export type BirthDataFormValues = z.infer<typeof birthDataSchema>;

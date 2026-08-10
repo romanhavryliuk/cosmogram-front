@@ -1,3 +1,5 @@
+import styles from './Loader.module.css';
+
 export const Loader = () => {
-  return <span role="status">{/* TODO */}</span>;
+  return <span className={styles.spinner} role="status" aria-hidden="true" />;
 };

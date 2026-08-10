@@ -1,3 +1,10 @@
+'use client';
+
+import { LoginForm } from '@/components/auth/LoginForm';
+import { useAuth } from '@/hooks/useAuth';
+
 export default function LoginPage() {
-  return <h1>Login</h1>;
+  useAuth({ redirectIfAuthenticated: true });
+
+  return <LoginForm />;
 }
