@@ -57,6 +57,33 @@ export type Dictionary = {
       passwordMismatch: string;
     };
   };
+  birthForm: {
+    tag: string;
+    heading: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    dateLabel: string;
+    timeLabel: string;
+    placeLabel: string;
+    placePlaceholder: string;
+    placeSearching: string;
+    placeNoResults: string;
+    submitCta: string;
+    submitLoadingCta: string;
+    note: string;
+    /** Гостю: форма працює, але зберегти карту можна тільки залогіненим */
+    authRequired: string;
+    genericError: string;
+    validation: {
+      nameMin: string;
+      nameMax: string;
+      dateFormat: string;
+      dateInvalid: string;
+      dateFuture: string;
+      timeFormat: string;
+      placeRequired: string;
+    };
+  };
 };
 
 const en: Dictionary = {
@@ -130,6 +157,33 @@ const en: Dictionary = {
       nameMax: 'Name is too long',
       confirmPasswordRequired: 'Confirm your password',
       passwordMismatch: "Passwords don't match",
+    },
+  },
+  birthForm: {
+    tag: 'Step 01',
+    heading: 'Birth Details',
+    nameLabel: 'Name',
+    namePlaceholder: 'Maria',
+    dateLabel: 'Date of Birth',
+    timeLabel: 'Time of Birth',
+    placeLabel: 'City of Birth',
+    placePlaceholder: 'Lviv, Ukraine',
+    placeSearching: 'Searching…',
+    placeNoResults: 'Nothing found',
+    submitCta: 'Calculate →',
+    submitLoadingCta: 'Calculating…',
+    note: 'The city is automatically converted into coordinates and a time zone — both are needed to place the houses precisely.',
+    authRequired:
+      'Sign in to build and save your chart — what you entered stays here.',
+    genericError: "We couldn't build the chart. Please try again.",
+    validation: {
+      nameMin: 'Name must be at least 2 characters',
+      nameMax: 'Name is too long',
+      dateFormat: 'Date must be in YYYY-MM-DD format',
+      dateInvalid: 'Invalid date',
+      dateFuture: 'Birth date cannot be in the future',
+      timeFormat: 'Time must be in HH:MM format',
+      placeRequired: 'Pick a city from the list',
     },
   },
 };
@@ -207,6 +261,33 @@ const uk: Dictionary = {
       passwordMismatch: 'Паролі не збігаються',
     },
   },
+  birthForm: {
+    tag: 'Крок 01',
+    heading: 'Дані народження',
+    nameLabel: "Ім'я",
+    namePlaceholder: 'Марія',
+    dateLabel: 'Дата народження',
+    timeLabel: 'Час народження',
+    placeLabel: 'Місто народження',
+    placePlaceholder: 'Львів, Україна',
+    placeSearching: 'Шукаємо…',
+    placeNoResults: 'Нічого не знайшли',
+    submitCta: 'Розрахувати →',
+    submitLoadingCta: 'Рахуємо…',
+    note: 'Місто автоматично конвертується в координати та часовий пояс — вони потрібні для точного розрахунку будинків.',
+    authRequired:
+      'Увійдіть, щоб побудувати й зберегти карту — введені дані залишаться.',
+    genericError: 'Не вдалося побудувати карту. Спробуйте ще раз.',
+    validation: {
+      nameMin: "Ім'я має містити щонайменше 2 символи",
+      nameMax: "Ім'я задовге",
+      dateFormat: 'Дата у форматі РРРР-ММ-ДД',
+      dateInvalid: 'Некоректна дата',
+      dateFuture: 'Дата народження не може бути в майбутньому',
+      timeFormat: 'Час у форматі ГГ:ХХ',
+      placeRequired: 'Оберіть місто зі списку',
+    },
+  },
 };
 
 const pl: Dictionary = {
@@ -280,6 +361,33 @@ const pl: Dictionary = {
       nameMax: 'Imię jest za długie',
       confirmPasswordRequired: 'Potwierdź hasło',
       passwordMismatch: 'Hasła nie są identyczne',
+    },
+  },
+  birthForm: {
+    tag: 'Krok 01',
+    heading: 'Dane urodzenia',
+    nameLabel: 'Imię',
+    namePlaceholder: 'Maria',
+    dateLabel: 'Data urodzenia',
+    timeLabel: 'Godzina urodzenia',
+    placeLabel: 'Miasto urodzenia',
+    placePlaceholder: 'Lwów, Ukraina',
+    placeSearching: 'Szukamy…',
+    placeNoResults: 'Nic nie znaleziono',
+    submitCta: 'Oblicz →',
+    submitLoadingCta: 'Obliczamy…',
+    note: 'Miasto jest automatycznie zamieniane na współrzędne i strefę czasową — są potrzebne do dokładnego wyznaczenia domów.',
+    authRequired:
+      'Zaloguj się, aby zbudować i zapisać mapę — wpisane dane zostaną.',
+    genericError: 'Nie udało się zbudować mapy. Spróbuj ponownie.',
+    validation: {
+      nameMin: 'Imię musi mieć co najmniej 2 znaki',
+      nameMax: 'Imię jest za długie',
+      dateFormat: 'Data w formacie RRRR-MM-DD',
+      dateInvalid: 'Nieprawidłowa data',
+      dateFuture: 'Data urodzenia nie może być w przyszłości',
+      timeFormat: 'Godzina w formacie GG:MM',
+      placeRequired: 'Wybierz miasto z listy',
     },
   },
 };
