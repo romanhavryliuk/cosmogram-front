@@ -1,0 +1,45 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.field {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 14px 16px;
+  background: var(--void-2);
+  color: var(--parchment);
+  font-family: var(--font-mono), 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.field::placeholder {
+  color: var(--muted);
+}
+
+.field:focus-visible {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 2px;
+}
+
+.fieldError {
+  border-color: #c0524f;
+}
+
+.errorMsg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: #e08a86;
+  font-size: 12px;
+}

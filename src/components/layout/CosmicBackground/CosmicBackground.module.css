@@ -62,42 +62,27 @@
   }
 }
 
-.stars {
+.star {
   position: absolute;
-  inset: 0;
-  background-repeat: repeat;
+  top: var(--y);
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--color, var(--parchment));
+  box-shadow: 0 0 calc(var(--size) * 2.5) var(--color, var(--parchment));
+  opacity: var(--max-opacity, 0.8);
+  animation: starTwinkle var(--duration, 5s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
 }
 
-.s1 {
-  background-image: radial-gradient(1px 1px at 10% 20%, rgba(237, 230, 214, 0.9), transparent),
-    radial-gradient(1px 1px at 30% 70%, rgba(237, 230, 214, 0.7), transparent),
-    radial-gradient(1.5px 1.5px at 50% 40%, rgba(217, 179, 77, 0.8), transparent),
-    radial-gradient(1px 1px at 70% 15%, rgba(237, 230, 214, 0.6), transparent),
-    radial-gradient(1px 1px at 85% 55%, rgba(237, 230, 214, 0.8), transparent),
-    radial-gradient(1.5px 1.5px at 15% 85%, rgba(217, 179, 77, 0.6), transparent),
-    radial-gradient(1px 1px at 95% 80%, rgba(237, 230, 214, 0.5), transparent),
-    radial-gradient(1px 1px at 60% 90%, rgba(237, 230, 214, 0.6), transparent);
-  background-size: 100% 100%;
-  animation: twinkle 6s ease-in-out infinite;
-}
-
-.s2 {
-  background-image: radial-gradient(0.8px 0.8px at 25% 45%, rgba(237, 230, 214, 0.5), transparent),
-    radial-gradient(0.8px 0.8px at 45% 25%, rgba(237, 230, 214, 0.4), transparent),
-    radial-gradient(0.8px 0.8px at 75% 65%, rgba(237, 230, 214, 0.5), transparent),
-    radial-gradient(0.8px 0.8px at 90% 35%, rgba(237, 230, 214, 0.4), transparent),
-    radial-gradient(0.8px 0.8px at 5% 55%, rgba(237, 230, 214, 0.4), transparent);
-  background-size: 100% 100%;
-  animation: twinkle 9s ease-in-out infinite reverse;
-}
-
-@keyframes twinkle {
+@keyframes starTwinkle {
   0%,
   100% {
-    opacity: 0.5;
+    opacity: calc(var(--max-opacity, 0.8) * 0.5);
   }
   50% {
-    opacity: 1;
+    opacity: var(--max-opacity, 0.8);
   }
 }
 
@@ -150,9 +135,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .nebula,
-  .stars,
   .shootingStar {
     animation: none !important;
     opacity: 0;
+  }
+
+  .star {
+    animation: none !important;
+    opacity: calc(var(--max-opacity, 0.8) * 0.8);
   }
 }

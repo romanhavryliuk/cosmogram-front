@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { ElementType, ReactNode } from 'react';
 import clsx from 'clsx';
 
@@ -9,10 +10,14 @@ interface ContainerProps {
   as?: ElementType;
 }
 
-export const Container = ({
-  children,
-  className,
-  as: Tag = 'div',
-}: ContainerProps) => {
-  return <Tag className={clsx(styles.wrap, className)}>{children}</Tag>;
-};
+export const Container = forwardRef<HTMLElement, ContainerProps>(
+  ({ children, className, as: Tag = 'div' }, ref) => {
+    return (
+      <Tag ref={ref} className={clsx(styles.wrap, className)}>
+        {children}
+      </Tag>
+    );
+  },
+);
+
+Container.displayName = 'Container';

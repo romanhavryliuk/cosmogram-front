@@ -1,5 +1,5 @@
 import { Hero } from '@/components/hero/Hero';
-import { HowItWorks } from '@/components/how-it-works/HowItWorks';
+import { HowItWorks } from '@/components/hero/how-it-works/HowItWorks';
 
 export default function HomePage() {
   return (
