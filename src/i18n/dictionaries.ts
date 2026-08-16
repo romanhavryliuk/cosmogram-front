@@ -1,3 +1,5 @@
+import type { PythagoreanDigit } from '@/types/astrology.types';
+
 import type { Locale } from './locales';
 
 export type Dictionary = {
@@ -83,6 +85,34 @@ export type Dictionary = {
       timeFormat: string;
       placeRequired: string;
     };
+  };
+  result: {
+    tag: string;
+    heading: string;
+    chartTitle: string;
+    ascendantPrefix: string;
+    wheelLabel: string;
+    retrograde: string;
+    squareTitle: string;
+    squareSubtitle: string;
+    /** Заглушка в клітинці квадрата, якщо цифри немає в даті */
+    emptyCell: string;
+    squareLabels: Record<PythagoreanDigit, string>;
+  };
+  exportCard: {
+    caption: string;
+    downloadPdf: string;
+    shareImage: string;
+    preparing: string;
+    linkCopied: string;
+    genericError: string;
+  };
+  dashboard: {
+    tag: string;
+    heading: string;
+    emptyTitle: string;
+    emptyText: string;
+    emptyCta: string;
   };
 };
 
@@ -186,6 +216,44 @@ const en: Dictionary = {
       placeRequired: 'Pick a city from the list',
     },
   },
+  result: {
+    tag: 'Step 02',
+    heading: 'Result',
+    chartTitle: 'Natal Chart',
+    ascendantPrefix: 'Ascendant —',
+    wheelLabel: 'Natal chart with planet positions',
+    retrograde: 'Retrograde',
+    squareTitle: 'Destiny Matrix',
+    squareSubtitle: 'Pythagorean square from your birth date',
+    emptyCell: '—',
+    squareLabels: {
+      '1': 'character',
+      '2': 'energy',
+      '3': 'interest',
+      '4': 'health',
+      '5': 'luck',
+      '6': 'duty',
+      '7': 'talent',
+      '8': 'memory',
+      '9': 'spirit',
+    },
+  },
+  exportCard: {
+    caption: 'Destiny Chart',
+    downloadPdf: 'Download PDF',
+    shareImage: 'Share Image',
+    preparing: 'Preparing…',
+    linkCopied: 'Link copied',
+    genericError: "We couldn't create the file. Please try again.",
+  },
+  dashboard: {
+    tag: 'Dashboard',
+    heading: 'Saved Charts',
+    emptyTitle: 'Nothing here yet',
+    emptyText:
+      'Build your first chart — it will be saved to your dashboard and available from any device.',
+    emptyCta: 'Build a Chart',
+  },
 };
 
 const uk: Dictionary = {
@@ -288,6 +356,44 @@ const uk: Dictionary = {
       placeRequired: 'Оберіть місто зі списку',
     },
   },
+  result: {
+    tag: 'Крок 02',
+    heading: 'Результат',
+    chartTitle: 'Натальна карта',
+    ascendantPrefix: 'Асцендент —',
+    wheelLabel: 'Натальна карта з позиціями планет',
+    retrograde: 'Ретроградний',
+    squareTitle: 'Матриця Долі',
+    squareSubtitle: 'Квадрат Піфагора за датою народження',
+    emptyCell: '—',
+    squareLabels: {
+      '1': 'характер',
+      '2': 'енергія',
+      '3': 'інтерес',
+      '4': "здоров'я",
+      '5': 'удача',
+      '6': "обов'язок",
+      '7': 'талант',
+      '8': "пам'ять",
+      '9': 'дух',
+    },
+  },
+  exportCard: {
+    caption: 'Карта долі',
+    downloadPdf: 'Завантажити PDF',
+    shareImage: 'Поділитись зображенням',
+    preparing: 'Готуємо…',
+    linkCopied: 'Посилання скопійовано',
+    genericError: 'Не вдалося створити файл. Спробуйте ще раз.',
+  },
+  dashboard: {
+    tag: 'Кабінет',
+    heading: 'Збережені карти',
+    emptyTitle: 'Тут поки порожньо',
+    emptyText:
+      'Побудуйте першу карту — вона збережеться в кабінеті й буде доступна з будь-якого пристрою.',
+    emptyCta: 'Побудувати карту',
+  },
 };
 
 const pl: Dictionary = {
@@ -389,6 +495,44 @@ const pl: Dictionary = {
       timeFormat: 'Godzina w formacie GG:MM',
       placeRequired: 'Wybierz miasto z listy',
     },
+  },
+  result: {
+    tag: 'Krok 02',
+    heading: 'Wynik',
+    chartTitle: 'Mapa natalna',
+    ascendantPrefix: 'Ascendent —',
+    wheelLabel: 'Mapa natalna z pozycjami planet',
+    retrograde: 'Retrogradacja',
+    squareTitle: 'Matryca Przeznaczenia',
+    squareSubtitle: 'Kwadrat Pitagorasa z daty urodzenia',
+    emptyCell: '—',
+    squareLabels: {
+      '1': 'charakter',
+      '2': 'energia',
+      '3': 'zainteresowanie',
+      '4': 'zdrowie',
+      '5': 'szczęście',
+      '6': 'obowiązek',
+      '7': 'talent',
+      '8': 'pamięć',
+      '9': 'duch',
+    },
+  },
+  exportCard: {
+    caption: 'Mapa przeznaczenia',
+    downloadPdf: 'Pobierz PDF',
+    shareImage: 'Udostępnij obraz',
+    preparing: 'Przygotowujemy…',
+    linkCopied: 'Link skopiowany',
+    genericError: 'Nie udało się utworzyć pliku. Spróbuj ponownie.',
+  },
+  dashboard: {
+    tag: 'Panel',
+    heading: 'Zapisane mapy',
+    emptyTitle: 'Na razie pusto',
+    emptyText:
+      'Zbuduj pierwszą mapę — zapisze się w panelu i będzie dostępna z każdego urządzenia.',
+    emptyCta: 'Zbuduj mapę',
   },
 };
 

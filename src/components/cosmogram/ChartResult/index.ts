@@ -1,0 +1,1 @@
+export { ChartResult } from './ChartResult';

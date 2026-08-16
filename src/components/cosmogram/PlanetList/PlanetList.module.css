@@ -1,0 +1,28 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.name {
+  color: var(--parchment-dim);
+}
+
+.value {
+  color: var(--gold-soft);
+  text-align: right;
+}
+
+.retrograde {
+  margin-left: 6px;
+  color: var(--teal);
+  text-decoration: none;
+  cursor: help;
+}

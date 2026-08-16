@@ -1,0 +1,12 @@
+.wrap {
+  position: relative;
+  flex-shrink: 0;
+  line-height: 0;
+  filter: drop-shadow(0 0 18px rgba(217, 179, 77, 0.2));
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

@@ -1,0 +1,36 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: rgba(16, 17, 42, 0.6);
+  backdrop-filter: blur(8px);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 30px rgba(217, 179, 77, 0.12);
+}
+
+.wheel {
+  flex-shrink: 0;
+}
+
+.name {
+  margin-bottom: 3px;
+  color: var(--parchment);
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 11px;
+}
