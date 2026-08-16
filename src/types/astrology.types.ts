@@ -79,8 +79,23 @@ export interface DestinyMatrix {
   love: number;
 }
 
-/** Квадрат Піфагора — кількість повторень кожної цифри 1–9 */
-export type PythagoreanSquare = Record<
-  '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9',
-  string
->;
+/** Порядок клітинок квадрата Піфагора — зліва направо, зверху вниз */
+export const PYTHAGOREAN_DIGITS = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+] as const;
+
+export type PythagoreanDigit = (typeof PYTHAGOREAN_DIGITS)[number];
+
+/**
+ * Квадрат Піфагора — рядок повторень кожної цифри 1–9.
+ * Напр. `{ '1': '111', '3': '' }` — три одиниці, жодної трійки.
+ */
+export type PythagoreanSquare = Record<PythagoreanDigit, string>;

@@ -1,0 +1,67 @@
+.strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 220px;
+  height: 280px;
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(91, 42, 134, 0.5), transparent 60%),
+    radial-gradient(circle at 70% 80%, rgba(217, 179, 77, 0.15), transparent 60%),
+    var(--ink);
+  box-shadow: 0 0 40px rgba(91, 42, 134, 0.3);
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.captionTag {
+  color: var(--gold-soft);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.captionName {
+  color: var(--parchment);
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: 16px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 220px;
+}
+
+@media (min-width: 768px) {
+  .strip {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .actions {
+    align-items: flex-start;
+  }
+}

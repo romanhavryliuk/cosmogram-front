@@ -1,0 +1,48 @@
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.col {
+  padding: 28px 22px;
+  background: rgba(10, 10, 28, 0.7);
+  backdrop-filter: blur(8px);
+}
+
+.title {
+  margin-bottom: 5px;
+  color: var(--parchment);
+  font-size: 19px;
+}
+
+.sub {
+  margin-bottom: 24px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.wheel {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    flex-direction: row;
+  }
+
+  .col {
+    flex: 1;
+    padding: 36px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .col {
+    padding: 48px;
+  }
+}
