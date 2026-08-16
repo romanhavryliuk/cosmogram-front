@@ -93,6 +93,11 @@ export type Dictionary = {
     ascendantPrefix: string;
     wheelLabel: string;
     retrograde: string;
+    matrixTitle: string;
+    matrixSubtitle: string;
+    matrixWheelLabel: string;
+    matrixMoneyLabel: string;
+    matrixLoveLabel: string;
     squareTitle: string;
     squareSubtitle: string;
     /** Заглушка в клітинці квадрата, якщо цифри немає в даті */
@@ -223,8 +228,13 @@ const en: Dictionary = {
     ascendantPrefix: 'Ascendant —',
     wheelLabel: 'Natal chart with planet positions',
     retrograde: 'Retrograde',
-    squareTitle: 'Destiny Matrix',
-    squareSubtitle: 'Pythagorean square from your birth date',
+    matrixTitle: 'Destiny Matrix',
+    matrixSubtitle: 'Your core energies, from birth date and time',
+    matrixWheelLabel: 'Destiny matrix diagram',
+    matrixMoneyLabel: 'Money',
+    matrixLoveLabel: 'Love',
+    squareTitle: 'Pythagorean Square',
+    squareSubtitle: 'Digit frequency from your birth date',
     emptyCell: '—',
     squareLabels: {
       '1': 'character',
@@ -363,8 +373,13 @@ const uk: Dictionary = {
     ascendantPrefix: 'Асцендент —',
     wheelLabel: 'Натальна карта з позиціями планет',
     retrograde: 'Ретроградний',
-    squareTitle: 'Матриця Долі',
-    squareSubtitle: 'Квадрат Піфагора за датою народження',
+    matrixTitle: 'Матриця Долі',
+    matrixSubtitle: 'Основні енергії за датою й часом народження',
+    matrixWheelLabel: 'Діаграма матриці долі',
+    matrixMoneyLabel: 'Гроші',
+    matrixLoveLabel: 'Любов',
+    squareTitle: 'Квадрат Піфагора',
+    squareSubtitle: 'Повторення цифр у даті народження',
     emptyCell: '—',
     squareLabels: {
       '1': 'характер',
@@ -503,8 +518,13 @@ const pl: Dictionary = {
     ascendantPrefix: 'Ascendent —',
     wheelLabel: 'Mapa natalna z pozycjami planet',
     retrograde: 'Retrogradacja',
-    squareTitle: 'Matryca Przeznaczenia',
-    squareSubtitle: 'Kwadrat Pitagorasa z daty urodzenia',
+    matrixTitle: 'Matryca Przeznaczenia',
+    matrixSubtitle: 'Twoje główne energie na podstawie daty i godziny urodzenia',
+    matrixWheelLabel: 'Diagram matrycy przeznaczenia',
+    matrixMoneyLabel: 'Pieniądze',
+    matrixLoveLabel: 'Miłość',
+    squareTitle: 'Kwadrat Pitagorasa',
+    squareSubtitle: 'Częstotliwość cyfr w dacie urodzenia',
     emptyCell: '—',
     squareLabels: {
       '1': 'charakter',

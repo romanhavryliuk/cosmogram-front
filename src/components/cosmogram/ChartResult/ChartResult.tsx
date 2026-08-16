@@ -1,5 +1,6 @@
 'use client';
 
+import { DestinyMatrix } from '@/components/cosmogram/DestinyMatrix';
 import { ExportCard } from '@/components/cosmogram/ExportCard';
 import { NatalChartWheel } from '@/components/cosmogram/NatalChartWheel';
 import { PlanetList } from '@/components/cosmogram/PlanetList';
@@ -14,7 +15,7 @@ type ChartResultProps = {
   profile: Profile;
 };
 
-/** Дві колонки результату з макета плюс смуга експорту під ними */
+/** Три колонки результату (натальна карта, матриця долі, квадрат Піфагора) плюс смуга експорту під ними */
 export const ChartResult = ({ profile }: ChartResultProps) => {
   const { t } = useLocale();
   const labels = useAstroLabels();
@@ -38,6 +39,12 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
             <NatalChartWheel chart={profile.chart} label={t.result.wheelLabel} />
           </div>
           <PlanetList planets={profile.chart.planets} />
+        </article>
+
+        <article className={styles.col}>
+          <h3 className={styles.title}>{t.result.matrixTitle}</h3>
+          <p className={styles.sub}>{t.result.matrixSubtitle}</p>
+          <DestinyMatrix matrix={profile.destinyMatrix} />
         </article>
 
         <article className={styles.col}>
