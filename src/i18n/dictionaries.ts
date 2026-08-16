@@ -107,6 +107,13 @@ export type Dictionary = {
     linkCopied: string;
     genericError: string;
   };
+  dashboard: {
+    tag: string;
+    heading: string;
+    emptyTitle: string;
+    emptyText: string;
+    emptyCta: string;
+  };
 };
 
 const en: Dictionary = {
@@ -238,6 +245,14 @@ const en: Dictionary = {
     preparing: 'Preparing…',
     linkCopied: 'Link copied',
     genericError: "We couldn't create the file. Please try again.",
+  },
+  dashboard: {
+    tag: 'Dashboard',
+    heading: 'Saved Charts',
+    emptyTitle: 'Nothing here yet',
+    emptyText:
+      'Build your first chart — it will be saved to your dashboard and available from any device.',
+    emptyCta: 'Build a Chart',
   },
 };
 
@@ -371,6 +386,14 @@ const uk: Dictionary = {
     linkCopied: 'Посилання скопійовано',
     genericError: 'Не вдалося створити файл. Спробуйте ще раз.',
   },
+  dashboard: {
+    tag: 'Кабінет',
+    heading: 'Збережені карти',
+    emptyTitle: 'Тут поки порожньо',
+    emptyText:
+      'Побудуйте першу карту — вона збережеться в кабінеті й буде доступна з будь-якого пристрою.',
+    emptyCta: 'Побудувати карту',
+  },
 };
 
 const pl: Dictionary = {
@@ -502,6 +525,14 @@ const pl: Dictionary = {
     preparing: 'Przygotowujemy…',
     linkCopied: 'Link skopiowany',
     genericError: 'Nie udało się utworzyć pliku. Spróbuj ponownie.',
+  },
+  dashboard: {
+    tag: 'Panel',
+    heading: 'Zapisane mapy',
+    emptyTitle: 'Na razie pusto',
+    emptyText:
+      'Zbuduj pierwszą mapę — zapisze się w panelu i będzie dostępna z każdego urządzenia.',
+    emptyCta: 'Zbuduj mapę',
   },
 };
 

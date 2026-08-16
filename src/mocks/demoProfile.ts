@@ -1,6 +1,6 @@
 import { ZODIAC_SIGNS } from '@/types/astrology.types';
 import type { HouseCusp } from '@/types/astrology.types';
-import type { Profile } from '@/types/profile.types';
+import type { Profile, ProfileSummary } from '@/types/profile.types';
 
 /**
  * Демо-дані з макета — для секції "приклад результату" на головній,
@@ -101,3 +101,28 @@ export const demoProfile: Profile = {
     '9': '999',
   },
 };
+
+/** Демо-картки для секції кабінету на головній */
+export const demoProfiles: ProfileSummary[] = [
+  {
+    id: demoProfile.id,
+    name: demoProfile.name,
+    birthDate: demoProfile.birthDate,
+    createdAt: demoProfile.createdAt,
+    place: { label: 'Lviv' },
+  },
+  {
+    id: 'demo-2',
+    name: 'Oleh',
+    birthDate: '1995-11-02',
+    createdAt: '2026-07-03T18:20:00.000Z',
+    place: { label: 'Odesa' },
+  },
+  {
+    id: 'demo-3',
+    name: 'Iryna',
+    birthDate: '2001-07-27',
+    createdAt: '2026-07-05T09:05:00.000Z',
+    place: { label: 'Kyiv' },
+  },
+];
