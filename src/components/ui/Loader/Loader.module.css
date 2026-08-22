@@ -1,9 +1,9 @@
 .spinner {
-  width: 13px;
-  height: 13px;
+  width: var(--loader-size, 13px);
+  height: var(--loader-size, 13px);
   flex-shrink: 0;
-  border: 2px solid rgba(6, 6, 15, 0.35);
-  border-top-color: var(--void);
+  border: 2px solid var(--loader-track, rgba(6, 6, 15, 0.35));
+  border-top-color: var(--loader-color, var(--void));
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

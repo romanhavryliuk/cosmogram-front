@@ -62,7 +62,7 @@ export default function ProfileResultPage({ params }: ProfileResultPageProps) {
   };
 
   return (
-    <Section id="result" tag={t.result.tag} heading={t.result.heading}>
+    <Section id="result" heading={t.result.heading}>
       {renderContent()}
 
       <ConfirmDialog
