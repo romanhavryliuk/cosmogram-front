@@ -1,6 +1,6 @@
 .grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1px;
   border: 1px solid var(--line);
   background: var(--line);
@@ -32,17 +32,30 @@
 
 @media (min-width: 768px) {
   .grid {
-    flex-direction: row;
+    grid-template-columns: 1fr 1fr;
   }
 
   .col {
-    flex: 1;
     padding: 36px;
+  }
+
+  /* Квадрат Піфагора — на всю ширину під двома верхніми блоками,
+     інакше сітка 3×3 всередині стає нечитабельно вузькою */
+  .squareCol {
+    grid-column: 1 / -1;
   }
 }
 
 @media (min-width: 1440px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .col {
     padding: 48px;
+  }
+
+  .squareCol {
+    grid-column: auto;
   }
 }

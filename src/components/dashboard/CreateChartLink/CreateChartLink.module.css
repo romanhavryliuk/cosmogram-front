@@ -1,0 +1,19 @@
+.link {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 26px;
+  border-radius: 2px;
+  background: var(--gold);
+  color: var(--void);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: var(--glow-gold);
+  transition: box-shadow 0.3s ease;
+}
+
+.link:hover {
+  box-shadow: 0 0 50px rgba(217, 179, 77, 0.4);
+}
