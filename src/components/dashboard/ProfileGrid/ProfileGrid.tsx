@@ -8,11 +8,14 @@ import styles from './ProfileGrid.module.css';
 type ProfileGridProps = {
   profiles: ProfileSummary[];
   isLoading?: boolean;
+  /** false — картки лише для показу (напр. декоративний кабінет на головній) */
+  interactive?: boolean;
 };
 
 export const ProfileGrid = ({
   profiles,
   isLoading = false,
+  interactive = true,
 }: ProfileGridProps) => {
   // Лоадер лише на першому завантаженні — при рефетчі показуємо наявні картки
   if (isLoading && profiles.length === 0) {
@@ -30,7 +33,11 @@ export const ProfileGrid = ({
   return (
     <ul className={styles.grid}>
       {profiles.map((profile) => (
-        <ProfileCard key={profile.id} profile={profile} />
+        <ProfileCard
+          key={profile.id}
+          profile={profile}
+          interactive={interactive}
+        />
       ))}
     </ul>
   );

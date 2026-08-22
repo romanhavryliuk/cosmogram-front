@@ -70,13 +70,26 @@ export interface NatalChart {
   midheaven: number;
 }
 
-/** Матриця долі — 22 енергії, ключі відповідають позиціям на діаграмі */
+export interface AncestralLine {
+  first: number;
+  second: number;
+  total: number;
+}
+
+/**
+ * Матриця долі — 22 енергії, ключі відповідають позиціям на діаграмі.
+ * `purpose`, `ancestralPrograms`, `familyPower` додані на бекенді пізніше:
+ * профілі, створені до цього, приходять без них — рендерити опціонально.
+ */
 export interface DestinyMatrix {
   center: number;
   personal: { a: number; b: number; c: number; d: number };
   karmic: { e: number; f: number; g: number; h: number };
   money: number;
   love: number;
+  purpose?: { personal: number; social: number; spiritual: number };
+  ancestralPrograms?: { paternal: AncestralLine; maternal: AncestralLine };
+  familyPower?: number;
 }
 
 /** Порядок клітинок квадрата Піфагора — зліва направо, зверху вниз */

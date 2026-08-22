@@ -8,8 +8,8 @@ import styles from './Section.module.css';
 type SectionProps = {
   /** Якір для навігації в хедері */
   id?: string;
-  /** Дрібний надпис над заголовком: "Процес", "Крок 01" */
-  tag: string;
+  /** Дрібний надпис над заголовком: "Процес", "Крок 01" — опціональний, не всюди доречний (напр. збережена карта в кабінеті) */
+  tag?: string;
   heading: string;
   /** Правий блок шапки — на десктопі стає в один рядок із заголовком */
   aside?: ReactNode;
@@ -31,7 +31,7 @@ export const Section = ({
       <Container>
         <div className={styles.head}>
           <div>
-            <p className={styles.tag}>{tag}</p>
+            {tag && <p className={styles.tag}>{tag}</p>}
             <h2 className={styles.title}>{heading}</h2>
           </div>
           {aside}

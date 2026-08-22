@@ -19,12 +19,14 @@ export const PythagoreanSquare = ({ square }: PythagoreanSquareProps) => {
         // Backend віддає рядок повторень ("444"), нам потрібна кількість
         const count = square[digit].length;
 
+        const label = t.result.squareLabels[digit];
+
         return (
-          <li key={digit} className={styles.cell}>
+          <li key={digit} className={styles.cell} title={label.full}>
             <span className={`${styles.count} mono`}>
               {count || t.result.emptyCell}
             </span>
-            <span className={styles.label}>{t.result.squareLabels[digit]}</span>
+            <span className={styles.label}>{label.short}</span>
           </li>
         );
       })}
