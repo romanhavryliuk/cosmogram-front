@@ -59,6 +59,10 @@ export type Dictionary = {
       confirmPasswordRequired: string;
       passwordMismatch: string;
     };
+    passwordToggle: {
+      show: string;
+      hide: string;
+    };
   };
   birthForm: {
     tag: string;
@@ -213,6 +217,10 @@ const en: Dictionary = {
       nameMax: 'Name is too long',
       confirmPasswordRequired: 'Confirm your password',
       passwordMismatch: "Passwords don't match",
+    },
+    passwordToggle: {
+      show: 'Show password',
+      hide: 'Hide password',
     },
   },
   birthForm: {
@@ -380,6 +388,10 @@ const uk: Dictionary = {
       confirmPasswordRequired: 'Підтвердіть пароль',
       passwordMismatch: 'Паролі не збігаються',
     },
+    passwordToggle: {
+      show: 'Показати пароль',
+      hide: 'Приховати пароль',
+    },
   },
   birthForm: {
     tag: 'Крок 01',
@@ -545,6 +557,10 @@ const pl: Dictionary = {
       nameMax: 'Imię jest za długie',
       confirmPasswordRequired: 'Potwierdź hasło',
       passwordMismatch: 'Hasła nie są identyczne',
+    },
+    passwordToggle: {
+      show: 'Pokaż hasło',
+      hide: 'Ukryj hasło',
     },
   },
   birthForm: {
