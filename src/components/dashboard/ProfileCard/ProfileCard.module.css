@@ -1,3 +1,8 @@
+.item {
+  position: relative;
+  height: 100%;
+}
+
 .card {
   display: flex;
   align-items: center;
@@ -33,4 +38,45 @@
 .meta {
   color: var(--muted);
   font-size: 11px;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: rgba(6, 6, 15, 0.5);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.deleteBtn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.deleteBtn:hover {
+  color: #e08a86;
+  border-color: #c0524f;
+}
+
+/* На пристроях з реальним hover ховаємо кнопку, поки не наведуть на картку —
+   на тачскрінах (де hover не працює) вона лишається видимою завжди */
+@media (hover: hover) {
+  .deleteBtn {
+    opacity: 0;
+  }
+
+  .item:hover .deleteBtn,
+  .deleteBtn:focus-visible {
+    opacity: 1;
+  }
 }

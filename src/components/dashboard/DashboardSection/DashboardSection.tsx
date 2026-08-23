@@ -11,7 +11,7 @@ export const DashboardSection = () => {
 
   return (
     <Section id="dashboard" tag={t.dashboard.tag} heading={t.dashboard.heading}>
-      <ProfileGrid profiles={demoProfiles} />
+      <ProfileGrid profiles={demoProfiles} interactive={false} />
     </Section>
   );
 };

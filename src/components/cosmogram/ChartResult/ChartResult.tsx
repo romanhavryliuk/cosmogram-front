@@ -1,5 +1,7 @@
 'use client';
 
+import clsx from 'clsx';
+
 import { DestinyMatrix } from '@/components/cosmogram/DestinyMatrix';
 import { ExportCard } from '@/components/cosmogram/ExportCard';
 import { NatalChartWheel } from '@/components/cosmogram/NatalChartWheel';
@@ -47,7 +49,7 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
           <DestinyMatrix matrix={profile.destinyMatrix} />
         </article>
 
-        <article className={styles.col}>
+        <article className={clsx(styles.col, styles.squareCol)}>
           <h3 className={styles.title}>{t.result.squareTitle}</h3>
           <p className={styles.sub}>{t.result.squareSubtitle}</p>
           <PythagoreanSquare square={profile.pythagoreanSquare} />

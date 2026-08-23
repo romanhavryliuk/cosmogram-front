@@ -1,0 +1,30 @@
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 60px 0;
+}
+
+.wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.panel {
+  display: flex;
+  width: 100%;
+  min-height: 280px;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 22px;
+  background: rgba(16, 17, 42, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  box-shadow: var(--glow-violet);
+}
+
+@media (min-width: 768px) {
+  .panel {
+    max-width: 460px;
+  }
+}

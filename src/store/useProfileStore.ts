@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+import { getApiErrorMessage } from '@/services/api';
 import { profileService } from '@/services/profileService';
 
 import type {
@@ -32,6 +33,10 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
     try {
       const items = await profileService.getAll();
       set({ items });
+    } catch (error) {
+      // Гасимо тут — і /profile (гість чи ще не піднявся токен), і реальний
+      // збій бекенду не мають валити сторінку необробленим reject'ом
+      set({ error: getApiErrorMessage(error) });
     } finally {
       set({ isLoading: false });
     }
@@ -42,6 +47,8 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
     try {
       const current = await profileService.getById(id);
       set({ current });
+    } catch (error) {
+      set({ error: getApiErrorMessage(error) });
     } finally {
       set({ isLoading: false });
     }

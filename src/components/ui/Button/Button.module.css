@@ -35,6 +35,16 @@
   backdrop-filter: blur(6px);
 }
 
+.btnDanger {
+  background: #c0524f;
+  color: var(--parchment);
+  box-shadow: 0 0 30px rgba(192, 82, 79, 0.25);
+}
+
+.btnDanger:hover:not(:disabled) {
+  box-shadow: 0 0 46px rgba(192, 82, 79, 0.4);
+}
+
 .isLoading {
   opacity: 0.7;
   cursor: progress;

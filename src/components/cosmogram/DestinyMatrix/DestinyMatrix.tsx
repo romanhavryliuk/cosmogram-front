@@ -22,6 +22,7 @@ const round = (value: number) => Math.round(value * 1000) / 1000;
 
 export const DestinyMatrix = ({ matrix }: DestinyMatrixProps) => {
   const { t } = useLocale();
+  const { purpose, ancestralPrograms, familyPower } = matrix;
 
   // Вісім точок восьмикутника — особисті (a–d) й кармічні (e–h) енергії
   // чергуються по колу. Семантику кожної конкретної точки визначає бекенд,
@@ -125,7 +126,81 @@ export const DestinyMatrix = ({ matrix }: DestinyMatrixProps) => {
           <span className={`${styles.statValue} mono`}>{matrix.love}</span>
           <span className={styles.statLabel}>{t.result.matrixLoveLabel}</span>
         </div>
+        {typeof familyPower === 'number' && (
+          <div className={styles.stat}>
+            <span className={`${styles.statValue} mono`}>{familyPower}</span>
+            <span className={styles.statLabel}>
+              {t.result.matrixFamilyPowerLabel}
+            </span>
+          </div>
+        )}
       </div>
+
+      {purpose && (
+        <div className={styles.extra}>
+          <span className={styles.sectionLabel}>
+            {t.result.matrixPurposeLabel}
+          </span>
+          <div className={styles.stats}>
+            <div className={styles.stat}>
+              <span className={`${styles.statValue} mono`}>
+                {purpose.personal}
+              </span>
+              <span className={styles.statLabel}>
+                {t.result.matrixPurposePersonalLabel}
+              </span>
+            </div>
+            <div className={styles.stat}>
+              <span className={`${styles.statValue} mono`}>
+                {purpose.social}
+              </span>
+              <span className={styles.statLabel}>
+                {t.result.matrixPurposeSocialLabel}
+              </span>
+            </div>
+            <div className={styles.stat}>
+              <span className={`${styles.statValue} mono`}>
+                {purpose.spiritual}
+              </span>
+              <span className={styles.statLabel}>
+                {t.result.matrixPurposeSpiritualLabel}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {ancestralPrograms && (
+        <div className={styles.extra}>
+          <span className={styles.sectionLabel}>
+            {t.result.matrixAncestralLabel}
+          </span>
+          <div className={styles.ancestralRow}>
+            <div className={styles.ancestralLine}>
+              <span className={styles.ancestralLineLabel}>
+                {t.result.matrixPaternalLabel}
+              </span>
+              <span className={`${styles.ancestralLineValue} mono`}>
+                {ancestralPrograms.paternal.first} ·{' '}
+                {ancestralPrograms.paternal.second} ·{' '}
+                {ancestralPrograms.paternal.total}
+              </span>
+            </div>
+            <div className={styles.ancestralLine}>
+              <span className={styles.ancestralLineLabel}>
+                {t.result.matrixMaternalLabel}
+              </span>
+              <span className={`${styles.ancestralLineValue} mono`}>
+                {ancestralPrograms.maternal.first} ·{' '}
+                {ancestralPrograms.maternal.second} ·{' '}
+                {ancestralPrograms.maternal.total}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <p className={styles.methodNote}>{t.result.matrixMethodNote}</p>
     </div>
   );
 };

@@ -8,6 +8,7 @@ export type Dictionary = {
     signUp: string;
     howItWorks: string;
     menu: string;
+    logout: string;
   };
   hero: {
     eyebrow: string;
@@ -58,6 +59,10 @@ export type Dictionary = {
       confirmPasswordRequired: string;
       passwordMismatch: string;
     };
+    passwordToggle: {
+      show: string;
+      hide: string;
+    };
   };
   birthForm: {
     tag: string;
@@ -98,11 +103,20 @@ export type Dictionary = {
     matrixWheelLabel: string;
     matrixMoneyLabel: string;
     matrixLoveLabel: string;
+    matrixFamilyPowerLabel: string;
+    matrixPurposeLabel: string;
+    matrixPurposePersonalLabel: string;
+    matrixPurposeSocialLabel: string;
+    matrixPurposeSpiritualLabel: string;
+    matrixAncestralLabel: string;
+    matrixPaternalLabel: string;
+    matrixMaternalLabel: string;
+    matrixMethodNote: string;
     squareTitle: string;
     squareSubtitle: string;
     /** Заглушка в клітинці квадрата, якщо цифри немає в даті */
     emptyCell: string;
-    squareLabels: Record<PythagoreanDigit, string>;
+    squareLabels: Record<PythagoreanDigit, { short: string; full: string }>;
   };
   exportCard: {
     caption: string;
@@ -119,6 +133,16 @@ export type Dictionary = {
     emptyText: string;
     emptyCta: string;
   };
+  profileActions: {
+    deleteCta: string;
+    createNewCta: string;
+    deleteConfirmTitle: string;
+    deleteConfirmDescription: string;
+    deleteConfirmAction: string;
+    deleteCancelAction: string;
+    deleteSuccess: string;
+    deleteError: string;
+  };
 };
 
 const en: Dictionary = {
@@ -127,6 +151,7 @@ const en: Dictionary = {
     signUp: 'Sign Up',
     howItWorks: 'How It Works',
     menu: 'Menu',
+    logout: 'Log Out',
   },
   hero: {
     eyebrow: 'Astrology + Numerology',
@@ -193,6 +218,10 @@ const en: Dictionary = {
       confirmPasswordRequired: 'Confirm your password',
       passwordMismatch: "Passwords don't match",
     },
+    passwordToggle: {
+      show: 'Show password',
+      hide: 'Hide password',
+    },
   },
   birthForm: {
     tag: 'Step 01',
@@ -229,23 +258,33 @@ const en: Dictionary = {
     wheelLabel: 'Natal chart with planet positions',
     retrograde: 'Retrograde',
     matrixTitle: 'Destiny Matrix',
-    matrixSubtitle: 'Your core energies, from birth date and time',
+    matrixSubtitle: 'Your core energies, from your birth date',
     matrixWheelLabel: 'Destiny matrix diagram',
     matrixMoneyLabel: 'Money',
     matrixLoveLabel: 'Love',
+    matrixFamilyPowerLabel: 'Family Power',
+    matrixPurposeLabel: 'Purpose',
+    matrixPurposePersonalLabel: 'Personal',
+    matrixPurposeSocialLabel: 'Social',
+    matrixPurposeSpiritualLabel: 'Spiritual',
+    matrixAncestralLabel: 'Ancestral Programs',
+    matrixPaternalLabel: 'Paternal Line',
+    matrixMaternalLabel: 'Maternal Line',
+    matrixMethodNote:
+      'Calculated using the Natalia Ladini method (22 Major Arcana). A tool for self-reflection, not a scientific prediction.',
     squareTitle: 'Pythagorean Square',
     squareSubtitle: 'Digit frequency from your birth date',
     emptyCell: '—',
     squareLabels: {
-      '1': 'character',
-      '2': 'energy',
-      '3': 'interest',
-      '4': 'health',
-      '5': 'luck',
-      '6': 'duty',
-      '7': 'talent',
-      '8': 'memory',
-      '9': 'spirit',
+      '1': { short: 'character', full: 'Character, will' },
+      '2': { short: 'energy', full: 'Energy, bioenergetics' },
+      '3': { short: 'interest', full: 'Interest, cognition, science' },
+      '4': { short: 'health', full: 'Health, beauty' },
+      '5': { short: 'logic', full: 'Logic, intuition' },
+      '6': { short: 'work', full: 'Work, mastery' },
+      '7': { short: 'luck', full: 'Luck, talent' },
+      '8': { short: 'duty', full: 'Duty, debt' },
+      '9': { short: 'memory', full: 'Memory, mind' },
     },
   },
   exportCard: {
@@ -264,6 +303,16 @@ const en: Dictionary = {
       'Build your first chart — it will be saved to your dashboard and available from any device.',
     emptyCta: 'Build a Chart',
   },
+  profileActions: {
+    deleteCta: 'Delete',
+    createNewCta: 'Build New Chart',
+    deleteConfirmTitle: 'Delete this chart?',
+    deleteConfirmDescription: 'This action can’t be undone.',
+    deleteConfirmAction: 'Delete',
+    deleteCancelAction: 'Cancel',
+    deleteSuccess: 'Chart deleted',
+    deleteError: "Couldn't delete the chart. Please try again.",
+  },
 };
 
 const uk: Dictionary = {
@@ -272,6 +321,7 @@ const uk: Dictionary = {
     signUp: 'Реєстрація',
     howItWorks: 'Як це працює',
     menu: 'Меню',
+    logout: 'Вийти',
   },
   hero: {
     eyebrow: 'Астрологія + нумерологія',
@@ -338,6 +388,10 @@ const uk: Dictionary = {
       confirmPasswordRequired: 'Підтвердіть пароль',
       passwordMismatch: 'Паролі не збігаються',
     },
+    passwordToggle: {
+      show: 'Показати пароль',
+      hide: 'Приховати пароль',
+    },
   },
   birthForm: {
     tag: 'Крок 01',
@@ -374,23 +428,33 @@ const uk: Dictionary = {
     wheelLabel: 'Натальна карта з позиціями планет',
     retrograde: 'Ретроградний',
     matrixTitle: 'Матриця Долі',
-    matrixSubtitle: 'Основні енергії за датою й часом народження',
+    matrixSubtitle: 'Основні енергії за датою народження',
     matrixWheelLabel: 'Діаграма матриці долі',
     matrixMoneyLabel: 'Гроші',
     matrixLoveLabel: 'Любов',
+    matrixFamilyPowerLabel: 'Сила роду',
+    matrixPurposeLabel: 'Призначення',
+    matrixPurposePersonalLabel: 'Особисте',
+    matrixPurposeSocialLabel: 'Соціальне',
+    matrixPurposeSpiritualLabel: 'Духовне',
+    matrixAncestralLabel: 'Родові програми',
+    matrixPaternalLabel: 'Батьківська лінія',
+    matrixMaternalLabel: 'Материнська лінія',
+    matrixMethodNote:
+      'Розрахунок за методикою Наталії Ладіні (22 Старших Аркани). Інструмент самопізнання, а не наукове передбачення.',
     squareTitle: 'Квадрат Піфагора',
     squareSubtitle: 'Повторення цифр у даті народження',
     emptyCell: '—',
     squareLabels: {
-      '1': 'характер',
-      '2': 'енергія',
-      '3': 'інтерес',
-      '4': "здоров'я",
-      '5': 'удача',
-      '6': "обов'язок",
-      '7': 'талант',
-      '8': "пам'ять",
-      '9': 'дух',
+      '1': { short: 'характер', full: "Характер, воля" },
+      '2': { short: 'енергія', full: 'Енергія, біоенергетика' },
+      '3': { short: 'інтерес', full: 'Інтерес, пізнання, наука' },
+      '4': { short: "здоров'я", full: "Здоров'я, краса" },
+      '5': { short: 'логіка', full: 'Логіка, інтуїція' },
+      '6': { short: 'праця', full: 'Праця, майстерність' },
+      '7': { short: 'удача', full: 'Удача, талант' },
+      '8': { short: "обов'язок", full: "Обов'язок, борг" },
+      '9': { short: "пам'ять", full: "Пам'ять, розум" },
     },
   },
   exportCard: {
@@ -409,6 +473,16 @@ const uk: Dictionary = {
       'Побудуйте першу карту — вона збережеться в кабінеті й буде доступна з будь-якого пристрою.',
     emptyCta: 'Побудувати карту',
   },
+  profileActions: {
+    deleteCta: 'Видалити',
+    createNewCta: 'Побудувати нову карту',
+    deleteConfirmTitle: 'Видалити цю карту?',
+    deleteConfirmDescription: 'Цю дію не можна скасувати.',
+    deleteConfirmAction: 'Видалити',
+    deleteCancelAction: 'Скасувати',
+    deleteSuccess: 'Карту видалено',
+    deleteError: 'Не вдалося видалити карту. Спробуйте ще раз.',
+  },
 };
 
 const pl: Dictionary = {
@@ -417,6 +491,7 @@ const pl: Dictionary = {
     signUp: 'Zarejestruj się',
     howItWorks: 'Jak to działa',
     menu: 'Menu',
+    logout: 'Wyloguj się',
   },
   hero: {
     eyebrow: 'Astrologia + numerologia',
@@ -483,6 +558,10 @@ const pl: Dictionary = {
       confirmPasswordRequired: 'Potwierdź hasło',
       passwordMismatch: 'Hasła nie są identyczne',
     },
+    passwordToggle: {
+      show: 'Pokaż hasło',
+      hide: 'Ukryj hasło',
+    },
   },
   birthForm: {
     tag: 'Krok 01',
@@ -519,23 +598,33 @@ const pl: Dictionary = {
     wheelLabel: 'Mapa natalna z pozycjami planet',
     retrograde: 'Retrogradacja',
     matrixTitle: 'Matryca Przeznaczenia',
-    matrixSubtitle: 'Twoje główne energie na podstawie daty i godziny urodzenia',
+    matrixSubtitle: 'Twoje główne energie na podstawie daty urodzenia',
     matrixWheelLabel: 'Diagram matrycy przeznaczenia',
     matrixMoneyLabel: 'Pieniądze',
     matrixLoveLabel: 'Miłość',
+    matrixFamilyPowerLabel: 'Siła rodu',
+    matrixPurposeLabel: 'Przeznaczenie',
+    matrixPurposePersonalLabel: 'Osobiste',
+    matrixPurposeSocialLabel: 'Społeczne',
+    matrixPurposeSpiritualLabel: 'Duchowe',
+    matrixAncestralLabel: 'Programy rodowe',
+    matrixPaternalLabel: 'Linia ojcowska',
+    matrixMaternalLabel: 'Linia macierzysta',
+    matrixMethodNote:
+      'Obliczenia według metody Natalii Ladini (22 Wielkie Arkana). Narzędzie do samopoznania, a nie naukowa prognoza.',
     squareTitle: 'Kwadrat Pitagorasa',
     squareSubtitle: 'Częstotliwość cyfr w dacie urodzenia',
     emptyCell: '—',
     squareLabels: {
-      '1': 'charakter',
-      '2': 'energia',
-      '3': 'zainteresowanie',
-      '4': 'zdrowie',
-      '5': 'szczęście',
-      '6': 'obowiązek',
-      '7': 'talent',
-      '8': 'pamięć',
-      '9': 'duch',
+      '1': { short: 'charakter', full: 'Charakter, wola' },
+      '2': { short: 'energia', full: 'Energia, bioenergetyka' },
+      '3': { short: 'zainteresowanie', full: 'Zainteresowanie, poznanie, nauka' },
+      '4': { short: 'zdrowie', full: 'Zdrowie, piękno' },
+      '5': { short: 'logika', full: 'Logika, intuicja' },
+      '6': { short: 'praca', full: 'Praca, mistrzostwo' },
+      '7': { short: 'szczęście', full: 'Szczęście, talent' },
+      '8': { short: 'obowiązek', full: 'Obowiązek, dług' },
+      '9': { short: 'pamięć', full: 'Pamięć, umysł' },
     },
   },
   exportCard: {
@@ -553,6 +642,16 @@ const pl: Dictionary = {
     emptyText:
       'Zbuduj pierwszą mapę — zapisze się w panelu i będzie dostępna z każdego urządzenia.',
     emptyCta: 'Zbuduj mapę',
+  },
+  profileActions: {
+    deleteCta: 'Usuń',
+    createNewCta: 'Zbuduj nową mapę',
+    deleteConfirmTitle: 'Usunąć tę mapę?',
+    deleteConfirmDescription: 'Tej czynności nie można cofnąć.',
+    deleteConfirmAction: 'Usuń',
+    deleteCancelAction: 'Anuluj',
+    deleteSuccess: 'Mapa usunięta',
+    deleteError: 'Nie udało się usunąć mapy. Spróbuj ponownie.',
   },
 };
 

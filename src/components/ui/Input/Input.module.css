@@ -11,7 +11,12 @@
   letter-spacing: 0.1em;
 }
 
+.fieldWrap {
+  position: relative;
+}
+
 .field {
+  width: 100%;
   border: 1px solid var(--line);
   border-radius: 2px;
   padding: 14px 16px;
@@ -33,6 +38,43 @@
 
 .fieldError {
   border-color: #c0524f;
+}
+
+.fieldWithToggle {
+  padding-right: 44px;
+}
+
+.toggleBtn {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  color: var(--muted);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color 0.2s ease;
+}
+
+.toggleBtn:hover {
+  color: var(--parchment);
+}
+
+.toggleBtn:focus-visible {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 2px;
+}
+
+.toggleBtn svg {
+  width: 18px;
+  height: 18px;
 }
 
 .errorMsg {
