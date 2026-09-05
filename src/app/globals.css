@@ -17,6 +17,11 @@
   --teal-dim: #35544b;
   --muted: #8a86a8;
   --line: rgba(217, 179, 77, 0.14);
+  /* Поверхні панелей — тримаємо токеном, щоб друк міг перевести їх на папір
+     одним місцем, а не полюванням по кожному *.module.css */
+  --panel: rgba(16, 17, 42, 0.6);
+  --panel-strong: rgba(10, 10, 28, 0.7);
+  --panel-blur: blur(8px);
   --glow-gold: 0 0 40px rgba(217, 179, 77, 0.25);
   --glow-violet: 0 0 60px rgba(91, 42, 134, 0.35);
 }
@@ -97,3 +102,4 @@ button:focus-visible {
   outline-offset: 3px;
   border-radius: 2px;
 }
+

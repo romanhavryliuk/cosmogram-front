@@ -1,0 +1,231 @@
+.carousel {
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+/* Вкладки — горизонтальний скрол на вузьких екранах, бо три назви в рядок
+   на 375px не вміщаються, а перенос рядка ламає ритм шапки */
+.tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border: none;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.tab:hover {
+  color: var(--parchment-dim);
+}
+
+.tabActive {
+  border-bottom-color: var(--gold);
+  color: var(--parchment);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arrow {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--parchment-dim);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.arrow:hover:not(:disabled) {
+  border-color: var(--gold-dim);
+  color: var(--gold-soft);
+}
+
+.arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.counter {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.panel {
+  padding: 28px 22px;
+  border: 1px solid var(--line);
+  background: var(--panel-strong);
+  backdrop-filter: var(--panel-blur);
+}
+
+.panel:focus-visible {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 3px;
+}
+
+.panelHead {
+  margin-bottom: 24px;
+}
+
+.title {
+  margin-bottom: 5px;
+  color: var(--parchment);
+  font-size: 19px;
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.description {
+  max-width: 62ch;
+  margin-top: 12px;
+  color: var(--parchment-dim);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dotActive {
+  background: var(--gold);
+  transform: scale(1.35);
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fromRight {
+  animation: slideFromRight 0.32s ease both;
+}
+
+.fromLeft {
+  animation: slideFromLeft 0.32s ease both;
+}
+
+@media (min-width: 768px) {
+  .head {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .tabs {
+    gap: 8px;
+  }
+
+  .tab {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+
+  .panel {
+    padding: 36px;
+  }
+
+  /* Стрілки й лічильник дублюють вкладки — на широкому екрані вкладок досить,
+     але лічильник лишаємо як орієнтир "де я" */
+  .dots {
+    display: none;
+  }
+}
+
+@media (min-width: 1440px) {
+  .panel {
+    padding: 48px;
+  }
+}
+
+/* Рух вимкнено — лишаємо тільки проявлення, без зсуву */
+@media (prefers-reduced-motion: reduce) {
+  .fromRight,
+  .fromLeft {
+    animation-name: none;
+    animation-duration: 0.01ms;
+  }
+
+  .dot {
+    transition: none;
+  }
+}

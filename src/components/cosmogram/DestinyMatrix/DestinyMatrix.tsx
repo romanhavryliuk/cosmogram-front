@@ -1,121 +1,216 @@
 'use client';
 
+import { useId } from 'react';
+
 import { useLocale } from '@/i18n/LocaleProvider';
 import type { DestinyMatrix as DestinyMatrixData } from '@/types/astrology.types';
+import { roundCoord } from '@/utils/geometry';
 
 import styles from './DestinyMatrix.module.css';
 
 type DestinyMatrixProps = {
   matrix: DestinyMatrixData;
+  size?: number;
 };
 
-const SIZE = 220;
-const CX = SIZE / 2;
-const CY = SIZE / 2;
-const R_OUTER = SIZE * 0.4;
-const R_CORE = SIZE * 0.15;
-const R_POINT = 13;
+const point = (cx: number, cy: number, radius: number, degrees: number) => {
+  const radians = ((degrees - 90) * Math.PI) / 180;
+  return {
+    x: roundCoord(cx + radius * Math.cos(radians)),
+    y: roundCoord(cy + radius * Math.sin(radians)),
+  };
+};
 
-// Округлюємо, щоб уникнути розбіжності останніх розрядів Math.sin/cos
-// між серверним і клієнтським рушієм (ламає SSR-гідратацію).
-const round = (value: number) => Math.round(value * 1000) / 1000;
+const toPolygon = (points: { x: number; y: number }[]) =>
+  points.map((p) => `${p.x},${p.y}`).join(' ');
 
-export const DestinyMatrix = ({ matrix }: DestinyMatrixProps) => {
+export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   const { t } = useLocale();
+  const gradientId = useId();
   const { purpose, ancestralPrograms, familyPower } = matrix;
 
-  // Вісім точок восьмикутника — особисті (a–d) й кармічні (e–h) енергії
-  // чергуються по колу. Семантику кожної конкретної точки визначає бекенд,
-  // тут показуємо лише значення, без вигаданих підписів.
-  const octagonPoints = [
-    { key: 'a', value: matrix.personal.a, angle: -90 },
-    { key: 'e', value: matrix.karmic.e, angle: -45 },
-    { key: 'b', value: matrix.personal.b, angle: 0 },
-    { key: 'f', value: matrix.karmic.f, angle: 45 },
-    { key: 'c', value: matrix.personal.c, angle: 90 },
-    { key: 'g', value: matrix.karmic.g, angle: 135 },
-    { key: 'd', value: matrix.personal.d, angle: 180 },
-    { key: 'h', value: matrix.karmic.h, angle: -135 },
-  ];
+  const c = size / 2;
+  const rPoint = size * 0.375;
+  const rRing = size * 0.26;
+  const rCore = size * 0.135;
+  const nodeR = size * 0.052;
 
-  const points = octagonPoints.map((point) => {
-    const rad = (point.angle * Math.PI) / 180;
-    return {
-      ...point,
-      x: round(CX + R_OUTER * Math.cos(rad)),
-      y: round(CY + R_OUTER * Math.sin(rad)),
-    };
-  });
+  /**
+   * Класична матриця — це октаграма з двох накладених квадратів: прямого
+   * (особисті аркани) і поверненого на 45° (кармічні). Малюємо саме її,
+   * а не один восьмикутник: так видно, що точки різної природи.
+   */
+  const personal = [
+    { key: 'a', value: matrix.personal.a, angle: 0 },
+    { key: 'b', value: matrix.personal.b, angle: 90 },
+    { key: 'c', value: matrix.personal.c, angle: 180 },
+    { key: 'd', value: matrix.personal.d, angle: 270 },
+  ].map((item) => ({ ...item, ...point(c, c, rPoint, item.angle) }));
+
+  const karmic = [
+    { key: 'e', value: matrix.karmic.e, angle: 45 },
+    { key: 'f', value: matrix.karmic.f, angle: 135 },
+    { key: 'g', value: matrix.karmic.g, angle: 225 },
+    { key: 'h', value: matrix.karmic.h, angle: 315 },
+  ].map((item) => ({ ...item, ...point(c, c, rPoint, item.angle) }));
 
   return (
     <div className={styles.wrap}>
       <svg
-        width={SIZE}
-        height={SIZE}
-        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
         role="img"
         aria-label={t.result.matrixWheelLabel}
+        className={styles.svg}
       >
-        <polygon
-          points={points.map((p) => `${p.x},${p.y}`).join(' ')}
+        <defs>
+          <radialGradient id={`${gradientId}-core`}>
+            <stop offset="0%" stopColor="rgba(217, 179, 77, 0.28)" />
+            <stop offset="70%" stopColor="rgba(91, 42, 134, 0.16)" />
+            <stop offset="100%" stopColor="transparent" />
+          </radialGradient>
+          <radialGradient id={`${gradientId}-halo`}>
+            <stop offset="0%" stopColor="rgba(91, 42, 134, 0.45)" />
+            <stop offset="100%" stopColor="transparent" />
+          </radialGradient>
+        </defs>
+
+        {/* М'яке світіння під фігурою — інакше графіка «висить» на пласкому фоні */}
+        <circle cx={c} cy={c} r={rPoint} fill={`url(#${gradientId}-halo)`} />
+
+        {/* Концентричні напрямні */}
+        <circle
+          cx={c}
+          cy={c}
+          r={rPoint}
           fill="none"
-          stroke="var(--gold)"
-          strokeWidth={0.8}
-          opacity={0.5}
+          stroke="var(--line)"
+          strokeWidth={0.6}
         />
-        {points.map((p) => (
+        <circle
+          cx={c}
+          cy={c}
+          r={rRing}
+          fill="none"
+          stroke="var(--line)"
+          strokeWidth={0.5}
+          strokeDasharray="2 4"
+        />
+
+        {/* Осі — кожна точка з'єднана з протилежною через центр (a↔c, b↔d, e↔g, f↔h) */}
+        {[
+          [personal[0], personal[2]],
+          [personal[1], personal[3]],
+          [karmic[0], karmic[2]],
+          [karmic[1], karmic[3]],
+        ].map(([from, to]) => (
           <line
-            key={`line-${p.key}`}
-            x1={CX}
-            y1={CY}
-            x2={p.x}
-            y2={p.y}
+            key={`axis-${from.key}`}
+            x1={from.x}
+            y1={from.y}
+            x2={to.x}
+            y2={to.y}
             stroke="var(--line)"
             strokeWidth={0.6}
           />
         ))}
+
+        {/* Квадрат кармічних арканів — під прямим, щоб прямий читався головним */}
+        <polygon
+          points={toPolygon(karmic)}
+          fill="rgba(94, 163, 147, 0.05)"
+          stroke="var(--teal-dim)"
+          strokeWidth={1}
+        />
+        {/* Квадрат особистих арканів */}
+        <polygon
+          points={toPolygon(personal)}
+          fill="rgba(217, 179, 77, 0.05)"
+          stroke="var(--gold-dim)"
+          strokeWidth={1.1}
+        />
+
+        {/* Ядро */}
+        <circle cx={c} cy={c} r={rCore * 1.6} fill={`url(#${gradientId}-core)`} />
         <circle
-          cx={CX}
-          cy={CY}
-          r={R_CORE}
-          fill="none"
+          cx={c}
+          cy={c}
+          r={rCore}
+          fill="var(--void-2)"
           stroke="var(--gold)"
-          strokeWidth={0.8}
-          opacity={0.6}
+          strokeWidth={1.1}
         />
         <text
-          x={CX}
-          y={CY}
+          x={c}
+          y={c}
           textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize={20}
+          dominantBaseline="central"
+          fontSize={size * 0.09}
           className={`${styles.center} mono`}
         >
           {matrix.center}
         </text>
-        {points.map((p) => (
+
+        {/* Кармічні вузли — бірюзові, трохи менші */}
+        {karmic.map((p) => (
           <g key={p.key}>
             <circle
               cx={p.x}
               cy={p.y}
-              r={R_POINT}
+              r={nodeR}
               fill="var(--void-2)"
-              stroke="var(--line)"
+              stroke="var(--teal)"
               strokeWidth={1}
             />
             <text
               x={p.x}
               y={p.y}
               textAnchor="middle"
-              dominantBaseline="middle"
-              fontSize={12}
-              className={`${styles.pointValue} mono`}
+              dominantBaseline="central"
+              fontSize={size * 0.048}
+              className={`${styles.karmicValue} mono`}
+            >
+              {p.value}
+            </text>
+          </g>
+        ))}
+
+        {/* Особисті вузли — золоті, акцентні */}
+        {personal.map((p) => (
+          <g key={p.key}>
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r={nodeR * 1.15}
+              fill="var(--ink)"
+              stroke="var(--gold)"
+              strokeWidth={1.2}
+            />
+            <text
+              x={p.x}
+              y={p.y}
+              textAnchor="middle"
+              dominantBaseline="central"
+              fontSize={size * 0.052}
+              className={`${styles.personalValue} mono`}
             >
               {p.value}
             </text>
           </g>
         ))}
       </svg>
+
+      <div className={styles.legend}>
+        <span className={styles.legendItem}>
+          <span className={`${styles.swatch} ${styles.swatchPersonal}`} />
+          {t.result.matrixPersonalLegend}
+        </span>
+        <span className={styles.legendItem}>
+          <span className={`${styles.swatch} ${styles.swatchKarmic}`} />
+          {t.result.matrixKarmicLegend}
+        </span>
+      </div>
 
       <div className={styles.stats}>
         <div className={styles.stat}>

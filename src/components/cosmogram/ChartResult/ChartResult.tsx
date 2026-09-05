@@ -1,7 +1,8 @@
 'use client';
 
-import clsx from 'clsx';
-
+import { AspectList } from '@/components/cosmogram/AspectList';
+import { ChartCarousel } from '@/components/cosmogram/ChartCarousel';
+import type { ChartSlide } from '@/components/cosmogram/ChartCarousel';
 import { DestinyMatrix } from '@/components/cosmogram/DestinyMatrix';
 import { ExportCard } from '@/components/cosmogram/ExportCard';
 import { NatalChartWheel } from '@/components/cosmogram/NatalChartWheel';
@@ -17,47 +18,80 @@ type ChartResultProps = {
   profile: Profile;
 };
 
-/** Три колонки результату (натальна карта, матриця долі, квадрат Піфагора) плюс смуга експорту під ними */
+/** Результат розбитий на слайди (натальна карта, матриця долі, квадрат Піфагора) плюс картка-підпис під ними */
 export const ChartResult = ({ profile }: ChartResultProps) => {
   const { t } = useLocale();
   const labels = useAstroLabels();
 
-  // Куспід першого будинку і є асцендентом — знак беремо готовим з бекенду
+  // Куспіди I і X будинків — це асцендент і середина неба; знаки беремо
+  // готовими з бекенду, щоб не рахувати їх із довготи вдруге
   const ascendantSign = profile.chart.houses.find(
     (house) => house.house === 1,
   )?.sign;
+  const midheavenSign = profile.chart.houses.find(
+    (house) => house.house === 10,
+  )?.sign;
 
-  return (
-    <>
-      <div className={styles.grid}>
-        <article className={styles.col}>
-          <h3 className={styles.title}>{t.result.chartTitle}</h3>
-          {ascendantSign && (
-            <p className={styles.sub}>
-              {t.result.ascendantPrefix} {labels.sign[ascendantSign]}
-            </p>
+  const slides: ChartSlide[] = [
+    {
+      id: 'chart',
+      tabLabel: t.result.chartTitle,
+      title: t.result.chartTitle,
+      subtitle: ascendantSign && (
+        <>
+          {t.result.ascendantPrefix} {labels.sign[ascendantSign]}
+          {midheavenSign && (
+            <>
+              {' · '}
+              {t.result.midheavenPrefix} {labels.sign[midheavenSign]}
+            </>
           )}
+        </>
+      ),
+      description: t.result.chartDescription,
+      content: (
+        <div className={styles.chartBody}>
           <div className={styles.wheel}>
             <NatalChartWheel chart={profile.chart} label={t.result.wheelLabel} />
           </div>
-          <PlanetList planets={profile.chart.planets} />
-        </article>
-
-        <article className={styles.col}>
-          <h3 className={styles.title}>{t.result.matrixTitle}</h3>
-          <p className={styles.sub}>{t.result.matrixSubtitle}</p>
+          <div className={styles.lists}>
+            <PlanetList planets={profile.chart.planets} />
+            <AspectList aspects={profile.chart.aspects} />
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: 'matrix',
+      tabLabel: t.result.matrixTitle,
+      title: t.result.matrixTitle,
+      subtitle: t.result.matrixSubtitle,
+      description: t.result.matrixDescription,
+      content: (
+        <div className={styles.matrix}>
           <DestinyMatrix matrix={profile.destinyMatrix} />
-        </article>
-
-        <article className={clsx(styles.col, styles.squareCol)}>
-          <h3 className={styles.title}>{t.result.squareTitle}</h3>
-          <p className={styles.sub}>{t.result.squareSubtitle}</p>
+        </div>
+      ),
+    },
+    {
+      id: 'square',
+      tabLabel: t.result.squareTitle,
+      title: t.result.squareTitle,
+      subtitle: t.result.squareSubtitle,
+      description: t.result.squareDescription,
+      content: (
+        <div className={styles.square}>
           <PythagoreanSquare square={profile.pythagoreanSquare} />
-        </article>
-      </div>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <ChartCarousel slides={slides} />
 
       <ExportCard
-        profileId={profile.id}
         birthDate={profile.birthDate}
         placeLabel={profile.place.label}
       />

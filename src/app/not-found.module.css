@@ -1,23 +1,30 @@
-.empty {
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 80px 0;
+}
+
+.wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 48px 22px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  background: var(--panel);
-  backdrop-filter: var(--panel-blur);
+  gap: 18px;
   text-align: center;
+}
+
+.code {
+  color: var(--gold-dim);
+  font-size: 13px;
+  letter-spacing: 0.24em;
 }
 
 .title {
   color: var(--parchment);
-  font-size: 19px;
+  font-size: 28px;
 }
 
 .text {
-  max-width: 380px;
+  max-width: 420px;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.6;
@@ -40,4 +47,14 @@
 
 .cta:hover {
   box-shadow: 0 0 50px rgba(217, 179, 77, 0.4);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 120px 0;
+  }
+
+  .title {
+    font-size: 34px;
+  }
 }

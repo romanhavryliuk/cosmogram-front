@@ -1,4 +1,4 @@
-import type { Planet, ZodiacSign } from '@/types/astrology.types';
+import type { AspectType, Planet, ZodiacSign } from '@/types/astrology.types';
 
 import type { Locale } from './locales';
 
@@ -29,6 +29,51 @@ export const SIGN_GLYPHS: Record<ZodiacSign, string> = {
   capricorn: '♑',
   aquarius: '♒',
   pisces: '♓',
+};
+
+export const ASPECT_GLYPHS: Record<AspectType, string> = {
+  conjunction: '☌',
+  sextile: '⚹',
+  square: '□',
+  trine: '△',
+  opposition: '☍',
+};
+
+/**
+ * Класична схема кольорів у натальних картах: гармонійні аспекти (тригон,
+ * секстиль) синьо-зелені, напружені (квадрат, опозиція) червоні, з'єднання
+ * нейтральне. Колір несе сенс, тому не беремо його з палітри навмання.
+ */
+export const ASPECT_COLORS: Record<AspectType, string> = {
+  conjunction: 'var(--gold-dim)',
+  sextile: 'var(--teal)',
+  trine: 'var(--teal)',
+  square: '#c0524f',
+  opposition: '#c0524f',
+};
+
+export const ASPECT_LABELS: Record<Locale, Record<AspectType, string>> = {
+  en: {
+    conjunction: 'Conjunction',
+    sextile: 'Sextile',
+    square: 'Square',
+    trine: 'Trine',
+    opposition: 'Opposition',
+  },
+  uk: {
+    conjunction: "З'єднання",
+    sextile: 'Секстиль',
+    square: 'Квадрат',
+    trine: 'Тригон',
+    opposition: 'Опозиція',
+  },
+  pl: {
+    conjunction: 'Koniunkcja',
+    sextile: 'Sekstyl',
+    square: 'Kwadratura',
+    trine: 'Trygon',
+    opposition: 'Opozycja',
+  },
 };
 
 /** Позначка ретроградного руху */

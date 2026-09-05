@@ -15,7 +15,7 @@
   max-width: 360px;
   padding: 28px 24px;
   background: rgba(16, 17, 42, 0.92);
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--panel-blur);
   border: 1px solid var(--line);
   border-radius: 3px;
   box-shadow: var(--glow-violet);

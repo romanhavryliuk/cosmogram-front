@@ -1,8 +1,8 @@
 .panel {
   border: 1px solid var(--line);
   border-radius: 3px;
-  background: rgba(16, 17, 42, 0.6);
-  backdrop-filter: blur(10px);
+  background: var(--panel);
+  backdrop-filter: var(--panel-blur);
   box-shadow: var(--glow-violet);
 }
 

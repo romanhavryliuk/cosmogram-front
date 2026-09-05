@@ -1,0 +1,49 @@
+.title {
+  margin-top: 24px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.pair {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--parchment);
+  font-size: 13px;
+}
+
+/* Гліф аспекту несе колір категорії (гармонійний / напружений) */
+.glyph {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+}
+
+.orb {
+  color: var(--parchment-dim);
+  font-size: 11px;
+}

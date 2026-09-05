@@ -1,12 +1,35 @@
+/* Ширина тягнеться до max-width зі style, але ніколи не переростає контейнер —
+   тому на вузькому екрані колесо масштабується, а не вилазить за панель */
 .wrap {
   position: relative;
-  flex-shrink: 0;
+  width: 100%;
+  aspect-ratio: 1;
   line-height: 0;
-  filter: drop-shadow(0 0 18px rgba(217, 179, 77, 0.2));
+  filter: drop-shadow(0 0 24px rgba(217, 179, 77, 0.16));
 }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
+.svg {
+  display: block;
+}
+
+.signGlyph {
+  fill: var(--parchment-dim);
+  opacity: 0.85;
+}
+
+.houseNumber {
+  fill: var(--muted);
+  opacity: 0.65;
+}
+
+.planetDot {
+  fill: var(--gold-soft);
+}
+
+.planetGlyph {
+  fill: var(--parchment);
+}
+
+.retrograde {
+  fill: var(--teal);
 }

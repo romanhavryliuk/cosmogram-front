@@ -32,8 +32,8 @@
 
 .step {
   padding: 28px 24px;
-  background: rgba(10, 10, 28, 0.7);
-  backdrop-filter: blur(8px);
+  background: var(--panel-strong);
+  backdrop-filter: var(--panel-blur);
 }
 
 .num {

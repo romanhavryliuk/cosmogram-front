@@ -4,3 +4,27 @@
   gap: 12px;
   margin-top: 28px;
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 64px 0;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 26px;
+  border-radius: 2px;
+  background: var(--gold);
+  color: var(--void);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--glow-gold);
+  transition: box-shadow 0.3s ease;
+}
+
+.backLink:hover {
+  box-shadow: 0 0 50px rgba(217, 179, 77, 0.4);
+}
