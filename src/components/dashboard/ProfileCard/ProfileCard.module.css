@@ -11,8 +11,8 @@
   padding: 22px;
   border: 1px solid var(--line);
   border-radius: 3px;
-  background: rgba(16, 17, 42, 0.6);
-  backdrop-filter: blur(8px);
+  background: var(--panel);
+  backdrop-filter: var(--panel-blur);
   transition:
     border-color 0.2s ease,
     box-shadow 0.3s ease;

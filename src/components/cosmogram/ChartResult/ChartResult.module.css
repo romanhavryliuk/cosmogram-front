@@ -1,61 +1,46 @@
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1px;
-  border: 1px solid var(--line);
-  background: var(--line);
-}
-
-.col {
-  padding: 28px 22px;
-  background: rgba(10, 10, 28, 0.7);
-  backdrop-filter: blur(8px);
-}
-
-.title {
-  margin-bottom: 5px;
-  color: var(--parchment);
-  font-size: 19px;
-}
-
-.sub {
-  margin-bottom: 24px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
 .wheel {
   display: flex;
   justify-content: center;
-  margin-bottom: 24px;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.lists {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Квадрат 3×3 не має розтягуватись на всю ширину слайда — клітинки
+   квадратні за aspect-ratio, тож інакше блок стає непомірно високим.
+   Центруємо, щоб на широкому слайді не лишалась порожнеча з одного боку. */
+.square {
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Матрицю теж центруємо — вона вужча за слайд */
+.matrix {
+  display: flex;
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
+  /* Слайд тепер на всю ширину: колесо і списки стають поруч, а не стовпчиком */
+  .chartBody {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
   }
 
-  .col {
-    padding: 36px;
+  .wheel {
+    width: auto;
+    flex: 0 0 340px;
+    margin-bottom: 0;
   }
 
-  /* Квадрат Піфагора — на всю ширину під двома верхніми блоками,
-     інакше сітка 3×3 всередині стає нечитабельно вузькою */
-  .squareCol {
-    grid-column: 1 / -1;
+  .lists {
+    flex: 1;
+    min-width: 0;
   }
 }
 
-@media (min-width: 1440px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .col {
-    padding: 48px;
-  }
-
-  .squareCol {
-    grid-column: auto;
-  }
-}

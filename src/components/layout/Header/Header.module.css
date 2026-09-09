@@ -60,7 +60,7 @@
   margin-top: 1px;
   padding: 20px;
   background: rgba(10, 10, 28, 0.95);
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--panel-blur);
   border: 1px solid var(--line);
   border-top: none;
   z-index: 5;

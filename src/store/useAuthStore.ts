@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 import { setTokens, setUnauthorizedHandler } from '@/services/api';
 import { authService } from '@/services/authService';
+import { useProfileStore } from '@/store/useProfileStore';
 
 import type {
   AuthTokens,
@@ -71,13 +72,21 @@ export const useAuthStore = create<AuthState>()(
 
       refreshCurrentUser: async () => {
         if (!get().tokens) return;
-        const user = await authService.getCurrentUser();
-        set({ user, isAuthenticated: true });
+        try {
+          const user = await authService.getCurrentUser();
+          set({ user, isAuthenticated: true });
+        } catch {
+          // 401 уже обробив інтерсептор (refresh або clearSession).
+          // Будь-який інший збій не має валити застосунок необробленим reject'ом.
+        }
       },
 
       clearSession: () => {
         setTokens(null);
         set({ user: null, tokens: null, isAuthenticated: false });
+        // Космограми попереднього юзера не мають лишатись у пам'яті:
+        // наступний логін на цьому ж браузері побачив би чужі картки
+        useProfileStore.getState().reset();
       },
     }),
     {
@@ -104,6 +113,13 @@ if (typeof window !== 'undefined') {
     isAuthenticated: Boolean(tokens),
     isHydrating: false,
   });
+
+  // localStorage міг пережити сесію: токен відкликано, юзера видалено або
+  // перейменовано. Звіряємось із сервером один раз на старті — помилку
+  // ковтає сам refreshCurrentUser, тож у fire-and-forget це безпечно.
+  if (tokens) {
+    void useAuthStore.getState().refreshCurrentUser();
+  }
 }
 
 // Протух refresh-токен -> інтерсептор гасить сесію

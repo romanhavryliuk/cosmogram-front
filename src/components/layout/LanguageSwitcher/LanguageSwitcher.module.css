@@ -40,7 +40,7 @@
   padding: 6px;
   list-style: none;
   background: rgba(10, 10, 28, 0.92);
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--panel-blur);
   border: 1px solid var(--line);
   border-radius: 3px;
   box-shadow: var(--glow-violet);

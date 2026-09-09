@@ -4,11 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
+import Link from 'next/link';
+
 import { ChartResult } from '@/components/cosmogram/ChartResult';
 import { CreateChartLink } from '@/components/dashboard/CreateChartLink';
 import { Section } from '@/components/layout/Section';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { ErrorState } from '@/components/ui/ErrorState';
 import { Loader } from '@/components/ui/Loader';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
@@ -21,11 +24,18 @@ interface ProfileResultPageProps {
   params: { id: string };
 }
 
+// Дефолтний лоадер розрахований на золоту кнопку — на темній сторінці його не видно
+const LOADER_STYLE = {
+  ['--loader-size' as string]: '26px',
+  ['--loader-color' as string]: 'var(--gold)',
+  ['--loader-track' as string]: 'rgba(217, 179, 77, 0.2)',
+};
+
 export default function ProfileResultPage({ params }: ProfileResultPageProps) {
   const { t } = useLocale();
   const router = useRouter();
   useAuth({ redirectIfUnauthenticated: true });
-  const { profile, isLoading } = useProfile(params.id);
+  const { profile, isLoading, error, refetch } = useProfile(params.id);
   const remove = useProfileStore((state) => state.remove);
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -57,8 +67,31 @@ export default function ProfileResultPage({ params }: ProfileResultPageProps) {
         </>
       );
     }
-    if (isLoading) return <Loader />;
-    return null;
+
+    if (isLoading) {
+      return (
+        <div className={styles.loading}>
+          <Loader style={LOADER_STYLE} />
+        </div>
+      );
+    }
+
+    // Профіль не завантажився: видалений, чужий, або бекенд недоступний —
+    // раніше тут лишалась порожня сторінка з самим заголовком
+    return (
+      <ErrorState
+        title={t.errorState.profileTitle}
+        text={t.errorState.profileText}
+        detail={error}
+        retryLabel={t.errorState.retryCta}
+        onRetry={refetch}
+        action={
+          <Link href="/profile" className={styles.backLink}>
+            {t.errorState.backToListCta}
+          </Link>
+        }
+      />
+    );
   };
 
   return (
