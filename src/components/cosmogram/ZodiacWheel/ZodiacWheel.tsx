@@ -1,5 +1,3 @@
-import clsx from 'clsx';
-
 import styles from './ZodiacWheel.module.css';
 
 const ZODIAC_GLYPHS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
@@ -57,41 +55,47 @@ export const ZodiacWheel = ({
       width={size}
       height={size}
       viewBox={`0 0 ${size} ${size}`}
-      className={clsx(animated && styles.spin, className)}
+      className={className}
       role={decorative ? undefined : 'img'}
       aria-hidden={decorative ? 'true' : undefined}
       aria-label={decorative ? undefined : 'Зодіакальне коло'}
     >
-      <circle cx={cx} cy={cy} r={rOuter} fill="none" stroke={lineColor} strokeWidth={0.8} opacity={0.75} />
-      <circle cx={cx} cy={cy} r={rInner} fill="none" stroke={lineColor} strokeWidth={0.6} opacity={0.45} />
-      <circle cx={cx} cy={cy} r={rCore} fill="none" stroke={lineColor} strokeWidth={0.5} opacity={0.3} />
-      {houses.map((house, i) => (
-        <line
-          key={i}
-          x1={house.x1}
-          y1={house.y1}
-          x2={house.x2}
-          y2={house.y2}
-          stroke={lineColor}
-          strokeWidth={0.6}
-          opacity={0.5}
-        />
-      ))}
-      {glyphs.map(({ glyph, x, y }, i) => (
-        <text
-          key={i}
-          x={x}
-          y={y}
-          fill={glyphColor}
-          fontSize={fontSize}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          opacity={0.9}
-          className={animated ? styles.glyphSpin : undefined}
-        >
-          {glyph}
-        </text>
-      ))}
+      {/* Крутимо групу всередині SVG, а не сам елемент: рамка повернутого
+          квадрата розростається до √2 від сторони, і на вузькому екрані
+          кути виїжджають за межі вікна. Вміст кругле — всередині viewBox
+          воно обертається, не змінюючи розміру самого елемента. */}
+      <g className={animated ? styles.spin : undefined}>
+        <circle cx={cx} cy={cy} r={rOuter} fill="none" stroke={lineColor} strokeWidth={0.8} opacity={0.75} />
+        <circle cx={cx} cy={cy} r={rInner} fill="none" stroke={lineColor} strokeWidth={0.6} opacity={0.45} />
+        <circle cx={cx} cy={cy} r={rCore} fill="none" stroke={lineColor} strokeWidth={0.5} opacity={0.3} />
+        {houses.map((house, i) => (
+          <line
+            key={i}
+            x1={house.x1}
+            y1={house.y1}
+            x2={house.x2}
+            y2={house.y2}
+            stroke={lineColor}
+            strokeWidth={0.6}
+            opacity={0.5}
+          />
+        ))}
+        {glyphs.map(({ glyph, x, y }, i) => (
+          <text
+            key={i}
+            x={x}
+            y={y}
+            fill={glyphColor}
+            fontSize={fontSize}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            opacity={0.9}
+            className={animated ? styles.glyphSpin : undefined}
+          >
+            {glyph}
+          </text>
+        ))}
+      </g>
     </svg>
   );
 };

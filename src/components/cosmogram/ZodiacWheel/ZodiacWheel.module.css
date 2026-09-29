@@ -1,4 +1,8 @@
+/* Обертається група всередині viewBox, тому центром має бути центр
+   системи координат SVG, а не власна рамка групи */
 .spin {
+  transform-box: view-box;
+  transform-origin: center;
   animation: spin 140s linear infinite;
 }
 
