@@ -91,6 +91,11 @@ export const ZodiacWheel = ({
             dominantBaseline="middle"
             opacity={0.9}
             className={animated ? styles.glyphSpin : undefined}
+            // Центр обертання задаємо явно в координатах viewBox. Покладатись
+            // на transform-box: fill-box не можна: Safari на iOS не застосовує
+            // його до <text>, і гліф починає крутитись навколо чужої точки —
+            // візуально вилітає за коло.
+            style={animated ? { transformOrigin: `${x}px ${y}px` } : undefined}
           >
             {glyph}
           </text>

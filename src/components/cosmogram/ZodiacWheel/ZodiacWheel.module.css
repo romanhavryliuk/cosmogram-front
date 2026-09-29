@@ -6,9 +6,11 @@
   animation: spin 140s linear infinite;
 }
 
+/* transform-origin приходить інлайном, у координатах viewBox: fill-box
+   на <text> не підтримується стабільно (iOS Safari), а view-box + px
+   дають однаковий результат у всіх рушіях */
 .glyphSpin {
-  transform-box: fill-box;
-  transform-origin: center;
+  transform-box: view-box;
   animation: counterSpin 140s linear infinite;
 }
 
