@@ -13,6 +13,36 @@
   filter: drop-shadow(0 0 22px rgba(91, 42, 134, 0.35));
 }
 
+/* Вузли матриці — кнопки: натиск відкриває тлумачення аркана */
+.node {
+  cursor: pointer;
+  outline: none;
+  transition: opacity 0.2s ease;
+}
+
+.node circle {
+  transition:
+    stroke-width 0.2s ease,
+    filter 0.2s ease;
+}
+
+.node:hover circle {
+  stroke-width: 2;
+}
+
+/* Фокус з клавіатури: SVG-група не має власного outline, тож
+   підсвічуємо коло тим самим золотом, що й focus-visible деінде */
+.node:focus-visible circle {
+  stroke: var(--gold-soft);
+  stroke-width: 2.4;
+}
+
+.nodeSelected circle {
+  stroke: var(--gold-soft);
+  stroke-width: 2.4;
+  filter: drop-shadow(0 0 6px rgba(240, 217, 138, 0.7));
+}
+
 .center {
   fill: var(--parchment);
   font-weight: 500;

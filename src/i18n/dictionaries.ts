@@ -125,6 +125,12 @@ export type Dictionary = {
     matrixMethodNote: string;
     matrixPersonalLegend: string;
     matrixKarmicLegend: string;
+    /** Підказка в панелі тлумачення, поки аркан не обрано */
+    arcanaHint: string;
+    /** Підпис позиції обраного аркана в матриці */
+    arcanaSourceCenter: string;
+    arcanaSourcePersonal: string;
+    arcanaSourceKarmic: string;
     squareTitle: string;
     squareSubtitle: string;
     /** Заглушка в клітинці квадрата, якщо цифри немає в даті */
@@ -314,6 +320,10 @@ const en: Dictionary = {
       'Calculated from your birth date, using the 22 Major Arcana. A tool for self-reflection, not a scientific prediction.',
     matrixPersonalLegend: 'Personal arcana',
     matrixKarmicLegend: 'Karmic arcana',
+    arcanaHint: 'Tap any number on the diagram to read what that arcanum means.',
+    arcanaSourceCenter: 'Centre',
+    arcanaSourcePersonal: 'Personal',
+    arcanaSourceKarmic: 'Karmic',
     squareTitle: 'Pythagorean Square',
     squareSubtitle: 'Digit frequency from your birth date',
     emptyCell: '—',
@@ -513,6 +523,10 @@ const uk: Dictionary = {
       'Розрахунок за датою народження, 22 Старших Аркани. Інструмент самопізнання, а не наукове передбачення.',
     matrixPersonalLegend: 'Особисті аркани',
     matrixKarmicLegend: 'Кармічні аркани',
+    arcanaHint: 'Натисни на будь-яке число на схемі, щоб прочитати значення аркана.',
+    arcanaSourceCenter: 'Центр',
+    arcanaSourcePersonal: 'Особистий',
+    arcanaSourceKarmic: 'Кармічний',
     squareTitle: 'Квадрат Піфагора',
     squareSubtitle: 'Повторення цифр у даті народження',
     emptyCell: '—',
@@ -711,6 +725,10 @@ const pl: Dictionary = {
       'Obliczenia na podstawie daty urodzenia, 22 Wielkie Arkana. Narzędzie do samopoznania, a nie naukowa prognoza.',
     matrixPersonalLegend: 'Arkana osobiste',
     matrixKarmicLegend: 'Arkana karmiczne',
+    arcanaHint: 'Dotknij dowolnej liczby na diagramie, aby poznać znaczenie arkanu.',
+    arcanaSourceCenter: 'Centrum',
+    arcanaSourcePersonal: 'Osobisty',
+    arcanaSourceKarmic: 'Karmiczny',
     squareTitle: 'Kwadrat Pitagorasa',
     squareSubtitle: 'Częstotliwość cyfr w dacie urodzenia',
     emptyCell: '—',

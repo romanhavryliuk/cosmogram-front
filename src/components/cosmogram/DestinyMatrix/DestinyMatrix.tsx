@@ -1,7 +1,11 @@
 'use client';
 
-import { useId } from 'react';
+import { useId, useState } from 'react';
+import type { KeyboardEvent } from 'react';
+import clsx from 'clsx';
 
+import { ArcanaDetails } from '@/components/cosmogram/ArcanaDetails';
+import { useArcanaLabels } from '@/hooks/useArcanaLabels';
 import { useLocale } from '@/i18n/LocaleProvider';
 import type { DestinyMatrix as DestinyMatrixData } from '@/types/astrology.types';
 import { roundCoord } from '@/utils/geometry';
@@ -12,6 +16,15 @@ type DestinyMatrixProps = {
   matrix: DestinyMatrixData;
   size?: number;
 };
+
+/** Яку позицію в матриці займає обраний аркан — показуємо в панелі тлумачення */
+type ArcanaSource = 'center' | 'personal' | 'karmic';
+
+/**
+ * Вибір тримаємо за ключем вузла, а не за значенням: два вузли можуть мати
+ * однакове число, і тоді підсвітились би обидва.
+ */
+type MatrixNode = { key: string; value: number; source: ArcanaSource };
 
 const point = (cx: number, cy: number, radius: number, degrees: number) => {
   const radians = ((degrees - 90) * Math.PI) / 180;
@@ -27,7 +40,41 @@ const toPolygon = (points: { x: number; y: number }[]) =>
 export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   const { t } = useLocale();
   const gradientId = useId();
+  const { getArcana } = useArcanaLabels();
+  const [selected, setSelected] = useState<MatrixNode | null>(null);
   const { purpose, ancestralPrograms, familyPower } = matrix;
+
+  const sourceLabels: Record<ArcanaSource, string> = {
+    center: t.result.arcanaSourceCenter,
+    personal: t.result.arcanaSourcePersonal,
+    karmic: t.result.arcanaSourceKarmic,
+  };
+
+  const isSelected = (node: MatrixNode) => selected?.key === node.key;
+
+  // Повторне натискання на той самий вузол знімає вибір — так панель
+  // можна закрити тим самим рухом, яким її відкрив
+  const toggle = (node: MatrixNode) =>
+    setSelected((current) => (current?.key === node.key ? null : node));
+
+  // Скрінрідер має почути не лише число, а й назву аркана та позицію
+  const nodeLabel = (node: MatrixNode) => {
+    const name = getArcana(node.value)?.name;
+    const source = sourceLabels[node.source];
+    return name ? `${node.value} — ${name}, ${source}` : `${node.value}, ${source}`;
+  };
+
+  // <g role="button"> сам не реагує на клавіатуру — додаємо Enter і пробіл,
+  // як у нативної кнопки
+  const handleNodeKeyDown = (
+    event: KeyboardEvent<SVGGElement>,
+    node: MatrixNode,
+  ) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggle(node);
+    }
+  };
 
   const c = size / 2;
   const rPoint = size * 0.375;
@@ -40,19 +87,33 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
    * (особисті аркани) і поверненого на 45° (кармічні). Малюємо саме її,
    * а не один восьмикутник: так видно, що точки різної природи.
    */
+  const centerNode: MatrixNode = {
+    key: 'center',
+    value: matrix.center,
+    source: 'center',
+  };
+
   const personal = [
     { key: 'a', value: matrix.personal.a, angle: 0 },
     { key: 'b', value: matrix.personal.b, angle: 90 },
     { key: 'c', value: matrix.personal.c, angle: 180 },
     { key: 'd', value: matrix.personal.d, angle: 270 },
-  ].map((item) => ({ ...item, ...point(c, c, rPoint, item.angle) }));
+  ].map((item) => ({
+    ...item,
+    source: 'personal' as const,
+    ...point(c, c, rPoint, item.angle),
+  }));
 
   const karmic = [
     { key: 'e', value: matrix.karmic.e, angle: 45 },
     { key: 'f', value: matrix.karmic.f, angle: 135 },
     { key: 'g', value: matrix.karmic.g, angle: 225 },
     { key: 'h', value: matrix.karmic.h, angle: 315 },
-  ].map((item) => ({ ...item, ...point(c, c, rPoint, item.angle) }));
+  ].map((item) => ({
+    ...item,
+    source: 'karmic' as const,
+    ...point(c, c, rPoint, item.angle),
+  }));
 
   return (
     <div className={styles.wrap}>
@@ -133,28 +194,50 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
 
         {/* Ядро */}
         <circle cx={c} cy={c} r={rCore * 1.6} fill={`url(#${gradientId}-core)`} />
-        <circle
-          cx={c}
-          cy={c}
-          r={rCore}
-          fill="var(--void-2)"
-          stroke="var(--gold)"
-          strokeWidth={1.1}
-        />
-        <text
-          x={c}
-          y={c}
-          textAnchor="middle"
-          dominantBaseline="central"
-          fontSize={size * 0.09}
-          className={`${styles.center} mono`}
+        <g
+          className={clsx(
+            styles.node,
+            isSelected(centerNode) && styles.nodeSelected,
+          )}
+          role="button"
+          tabIndex={0}
+          aria-label={nodeLabel(centerNode)}
+          aria-pressed={isSelected(centerNode)}
+          onClick={() => toggle(centerNode)}
+          onKeyDown={(event) => handleNodeKeyDown(event, centerNode)}
         >
-          {matrix.center}
-        </text>
+          <circle
+            cx={c}
+            cy={c}
+            r={rCore}
+            fill="var(--void-2)"
+            stroke="var(--gold)"
+            strokeWidth={1.1}
+          />
+          <text
+            x={c}
+            y={c}
+            textAnchor="middle"
+            dominantBaseline="central"
+            fontSize={size * 0.09}
+            className={`${styles.center} mono`}
+          >
+            {matrix.center}
+          </text>
+        </g>
 
         {/* Кармічні вузли — бірюзові, трохи менші */}
         {karmic.map((p) => (
-          <g key={p.key}>
+          <g
+            key={p.key}
+            className={clsx(styles.node, isSelected(p) && styles.nodeSelected)}
+            role="button"
+            tabIndex={0}
+            aria-label={nodeLabel(p)}
+            aria-pressed={isSelected(p)}
+            onClick={() => toggle(p)}
+            onKeyDown={(event) => handleNodeKeyDown(event, p)}
+          >
             <circle
               cx={p.x}
               cy={p.y}
@@ -178,7 +261,16 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
 
         {/* Особисті вузли — золоті, акцентні */}
         {personal.map((p) => (
-          <g key={p.key}>
+          <g
+            key={p.key}
+            className={clsx(styles.node, isSelected(p) && styles.nodeSelected)}
+            role="button"
+            tabIndex={0}
+            aria-label={nodeLabel(p)}
+            aria-pressed={isSelected(p)}
+            onClick={() => toggle(p)}
+            onKeyDown={(event) => handleNodeKeyDown(event, p)}
+          >
             <circle
               cx={p.x}
               cy={p.y}
@@ -200,6 +292,11 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
           </g>
         ))}
       </svg>
+
+      <ArcanaDetails
+        value={selected?.value ?? null}
+        sourceLabel={selected ? sourceLabels[selected.source] : undefined}
+      />
 
       <div className={styles.legend}>
         <span className={styles.legendItem}>
