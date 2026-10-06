@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { Button } from '@/components/ui/Button';
@@ -23,6 +23,21 @@ export const ShareControls = ({ profileId, shareId }: ShareControlsProps) => {
   const { t } = useLocale();
   const setShareId = useProfileStore((state) => state.setShareId);
   const [isBusy, setIsBusy] = useState(false);
+  // Визначаємо після монтування: на сервері navigator немає, і умовний
+  // рендер одразу дав би розбіжність гідрації
+  const [canNativeShare, setCanNativeShare] = useState(false);
+
+  useEffect(() => {
+    setCanNativeShare(typeof navigator.share === 'function');
+  }, []);
+
+  const nativeShare = async (id: string) => {
+    try {
+      await navigator.share({ url: buildShareUrl(id) });
+    } catch {
+      // Користувач закрив системне меню — це не помилка, нічого не кажемо
+    }
+  };
 
   const copyLink = async (id: string) => {
     try {
@@ -81,7 +96,17 @@ export const ShareControls = ({ profileId, shareId }: ShareControlsProps) => {
           // Один клік виділяє все посилання — зручно, якщо буфер недоступний
           onFocus={(event) => event.currentTarget.select()}
         />
-        <Button onClick={() => void copyLink(shareId)} disabled={isBusy}>
+        {/* На телефоні системне меню (Telegram, Viber…) зручніше за буфер */}
+        {canNativeShare && (
+          <Button onClick={() => void nativeShare(shareId)} disabled={isBusy}>
+            {t.share.shareCta}
+          </Button>
+        )}
+        <Button
+          variant={canNativeShare ? 'ghost' : 'primary'}
+          onClick={() => void copyLink(shareId)}
+          disabled={isBusy}
+        >
           {t.share.copyLink}
         </Button>
         <Button
