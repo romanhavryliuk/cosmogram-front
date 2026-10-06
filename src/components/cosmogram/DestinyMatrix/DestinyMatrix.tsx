@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment, useId, useState } from 'react';
-import type { KeyboardEvent } from 'react';
+import type { CSSProperties, KeyboardEvent } from 'react';
 import clsx from 'clsx';
 
 import { ArcanaDetails } from '@/components/cosmogram/ArcanaDetails';
@@ -30,6 +30,17 @@ type MatrixNode = { key: string; value: number; label: string };
 
 /** Родова лінія: два аркани й їхня сума — кожне число відкривається окремо */
 const LINE_PARTS = ['first', 'second', 'total'] as const;
+
+/**
+ * Порядок появи вузлів: спершу центр, потім особисті, потім кармічні —
+ * та сама ієрархія, що й у кольорі. Крок задається в CSS через --appear.
+ */
+const PERSONAL_APPEAR_OFFSET = 1;
+const KARMIC_APPEAR_OFFSET = 5;
+
+const appearDelay = (order: number): CSSProperties => ({
+  ['--appear' as string]: order,
+});
 
 const point = (cx: number, cy: number, radius: number, degrees: number) => {
   const radians = ((degrees - 90) * Math.PI) / 180;
@@ -91,6 +102,8 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
     >
       <span className={`${styles.statValue} mono`}>{node.value}</span>
       <span className={styles.statLabel}>{caption}</span>
+      {/* Назва видна одразу — щоб «8» щось означало ще до натискання */}
+      <span className={styles.statArcana}>{getArcana(node.value)?.name}</span>
     </button>
   );
 
@@ -180,276 +193,293 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
 
   return (
     <div className={styles.wrap}>
-      <svg
-        width={size}
-        height={size}
-        viewBox={`0 0 ${size} ${size}`}
-        role="img"
-        aria-label={t.result.matrixWheelLabel}
-        className={styles.svg}
-      >
-        <defs>
-          <radialGradient id={`${gradientId}-core`}>
-            <stop offset="0%" stopColor="rgba(217, 179, 77, 0.28)" />
-            <stop offset="70%" stopColor="rgba(91, 42, 134, 0.16)" />
-            <stop offset="100%" stopColor="transparent" />
-          </radialGradient>
-          <radialGradient id={`${gradientId}-halo`}>
-            <stop offset="0%" stopColor="rgba(91, 42, 134, 0.45)" />
-            <stop offset="100%" stopColor="transparent" />
-          </radialGradient>
-        </defs>
-
-        {/* М'яке світіння під фігурою — інакше графіка «висить» на пласкому фоні */}
-        <circle cx={c} cy={c} r={rPoint} fill={`url(#${gradientId}-halo)`} />
-
-        {/* Концентричні напрямні */}
-        <circle
-          cx={c}
-          cy={c}
-          r={rPoint}
-          fill="none"
-          stroke="var(--line)"
-          strokeWidth={0.6}
-        />
-        <circle
-          cx={c}
-          cy={c}
-          r={rRing}
-          fill="none"
-          stroke="var(--line)"
-          strokeWidth={0.5}
-          strokeDasharray="2 4"
-        />
-
-        {/* Осі — кожна точка з'єднана з протилежною через центр (a↔c, b↔d, e↔g, f↔h) */}
-        {[
-          [personal[0], personal[2]],
-          [personal[1], personal[3]],
-          [karmic[0], karmic[2]],
-          [karmic[1], karmic[3]],
-        ].map(([from, to]) => (
-          <line
-            key={`axis-${from.key}`}
-            x1={from.x}
-            y1={from.y}
-            x2={to.x}
-            y2={to.y}
-            stroke="var(--line)"
-            strokeWidth={0.6}
-          />
-        ))}
-
-        {/* Квадрат кармічних арканів — під прямим, щоб прямий читався головним */}
-        <polygon
-          points={toPolygon(karmic)}
-          fill="rgba(94, 163, 147, 0.05)"
-          stroke="var(--teal-dim)"
-          strokeWidth={1}
-        />
-        {/* Квадрат особистих арканів */}
-        <polygon
-          points={toPolygon(personal)}
-          fill="rgba(217, 179, 77, 0.05)"
-          stroke="var(--gold-dim)"
-          strokeWidth={1.1}
-        />
-
-        {/* Ядро */}
-        <circle cx={c} cy={c} r={rCore * 1.6} fill={`url(#${gradientId}-core)`} />
-        <g
-          className={clsx(
-            styles.node,
-            isSelected(centerNode) && styles.nodeSelected,
-          )}
-          role="button"
-          tabIndex={0}
-          aria-label={nodeLabel(centerNode)}
-          aria-pressed={isSelected(centerNode)}
-          onClick={() => toggle(centerNode)}
-          onKeyDown={(event) => handleNodeKeyDown(event, centerNode)}
+      {/* На десктопі — ліва колонка: схема з легендою */}
+      <div className={styles.figure}>
+        <svg
+          width={size}
+          height={size}
+          viewBox={`0 0 ${size} ${size}`}
+          role="img"
+          aria-label={t.result.matrixWheelLabel}
+          className={styles.svg}
         >
+          <defs>
+            <radialGradient id={`${gradientId}-core`}>
+              <stop offset="0%" stopColor="rgba(217, 179, 77, 0.28)" />
+              <stop offset="70%" stopColor="rgba(91, 42, 134, 0.16)" />
+              <stop offset="100%" stopColor="transparent" />
+            </radialGradient>
+            <radialGradient id={`${gradientId}-halo`}>
+              <stop offset="0%" stopColor="rgba(91, 42, 134, 0.45)" />
+              <stop offset="100%" stopColor="transparent" />
+            </radialGradient>
+          </defs>
+
+          {/* М'яке світіння під фігурою — інакше графіка «висить» на пласкому фоні */}
+          <circle cx={c} cy={c} r={rPoint} fill={`url(#${gradientId}-halo)`} />
+
+          {/* Концентричні напрямні */}
           <circle
             cx={c}
             cy={c}
-            r={rCore}
-            fill="var(--void-2)"
-            stroke="var(--gold)"
-            strokeWidth={1.1}
+            r={rPoint}
+            fill="none"
+            stroke="var(--line)"
+            strokeWidth={0.6}
           />
-          <text
-            x={c}
-            y={c}
-            textAnchor="middle"
-            dominantBaseline="central"
-            fontSize={size * 0.09}
-            className={`${styles.center} mono`}
-          >
-            {matrix.center}
-          </text>
-        </g>
+          <circle
+            cx={c}
+            cy={c}
+            r={rRing}
+            fill="none"
+            stroke="var(--line)"
+            strokeWidth={0.5}
+            strokeDasharray="2 4"
+          />
 
-        {/* Кармічні вузли — бірюзові, трохи менші */}
-        {karmic.map((p) => (
+          {/* Осі — кожна точка з'єднана з протилежною через центр (a↔c, b↔d, e↔g, f↔h) */}
+          {[
+            [personal[0], personal[2]],
+            [personal[1], personal[3]],
+            [karmic[0], karmic[2]],
+            [karmic[1], karmic[3]],
+          ].map(([from, to]) => (
+            <line
+              key={`axis-${from.key}`}
+              x1={from.x}
+              y1={from.y}
+              x2={to.x}
+              y2={to.y}
+              // Обраний вузол підсвічує свою вісь: видно, з чим він у парі
+              className={clsx(
+                styles.axis,
+                (selected?.key === from.key || selected?.key === to.key) &&
+                  styles.axisActive,
+              )}
+            />
+          ))}
+
+          {/* Квадрат кармічних арканів — під прямим, щоб прямий читався головним.
+              pathLength=1 дає анімації прокреслення працювати без заміру довжини */}
+          <polygon
+            points={toPolygon(karmic)}
+            fill="rgba(94, 163, 147, 0.05)"
+            stroke="var(--teal-dim)"
+            strokeWidth={1}
+            pathLength={1}
+            className={styles.draw}
+          />
+          {/* Квадрат особистих арканів */}
+          <polygon
+            points={toPolygon(personal)}
+            fill="rgba(217, 179, 77, 0.05)"
+            stroke="var(--gold-dim)"
+            strokeWidth={1.1}
+            pathLength={1}
+            className={clsx(styles.draw, styles.drawLate)}
+          />
+
+          {/* Ядро */}
+          <circle cx={c} cy={c} r={rCore * 1.6} fill={`url(#${gradientId}-core)`} />
           <g
-            key={p.key}
-            className={clsx(styles.node, isSelected(p) && styles.nodeSelected)}
+            className={clsx(
+              styles.node,
+              isSelected(centerNode) && styles.nodeSelected,
+            )}
             role="button"
             tabIndex={0}
-            aria-label={nodeLabel(p)}
-            aria-pressed={isSelected(p)}
-            onClick={() => toggle(p)}
-            onKeyDown={(event) => handleNodeKeyDown(event, p)}
+            aria-label={nodeLabel(centerNode)}
+            aria-pressed={isSelected(centerNode)}
+            onClick={() => toggle(centerNode)}
+            onKeyDown={(event) => handleNodeKeyDown(event, centerNode)}
           >
             <circle
-              cx={p.x}
-              cy={p.y}
-              r={nodeR}
+              cx={c}
+              cy={c}
+              r={rCore}
               fill="var(--void-2)"
-              stroke="var(--teal)"
-              strokeWidth={1}
-            />
-            <text
-              x={p.x}
-              y={p.y}
-              textAnchor="middle"
-              dominantBaseline="central"
-              fontSize={size * 0.048}
-              className={`${styles.karmicValue} mono`}
-            >
-              {p.value}
-            </text>
-          </g>
-        ))}
-
-        {/* Особисті вузли — золоті, акцентні */}
-        {personal.map((p) => (
-          <g
-            key={p.key}
-            className={clsx(styles.node, isSelected(p) && styles.nodeSelected)}
-            role="button"
-            tabIndex={0}
-            aria-label={nodeLabel(p)}
-            aria-pressed={isSelected(p)}
-            onClick={() => toggle(p)}
-            onKeyDown={(event) => handleNodeKeyDown(event, p)}
-          >
-            <circle
-              cx={p.x}
-              cy={p.y}
-              r={nodeR * 1.15}
-              fill="var(--ink)"
               stroke="var(--gold)"
-              strokeWidth={1.2}
+              strokeWidth={1.1}
             />
             <text
-              x={p.x}
-              y={p.y}
+              x={c}
+              y={c}
               textAnchor="middle"
               dominantBaseline="central"
-              fontSize={size * 0.052}
-              className={`${styles.personalValue} mono`}
+              fontSize={size * 0.09}
+              className={`${styles.center} mono`}
             >
-              {p.value}
+              {matrix.center}
             </text>
           </g>
-        ))}
-      </svg>
 
-      <div ref={detailsRef} className={styles.details}>
-        <ArcanaDetails
-          value={selected?.value ?? null}
-          sourceLabel={selected?.label}
-        />
+          {/* Кармічні вузли — бірюзові, трохи менші */}
+          {karmic.map((p, index) => (
+            <g
+              key={p.key}
+              className={clsx(styles.node, isSelected(p) && styles.nodeSelected)}
+              style={appearDelay(KARMIC_APPEAR_OFFSET + index)}
+              role="button"
+              tabIndex={0}
+              aria-label={nodeLabel(p)}
+              aria-pressed={isSelected(p)}
+              onClick={() => toggle(p)}
+              onKeyDown={(event) => handleNodeKeyDown(event, p)}
+            >
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={nodeR}
+                fill="var(--void-2)"
+                stroke="var(--teal)"
+                strokeWidth={1}
+              />
+              <text
+                x={p.x}
+                y={p.y}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fontSize={size * 0.048}
+                className={`${styles.karmicValue} mono`}
+              >
+                {p.value}
+              </text>
+            </g>
+          ))}
+
+          {/* Особисті вузли — золоті, акцентні */}
+          {personal.map((p, index) => (
+            <g
+              key={p.key}
+              className={clsx(styles.node, isSelected(p) && styles.nodeSelected)}
+              style={appearDelay(PERSONAL_APPEAR_OFFSET + index)}
+              role="button"
+              tabIndex={0}
+              aria-label={nodeLabel(p)}
+              aria-pressed={isSelected(p)}
+              onClick={() => toggle(p)}
+              onKeyDown={(event) => handleNodeKeyDown(event, p)}
+            >
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={nodeR * 1.15}
+                fill="var(--ink)"
+                stroke="var(--gold)"
+                strokeWidth={1.2}
+              />
+              <text
+                x={p.x}
+                y={p.y}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fontSize={size * 0.052}
+                className={`${styles.personalValue} mono`}
+              >
+                {p.value}
+              </text>
+            </g>
+          ))}
+        </svg>
+
+        <div className={styles.legend}>
+          <span className={styles.legendItem}>
+            <span className={`${styles.swatch} ${styles.swatchPersonal}`} />
+            {t.result.matrixPersonalLegend}
+          </span>
+          <span className={styles.legendItem}>
+            <span className={`${styles.swatch} ${styles.swatchKarmic}`} />
+            {t.result.matrixKarmicLegend}
+          </span>
+        </div>
       </div>
 
-      <div className={styles.legend}>
-        <span className={styles.legendItem}>
-          <span className={`${styles.swatch} ${styles.swatchPersonal}`} />
-          {t.result.matrixPersonalLegend}
-        </span>
-        <span className={styles.legendItem}>
-          <span className={`${styles.swatch} ${styles.swatchKarmic}`} />
-          {t.result.matrixKarmicLegend}
-        </span>
-      </div>
+      {/* Права колонка: тлумачення поруч зі схемою, нижче — решта чисел */}
+      <div className={styles.info}>
+        <div ref={detailsRef} className={styles.details}>
+          <ArcanaDetails
+            value={selected?.value ?? null}
+            sourceLabel={selected?.label}
+          />
+        </div>
 
-      <div className={styles.stats}>
-        {renderStat({
-          key: 'money',
-          value: matrix.money,
-          label: t.result.matrixMoneyLabel,
-        })}
-        {renderStat({
-          key: 'love',
-          value: matrix.love,
-          label: t.result.matrixLoveLabel,
-        })}
-        {typeof familyPower === 'number' &&
-          renderStat({
-            key: 'familyPower',
-            value: familyPower,
-            label: t.result.matrixFamilyPowerLabel,
+        <div className={styles.stats}>
+          {renderStat({
+            key: 'money',
+            value: matrix.money,
+            label: t.result.matrixMoneyLabel,
           })}
+          {renderStat({
+            key: 'love',
+            value: matrix.love,
+            label: t.result.matrixLoveLabel,
+          })}
+          {typeof familyPower === 'number' &&
+            renderStat({
+              key: 'familyPower',
+              value: familyPower,
+              label: t.result.matrixFamilyPowerLabel,
+            })}
+        </div>
+
+        {purpose && (
+          <div className={styles.extra}>
+            <span className={styles.sectionLabel}>
+              {t.result.matrixPurposeLabel}
+            </span>
+            <div className={styles.stats}>
+              {renderStat(
+                {
+                  key: 'purposePersonal',
+                  value: purpose.personal,
+                  label: `${t.result.matrixPurposeLabel} · ${t.result.matrixPurposePersonalLabel}`,
+                },
+                t.result.matrixPurposePersonalLabel,
+              )}
+              {renderStat(
+                {
+                  key: 'purposeSocial',
+                  value: purpose.social,
+                  label: `${t.result.matrixPurposeLabel} · ${t.result.matrixPurposeSocialLabel}`,
+                },
+                t.result.matrixPurposeSocialLabel,
+              )}
+              {renderStat(
+                {
+                  key: 'purposeSpiritual',
+                  value: purpose.spiritual,
+                  label: `${t.result.matrixPurposeLabel} · ${t.result.matrixPurposeSpiritualLabel}`,
+                },
+                t.result.matrixPurposeSpiritualLabel,
+              )}
+            </div>
+          </div>
+        )}
+
+        {ancestralPrograms && (
+          <div className={styles.extra}>
+            <span className={styles.sectionLabel}>
+              {t.result.matrixAncestralLabel}
+            </span>
+            <div className={styles.ancestralRow}>
+              <div className={styles.ancestralLine}>
+                <span className={styles.ancestralLineLabel}>
+                  {t.result.matrixPaternalLabel}
+                </span>
+                {renderLine('paternal', ancestralPrograms.paternal, t.result.matrixPaternalLabel)}
+              </div>
+              <div className={styles.ancestralLine}>
+                <span className={styles.ancestralLineLabel}>
+                  {t.result.matrixMaternalLabel}
+                </span>
+                {renderLine('maternal', ancestralPrograms.maternal, t.result.matrixMaternalLabel)}
+              </div>
+            </div>
+          </div>
+        )}
+
+        <p className={styles.methodNote}>{t.result.matrixMethodNote}</p>
       </div>
-
-      {purpose && (
-        <div className={styles.extra}>
-          <span className={styles.sectionLabel}>
-            {t.result.matrixPurposeLabel}
-          </span>
-          <div className={styles.stats}>
-            {renderStat(
-              {
-                key: 'purposePersonal',
-                value: purpose.personal,
-                label: `${t.result.matrixPurposeLabel} · ${t.result.matrixPurposePersonalLabel}`,
-              },
-              t.result.matrixPurposePersonalLabel,
-            )}
-            {renderStat(
-              {
-                key: 'purposeSocial',
-                value: purpose.social,
-                label: `${t.result.matrixPurposeLabel} · ${t.result.matrixPurposeSocialLabel}`,
-              },
-              t.result.matrixPurposeSocialLabel,
-            )}
-            {renderStat(
-              {
-                key: 'purposeSpiritual',
-                value: purpose.spiritual,
-                label: `${t.result.matrixPurposeLabel} · ${t.result.matrixPurposeSpiritualLabel}`,
-              },
-              t.result.matrixPurposeSpiritualLabel,
-            )}
-          </div>
-        </div>
-      )}
-
-      {ancestralPrograms && (
-        <div className={styles.extra}>
-          <span className={styles.sectionLabel}>
-            {t.result.matrixAncestralLabel}
-          </span>
-          <div className={styles.ancestralRow}>
-            <div className={styles.ancestralLine}>
-              <span className={styles.ancestralLineLabel}>
-                {t.result.matrixPaternalLabel}
-              </span>
-              {renderLine('paternal', ancestralPrograms.paternal, t.result.matrixPaternalLabel)}
-            </div>
-            <div className={styles.ancestralLine}>
-              <span className={styles.ancestralLineLabel}>
-                {t.result.matrixMaternalLabel}
-              </span>
-              {renderLine('maternal', ancestralPrograms.maternal, t.result.matrixMaternalLabel)}
-            </div>
-          </div>
-        </div>
-      )}
-
-      <p className={styles.methodNote}>{t.result.matrixMethodNote}</p>
     </div>
   );
 };

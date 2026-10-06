@@ -9,14 +9,104 @@
   gap: 20px;
 }
 
+.figure,
+.info {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Широкий слайд: схема ліворуч, тлумачення праворуч — натиснув вузол,
+   і значення одразу поруч, без прокрутки вниз */
+@media (min-width: 1024px) {
+  .wrap {
+    display: grid;
+    max-width: 880px;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 48px;
+  }
+
+  .figure {
+    position: sticky;
+    top: 24px;
+    width: auto;
+  }
+
+  .info {
+    align-items: stretch;
+  }
+
+  .info .stats,
+  .info .sectionLabel,
+  .info .ancestralRow {
+    justify-content: flex-start;
+    align-self: flex-start;
+  }
+
+  .info .extra {
+    align-items: flex-start;
+  }
+
+  .info .methodNote {
+    text-align: left;
+  }
+}
+
 .svg {
   filter: drop-shadow(0 0 22px rgba(91, 42, 134, 0.35));
+}
+
+.axis {
+  stroke: var(--line);
+  stroke-width: 0.6;
+  transition:
+    stroke 0.2s ease,
+    stroke-width 0.2s ease;
+}
+
+.axisActive {
+  stroke: var(--gold-soft);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+/* Квадрати октаграми прокреслюються при появі слайда */
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 0.9s ease-out forwards;
+}
+
+.drawLate {
+  animation-delay: 0.25s;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Вузли проявляються по черзі: центр, особисті, кармічні.
+   --appear задається інлайном — це порядковий номер вузла */
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Вузли матриці — кнопки: натиск відкриває тлумачення аркана */
 .node {
   cursor: pointer;
   outline: none;
+  animation: appear 0.35s ease-out both;
+  animation-delay: calc(0.35s + var(--appear, 0) * 0.06s);
   transition: opacity 0.2s ease;
 }
 
@@ -154,7 +244,10 @@
    візуальна відстань між числами лишається ~28px, як до інтерактивності */
 .stats {
   display: flex;
-  gap: 16px;
+  /* На 320px із довгими польськими підписами три числа в рядок не влазять */
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 16px;
 }
 
 .stat {
@@ -167,6 +260,29 @@
 .statValue {
   color: var(--parchment);
   font-size: 20px;
+}
+
+/* Назва аркана під числом — дрібно, щоб не змагатись із самим числом */
+.statArcana {
+  color: var(--gold-dim);
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.25;
+  /* Довгі назви («Колесо Фортуни») переносяться, а не розпирають ряд */
+  max-width: 8em;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .node {
+    animation: none;
+  }
 }
 
 .statLabel {
