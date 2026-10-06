@@ -9,6 +9,7 @@ export type Dictionary = {
     howItWorks: string;
     menu: string;
     logout: string;
+    skipToContent: string;
   };
   hero: {
     eyebrow: string;
@@ -71,6 +72,10 @@ export type Dictionary = {
     namePlaceholder: string;
     dateLabel: string;
     timeLabel: string;
+    /** Час необов'язковий: без нього карта рахується без домів і асцендента */
+    timeOptionalHint: string;
+    placeSearchError: string;
+    placeRateLimited: string;
     placeLabel: string;
     placePlaceholder: string;
     placeSearching: string;
@@ -99,6 +104,7 @@ export type Dictionary = {
     wheelLabel: string;
     retrograde: string;
     midheavenPrefix: string;
+    timeUnknownNote: string;
     aspectsTitle: string;
     /** Розгорнуті пояснення до кожного блоку результату */
     chartDescription: string;
@@ -125,10 +131,25 @@ export type Dictionary = {
     matrixMethodNote: string;
     matrixPersonalLegend: string;
     matrixKarmicLegend: string;
+    /** Підказка в панелі тлумачення, поки аркан не обрано */
+    arcanaHint: string;
+    /** Підпис позиції обраного аркана в матриці */
+    arcanaSourceCenter: string;
+    arcanaSourcePersonal: string;
+    arcanaSourceKarmic: string;
+    /** Тлумачення натальної карти: планета («що»), знак («як»), дім («де») */
+    readingHint: string;
+    readingWhat: string;
+    readingHow: string;
+    readingWhere: string;
+    readingRetrograde: string;
+    readingOrbNote: string;
     squareTitle: string;
     squareSubtitle: string;
     /** Заглушка в клітинці квадрата, якщо цифри немає в даті */
     emptyCell: string;
+    squareHint: string;
+    squareLinesTitle: string;
     squareLabels: Record<PythagoreanDigit, { short: string; full: string }>;
   };
   exportCard: {
@@ -159,11 +180,50 @@ export type Dictionary = {
     profileText: string;
     retryCta: string;
     backToListCta: string;
+    /** Межа помилок: неперехоплений збій рендеру */
+    crashTitle: string;
+    crashText: string;
+    /** Підпис до error.digest — єдиного ідентифікатора збою, видимого в проді */
+    crashCodePrefix: string;
   };
   notFound: {
     title: string;
     text: string;
     cta: string;
+  };
+  /** Результат гостя: порахований бекендом, але ще не збережений */
+  guest: {
+    heading: string;
+    saveTitle: string;
+    saveText: string;
+    emptyTitle: string;
+    emptyText: string;
+    emptyCta: string;
+    saving: string;
+    saveError: string;
+    previewError: string;
+  };
+  share: {
+    shareCta: string;
+    copyLink: string;
+    linkCopied: string;
+    stopSharing: string;
+    stopped: string;
+    error: string;
+    activeHint: string;
+    publicHeading: string;
+    publicCta: string;
+    unavailableTitle: string;
+    unavailableText: string;
+  };
+  editProfile: {
+    editCta: string;
+    heading: string;
+    saveCta: string;
+    savingCta: string;
+    cancelCta: string;
+    success: string;
+    error: string;
   };
 };
 
@@ -174,6 +234,7 @@ const en: Dictionary = {
     howItWorks: 'How It Works',
     menu: 'Menu',
     logout: 'Log Out',
+    skipToContent: 'Skip to content',
   },
   hero: {
     eyebrow: 'Astrology + Numerology',
@@ -251,7 +312,11 @@ const en: Dictionary = {
     nameLabel: 'Name',
     namePlaceholder: 'Maria',
     dateLabel: 'Date of Birth',
-    timeLabel: 'Time of Birth',
+    timeLabel: 'Time of Birth (optional)',
+    timeOptionalHint:
+      "Don't know the exact time? Leave it empty — the chart will be built without houses and the ascendant.",
+    placeSearchError: 'City search is unavailable right now. Please try again later.',
+    placeRateLimited: 'Too many searches. Please wait a few minutes.',
     placeLabel: 'City of Birth',
     placePlaceholder: 'Lviv, Ukraine',
     placeSearching: 'Searching…',
@@ -260,7 +325,7 @@ const en: Dictionary = {
     submitLoadingCta: 'Calculating…',
     note: 'The city is automatically converted into coordinates and a time zone — both are needed to place the houses precisely.',
     authRequired:
-      'Sign in to build and save your chart — what you entered stays here.',
+      'No account needed to see your chart — sign in only if you want to keep it.',
     genericError: "We couldn't build the chart. Please try again.",
     validation: {
       nameMin: 'Name must be at least 2 characters',
@@ -280,6 +345,8 @@ const en: Dictionary = {
     wheelLabel: 'Natal chart with planet positions',
     retrograde: 'Retrograde',
     midheavenPrefix: 'Midheaven —',
+    timeUnknownNote:
+      'Birth time unknown — houses, ascendant and midheaven are not calculated; the Moon may be off by a few degrees.',
     aspectsTitle: 'Aspects',
     chartDescription:
       'A snapshot of the sky at the moment you were born. The outer ring carries the twelve zodiac signs, the thin spokes mark the house cusps, and the lines crossing the centre are aspects — the angles between planets. Teal lines are harmonious, red ones are tense.',
@@ -309,9 +376,23 @@ const en: Dictionary = {
       'Calculated from your birth date, using the 22 Major Arcana. A tool for self-reflection, not a scientific prediction.',
     matrixPersonalLegend: 'Personal arcana',
     matrixKarmicLegend: 'Karmic arcana',
+    arcanaHint: 'Tap any number on the diagram to read what that arcanum means.',
+    arcanaSourceCenter: 'Centre',
+    arcanaSourcePersonal: 'Personal',
+    arcanaSourceKarmic: 'Karmic',
+    readingHint: 'Tap a planet or an aspect to read what it means in your chart.',
+    readingWhat: 'What',
+    readingHow: 'How',
+    readingWhere: 'Where',
+    readingRetrograde:
+      'Retrograde: this energy turns inward and works through rethinking and returning to the past.',
+    readingOrbNote:
+      'Orb is the deviation from the exact angle — the smaller it is, the more strongly the aspect is felt.',
     squareTitle: 'Pythagorean Square',
     squareSubtitle: 'Digit frequency from your birth date',
     emptyCell: '—',
+    squareHint: 'Tap a cell to read what that number of repetitions means.',
+    squareLinesTitle: 'Lines of the square',
     squareLabels: {
       '1': { short: 'character', full: 'Character, will' },
       '2': { short: 'energy', full: 'Energy, bioenergetics' },
@@ -354,11 +435,49 @@ const en: Dictionary = {
       'It may have been deleted, or the server is unavailable right now.',
     retryCta: 'Try Again',
     backToListCta: 'Back to Saved Charts',
+    crashTitle: 'Something went wrong',
+    crashText:
+      'This section failed to render. Trying again usually helps — your saved charts are not affected.',
+    crashCodePrefix: 'Error code:',
   },
   notFound: {
     title: 'Page not found',
     text: 'This page does not exist, or the link has expired.',
     cta: 'Go Home',
+  },
+  guest: {
+    heading: 'Your Chart',
+    saveTitle: 'Keep this chart',
+    saveText:
+      'Create a free account and this chart will be saved to your dashboard automatically — nothing to fill in again.',
+    emptyTitle: 'No chart yet',
+    emptyText: 'Build a chart first — it takes under a minute.',
+    emptyCta: 'Build a Chart',
+    saving: 'Saving your chart…',
+    saveError: "We couldn't save the chart. Please build it again.",
+    previewError: "We couldn't calculate the chart. Please try again.",
+  },
+  share: {
+    shareCta: 'Share',
+    copyLink: 'Copy Link',
+    linkCopied: 'Link copied',
+    stopSharing: 'Stop Sharing',
+    stopped: 'The link no longer works',
+    error: "Couldn't change sharing. Please try again.",
+    activeHint: 'Anyone with this link can view the chart — without your coordinates or account.',
+    publicHeading: 'Shared Chart',
+    publicCta: 'Build Your Own Chart',
+    unavailableTitle: 'This link is not available',
+    unavailableText: 'The owner may have turned sharing off, or the link is mistyped.',
+  },
+  editProfile: {
+    editCta: 'Edit',
+    heading: 'Edit Chart',
+    saveCta: 'Save Changes →',
+    savingCta: 'Saving…',
+    cancelCta: 'Cancel',
+    success: 'Chart updated',
+    error: "Couldn't save the changes. Please try again.",
   },
 };
 
@@ -369,6 +488,7 @@ const uk: Dictionary = {
     howItWorks: 'Як це працює',
     menu: 'Меню',
     logout: 'Вийти',
+    skipToContent: 'Перейти до вмісту',
   },
   hero: {
     eyebrow: 'Астрологія + нумерологія',
@@ -446,7 +566,11 @@ const uk: Dictionary = {
     nameLabel: "Ім'я",
     namePlaceholder: 'Марія',
     dateLabel: 'Дата народження',
-    timeLabel: 'Час народження',
+    timeLabel: "Час народження (необов'язково)",
+    timeOptionalHint:
+      'Не знаєш точного часу? Залиш порожнім — карту буде побудовано без домів і асцендента.',
+    placeSearchError: 'Пошук міста зараз недоступний. Спробуй трохи пізніше.',
+    placeRateLimited: 'Забагато запитів. Зачекай кілька хвилин.',
     placeLabel: 'Місто народження',
     placePlaceholder: 'Львів, Україна',
     placeSearching: 'Шукаємо…',
@@ -455,7 +579,7 @@ const uk: Dictionary = {
     submitLoadingCta: 'Рахуємо…',
     note: 'Місто автоматично конвертується в координати та часовий пояс — вони потрібні для точного розрахунку будинків.',
     authRequired:
-      'Увійдіть, щоб побудувати й зберегти карту — введені дані залишаться.',
+      'Щоб побачити карту, акаунт не потрібен — увійди, лише якщо хочеш її зберегти.',
     genericError: 'Не вдалося побудувати карту. Спробуйте ще раз.',
     validation: {
       nameMin: "Ім'я має містити щонайменше 2 символи",
@@ -475,6 +599,8 @@ const uk: Dictionary = {
     wheelLabel: 'Натальна карта з позиціями планет',
     retrograde: 'Ретроградний',
     midheavenPrefix: 'Середина неба —',
+    timeUnknownNote:
+      'Час народження невідомий — доми, асцендент і середину неба не розраховано; Місяць може зсунутись на кілька градусів.',
     aspectsTitle: 'Аспекти',
     chartDescription:
       'Знімок неба в момент твого народження. Зовнішнє коло — дванадцять знаків зодіаку, тонкі промені позначають межі будинків, а лінії через центр — це аспекти, кути між планетами. Бірюзові лінії гармонійні, червоні — напружені.',
@@ -504,9 +630,23 @@ const uk: Dictionary = {
       'Розрахунок за датою народження, 22 Старших Аркани. Інструмент самопізнання, а не наукове передбачення.',
     matrixPersonalLegend: 'Особисті аркани',
     matrixKarmicLegend: 'Кармічні аркани',
+    arcanaHint: 'Натисни на будь-яке число на схемі, щоб прочитати значення аркана.',
+    arcanaSourceCenter: 'Центр',
+    arcanaSourcePersonal: 'Особистий',
+    arcanaSourceKarmic: 'Кармічний',
+    readingHint: 'Натисни на планету чи аспект, щоб прочитати, що вони означають у твоїй карті.',
+    readingWhat: 'Що',
+    readingHow: 'Як',
+    readingWhere: 'Де',
+    readingRetrograde:
+      'Ретроградність: ця енергія спрямована всередину й проявляється через переосмислення та повернення до минулого.',
+    readingOrbNote:
+      'Орб — відхилення від точного кута: що він менший, то сильніше відчувається аспект.',
     squareTitle: 'Квадрат Піфагора',
     squareSubtitle: 'Повторення цифр у даті народження',
     emptyCell: '—',
+    squareHint: 'Натисни на клітинку, щоб прочитати, що означає така кількість повторень.',
+    squareLinesTitle: 'Лінії квадрата',
     squareLabels: {
       '1': { short: 'характер', full: "Характер, воля" },
       '2': { short: 'енергія', full: 'Енергія, біоенергетика' },
@@ -548,11 +688,49 @@ const uk: Dictionary = {
     profileText: 'Можливо, її видалено, або сервер зараз недоступний.',
     retryCta: 'Спробувати ще раз',
     backToListCta: 'До збережених карт',
+    crashTitle: 'Щось пішло не так',
+    crashText:
+      'Цей розділ не вдалося відобразити. Зазвичай допомагає повторна спроба — збережені карти не постраждали.',
+    crashCodePrefix: 'Код помилки:',
   },
   notFound: {
     title: 'Сторінку не знайдено',
     text: 'Такої сторінки не існує, або посилання застаріло.',
     cta: 'На головну',
+  },
+  guest: {
+    heading: 'Твоя карта',
+    saveTitle: 'Збережи цю карту',
+    saveText:
+      'Створи безкоштовний акаунт — і карта сама збережеться в кабінеті, нічого не доведеться заповнювати знову.',
+    emptyTitle: 'Карти ще немає',
+    emptyText: 'Спершу побудуй карту — це менше хвилини.',
+    emptyCta: 'Побудувати карту',
+    saving: 'Зберігаємо твою карту…',
+    saveError: 'Не вдалося зберегти карту. Побудуй її ще раз.',
+    previewError: 'Не вдалося розрахувати карту. Спробуй ще раз.',
+  },
+  share: {
+    shareCta: 'Поділитися',
+    copyLink: 'Скопіювати посилання',
+    linkCopied: 'Посилання скопійовано',
+    stopSharing: 'Закрити доступ',
+    stopped: 'Посилання більше не працює',
+    error: 'Не вдалося змінити доступ. Спробуй ще раз.',
+    activeHint: 'Будь-хто з цим посиланням побачить карту — без твоїх координат і акаунта.',
+    publicHeading: 'Карта за посиланням',
+    publicCta: 'Побудувати свою карту',
+    unavailableTitle: 'Посилання недоступне',
+    unavailableText: 'Можливо, власник закрив доступ або в посиланні помилка.',
+  },
+  editProfile: {
+    editCta: 'Редагувати',
+    heading: 'Редагування карти',
+    saveCta: 'Зберегти зміни →',
+    savingCta: 'Зберігаємо…',
+    cancelCta: 'Скасувати',
+    success: 'Карту оновлено',
+    error: 'Не вдалося зберегти зміни. Спробуй ще раз.',
   },
 };
 
@@ -563,6 +741,7 @@ const pl: Dictionary = {
     howItWorks: 'Jak to działa',
     menu: 'Menu',
     logout: 'Wyloguj się',
+    skipToContent: 'Przejdź do treści',
   },
   hero: {
     eyebrow: 'Astrologia + numerologia',
@@ -640,7 +819,11 @@ const pl: Dictionary = {
     nameLabel: 'Imię',
     namePlaceholder: 'Maria',
     dateLabel: 'Data urodzenia',
-    timeLabel: 'Godzina urodzenia',
+    timeLabel: 'Godzina urodzenia (opcjonalnie)',
+    timeOptionalHint:
+      'Nie znasz dokładnej godziny? Zostaw puste — mapa powstanie bez domów i ascendentu.',
+    placeSearchError: 'Wyszukiwanie miasta jest teraz niedostępne. Spróbuj później.',
+    placeRateLimited: 'Zbyt wiele wyszukiwań. Poczekaj kilka minut.',
     placeLabel: 'Miasto urodzenia',
     placePlaceholder: 'Lwów, Ukraina',
     placeSearching: 'Szukamy…',
@@ -649,7 +832,7 @@ const pl: Dictionary = {
     submitLoadingCta: 'Obliczamy…',
     note: 'Miasto jest automatycznie zamieniane na współrzędne i strefę czasową — są potrzebne do dokładnego wyznaczenia domów.',
     authRequired:
-      'Zaloguj się, aby zbudować i zapisać mapę — wpisane dane zostaną.',
+      'Aby zobaczyć mapę, konto nie jest potrzebne — zaloguj się tylko, jeśli chcesz ją zachować.',
     genericError: 'Nie udało się zbudować mapy. Spróbuj ponownie.',
     validation: {
       nameMin: 'Imię musi mieć co najmniej 2 znaki',
@@ -669,6 +852,8 @@ const pl: Dictionary = {
     wheelLabel: 'Mapa natalna z pozycjami planet',
     retrograde: 'Retrogradacja',
     midheavenPrefix: 'Medium Coeli —',
+    timeUnknownNote:
+      'Godzina urodzenia nieznana — domów, ascendentu i Medium Coeli nie obliczono; Księżyc może się przesunąć o kilka stopni.',
     aspectsTitle: 'Aspekty',
     chartDescription:
       'Zdjęcie nieba z chwili twoich narodzin. Zewnętrzny pierścień to dwanaście znaków zodiaku, cienkie promienie wyznaczają granice domów, a linie przecinające środek to aspekty — kąty między planetami. Turkusowe linie są harmonijne, czerwone napięte.',
@@ -698,9 +883,23 @@ const pl: Dictionary = {
       'Obliczenia na podstawie daty urodzenia, 22 Wielkie Arkana. Narzędzie do samopoznania, a nie naukowa prognoza.',
     matrixPersonalLegend: 'Arkana osobiste',
     matrixKarmicLegend: 'Arkana karmiczne',
+    arcanaHint: 'Dotknij dowolnej liczby na diagramie, aby poznać znaczenie arkanu.',
+    arcanaSourceCenter: 'Centrum',
+    arcanaSourcePersonal: 'Osobisty',
+    arcanaSourceKarmic: 'Karmiczny',
+    readingHint: 'Dotknij planety lub aspektu, aby przeczytać, co oznaczają w twojej mapie.',
+    readingWhat: 'Co',
+    readingHow: 'Jak',
+    readingWhere: 'Gdzie',
+    readingRetrograde:
+      'Retrogradacja: ta energia kieruje się do wewnątrz i działa przez przemyślenie i powrót do przeszłości.',
+    readingOrbNote:
+      'Orb to odchylenie od dokładnego kąta — im mniejszy, tym silniej odczuwa się aspekt.',
     squareTitle: 'Kwadrat Pitagorasa',
     squareSubtitle: 'Częstotliwość cyfr w dacie urodzenia',
     emptyCell: '—',
+    squareHint: 'Dotknij komórki, aby przeczytać, co oznacza taka liczba powtórzeń.',
+    squareLinesTitle: 'Linie kwadratu',
     squareLabels: {
       '1': { short: 'charakter', full: 'Charakter, wola' },
       '2': { short: 'energia', full: 'Energia, bioenergetyka' },
@@ -742,11 +941,49 @@ const pl: Dictionary = {
     profileText: 'Mogła zostać usunięta lub serwer jest chwilowo niedostępny.',
     retryCta: 'Spróbuj ponownie',
     backToListCta: 'Wróć do zapisanych map',
+    crashTitle: 'Coś poszło nie tak',
+    crashText:
+      'Nie udało się wyświetlić tej sekcji. Zwykle pomaga ponowna próba — zapisane mapy są bezpieczne.',
+    crashCodePrefix: 'Kod błędu:',
   },
   notFound: {
     title: 'Nie znaleziono strony',
     text: 'Taka strona nie istnieje lub link wygasł.',
     cta: 'Strona główna',
+  },
+  guest: {
+    heading: 'Twoja mapa',
+    saveTitle: 'Zachowaj tę mapę',
+    saveText:
+      'Załóż darmowe konto, a mapa sama zapisze się w panelu — nic nie trzeba wpisywać ponownie.',
+    emptyTitle: 'Brak mapy',
+    emptyText: 'Najpierw zbuduj mapę — to zajmie mniej niż minutę.',
+    emptyCta: 'Zbuduj mapę',
+    saving: 'Zapisujemy twoją mapę…',
+    saveError: 'Nie udało się zapisać mapy. Zbuduj ją ponownie.',
+    previewError: 'Nie udało się obliczyć mapy. Spróbuj ponownie.',
+  },
+  share: {
+    shareCta: 'Udostępnij',
+    copyLink: 'Kopiuj link',
+    linkCopied: 'Link skopiowany',
+    stopSharing: 'Wyłącz udostępnianie',
+    stopped: 'Link już nie działa',
+    error: 'Nie udało się zmienić udostępniania. Spróbuj ponownie.',
+    activeHint: 'Każdy z tym linkiem zobaczy mapę — bez twoich współrzędnych i konta.',
+    publicHeading: 'Udostępniona mapa',
+    publicCta: 'Zbuduj swoją mapę',
+    unavailableTitle: 'Link jest niedostępny',
+    unavailableText: 'Właściciel mógł wyłączyć udostępnianie lub link jest błędny.',
+  },
+  editProfile: {
+    editCta: 'Edytuj',
+    heading: 'Edycja mapy',
+    saveCta: 'Zapisz zmiany →',
+    savingCta: 'Zapisujemy…',
+    cancelCta: 'Anuluj',
+    success: 'Mapa zaktualizowana',
+    error: 'Nie udało się zapisać zmian. Spróbuj ponownie.',
   },
 };
 

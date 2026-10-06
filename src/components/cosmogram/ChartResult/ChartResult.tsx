@@ -1,21 +1,21 @@
 'use client';
 
-import { AspectList } from '@/components/cosmogram/AspectList';
 import { ChartCarousel } from '@/components/cosmogram/ChartCarousel';
 import type { ChartSlide } from '@/components/cosmogram/ChartCarousel';
 import { DestinyMatrix } from '@/components/cosmogram/DestinyMatrix';
 import { ExportCard } from '@/components/cosmogram/ExportCard';
 import { NatalChartWheel } from '@/components/cosmogram/NatalChartWheel';
-import { PlanetList } from '@/components/cosmogram/PlanetList';
+import { NatalLists } from '@/components/cosmogram/NatalLists';
 import { PythagoreanSquare } from '@/components/cosmogram/PythagoreanSquare';
 import { useAstroLabels } from '@/hooks/useAstroLabels';
 import { useLocale } from '@/i18n/LocaleProvider';
-import type { Profile } from '@/types/profile.types';
+import type { CosmogramView } from '@/types/profile.types';
 
 import styles from './ChartResult.module.css';
 
 type ChartResultProps = {
-  profile: Profile;
+  /** Власний профіль, гостьовий розрахунок або карта за посиланням */
+  profile: CosmogramView;
 };
 
 /** Результат розбитий на слайди (натальна карта, матриця долі, квадрат Піфагора) плюс картка-підпис під ними */
@@ -37,7 +37,9 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
       id: 'chart',
       tabLabel: t.result.chartTitle,
       title: t.result.chartTitle,
-      subtitle: ascendantSign && (
+      // Без часу народження доми, асцендент і MC не рахуються — замість
+      // них чесно кажемо, чому їх немає і що може бути неточним
+      subtitle: ascendantSign ? (
         <>
           {t.result.ascendantPrefix} {labels.sign[ascendantSign]}
           {midheavenSign && (
@@ -47,6 +49,8 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
             </>
           )}
         </>
+      ) : (
+        t.result.timeUnknownNote
       ),
       description: t.result.chartDescription,
       content: (
@@ -55,8 +59,10 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
             <NatalChartWheel chart={profile.chart} label={t.result.wheelLabel} />
           </div>
           <div className={styles.lists}>
-            <PlanetList planets={profile.chart.planets} />
-            <AspectList aspects={profile.chart.aspects} />
+            <NatalLists
+              planets={profile.chart.planets}
+              aspects={profile.chart.aspects}
+            />
           </div>
         </div>
       ),

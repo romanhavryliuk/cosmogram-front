@@ -4,7 +4,9 @@ import { CreateChartLink } from '@/components/dashboard/CreateChartLink';
 import { ProfileGrid } from '@/components/dashboard/ProfileGrid';
 import { Section } from '@/components/layout/Section';
 import { ErrorState } from '@/components/ui/ErrorState';
+import { PageLoader } from '@/components/ui/PageLoader';
 import { useAuth } from '@/hooks/useAuth';
+import { usePendingPreviewClaim } from '@/hooks/usePendingPreviewClaim';
 import { useProfiles } from '@/hooks/useProfile';
 import { useLocale } from '@/i18n/LocaleProvider';
 
@@ -12,6 +14,16 @@ export default function ProfileListPage() {
   const { t } = useLocale();
   useAuth({ redirectIfUnauthenticated: true });
   const { items, isLoading, error, refetch } = useProfiles();
+  // Гостьова карта, порахована до входу, зберігається тут автоматично
+  const isClaimingPreview = usePendingPreviewClaim();
+
+  if (isClaimingPreview) {
+    return (
+      <Section id="dashboard" tag={t.dashboard.tag} heading={t.dashboard.heading}>
+        <PageLoader label={t.guest.saving} />
+      </Section>
+    );
+  }
 
   // Помилку показуємо, лише коли показувати більше нічого: якщо в сторі лишився
   // попередній список, краще віддати його, ніж ховати дані за помилкою

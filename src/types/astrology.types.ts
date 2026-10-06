@@ -44,7 +44,8 @@ export interface PlanetPosition {
   degree: number;
   /** Абсолютна довгота на екліптиці, 0–359.99 — використовується для SVG-колеса */
   longitude: number;
-  house: number;
+  /** Немає, якщо час народження невідомий: дім залежить від часу */
+  house?: number;
   retrograde: boolean;
 }
 
@@ -62,12 +63,17 @@ export interface Aspect {
   orb: number;
 }
 
+/**
+ * Без часу народження бекенд рахує карту на місцевий полудень: планети
+ * є (Місяць може зсунутись до ~7°), а доми, асцендент і MC — ні.
+ */
 export interface NatalChart {
   planets: PlanetPosition[];
+  /** Порожній масив, якщо час народження невідомий */
   houses: HouseCusp[];
   aspects: Aspect[];
-  ascendant: number;
-  midheaven: number;
+  ascendant?: number;
+  midheaven?: number;
 }
 
 export interface AncestralLine {
@@ -75,6 +81,17 @@ export interface AncestralLine {
   second: number;
   total: number;
 }
+
+/** Старші Аркани, 1–22: до цього діапазону бекенд згортає будь-яке значення матриці */
+export const ARCANA_NUMBERS = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+] as const;
+
+export type ArcanaNumber = (typeof ARCANA_NUMBERS)[number];
+
+/** Старі профілі теоретично можуть принести число поза діапазоном — не падаємо на ньому */
+export const isArcanaNumber = (value: number): value is ArcanaNumber =>
+  Number.isInteger(value) && value >= 1 && value <= 22;
 
 /**
  * Матриця долі — 22 енергії, ключі відповідають позиціям на діаграмі.

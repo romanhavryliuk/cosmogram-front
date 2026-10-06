@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useState } from 'react';
 import type { ChangeEvent, KeyboardEvent } from 'react';
+import axios from 'axios';
 import clsx from 'clsx';
 
 import { Input } from '@/components/ui/Input';
@@ -14,11 +15,22 @@ import styles from './PlaceAutocomplete.module.css';
 /** Коротші запити віддають надто багато міст — не смикаємо API */
 const MIN_QUERY_LENGTH = 2;
 
+const TOO_MANY_REQUESTS = 429;
+
+/**
+ * Чому підказок немає. Раніше будь-який збій показувався як «нічого не
+ * знайдено» — і користувач не міг відрізнити порожній результат від
+ * поламаного пошуку чи вичерпаного ліміту.
+ */
+type SearchFailure = 'error' | 'rateLimited' | null;
+
 type PlaceAutocompleteProps = {
   label: string;
   placeholder?: string;
   searchingText: string;
   noResultsText: string;
+  errorText: string;
+  rateLimitedText: string;
   value: BirthPlace | null;
   onChange: (place: BirthPlace | null) => void;
   error?: string;
@@ -29,6 +41,8 @@ export const PlaceAutocomplete = ({
   placeholder,
   searchingText,
   noResultsText,
+  errorText,
+  rateLimitedText,
   value,
   onChange,
   error,
@@ -38,6 +52,7 @@ export const PlaceAutocomplete = ({
   const [suggestions, setSuggestions] = useState<PlaceSuggestion[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [failure, setFailure] = useState<SearchFailure>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
 
   const debouncedQuery = useDebounce(query);
@@ -49,12 +64,14 @@ export const PlaceAutocomplete = ({
     // Місце вже обране — повторний запит тим самим рядком нічого не дасть
     if (trimmed.length < MIN_QUERY_LENGTH || trimmed === selectedLabel) {
       setSuggestions([]);
+      setFailure(null);
       setIsSearching(false);
       return;
     }
 
     let ignore = false;
     setIsSearching(true);
+    setFailure(null);
 
     profileService
       .searchPlaces(trimmed)
@@ -63,8 +80,13 @@ export const PlaceAutocomplete = ({
         setSuggestions(places);
         setActiveIndex(-1);
       })
-      .catch(() => {
-        if (!ignore) setSuggestions([]);
+      .catch((searchError: unknown) => {
+        if (ignore) return;
+        setSuggestions([]);
+        const isRateLimited =
+          axios.isAxiosError(searchError) &&
+          searchError.response?.status === TOO_MANY_REQUESTS;
+        setFailure(isRateLimited ? 'rateLimited' : 'error');
       })
       .finally(() => {
         if (!ignore) setIsSearching(false);
@@ -150,7 +172,13 @@ export const PlaceAutocomplete = ({
         <ul id={listId} role="listbox" className={styles.list}>
           {isSearching && <li className={styles.hint}>{searchingText}</li>}
 
-          {!isSearching && suggestions.length === 0 && (
+          {!isSearching && failure && (
+            <li className={clsx(styles.hint, styles.hintError)} role="alert">
+              {failure === 'rateLimited' ? rateLimitedText : errorText}
+            </li>
+          )}
+
+          {!isSearching && !failure && suggestions.length === 0 && (
             <li className={styles.hint}>{noResultsText}</li>
           )}
 

@@ -5,10 +5,23 @@
   margin-top: 28px;
 }
 
-.loading {
-  display: flex;
+/* Вигляд ghost-кнопки: редагування — другорядна дія поруч із видаленням */
+.editLink {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  padding: 64px 0;
+  padding: 15px 26px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--parchment);
+  font-size: 14px;
+  font-weight: 500;
+  transition: border-color 0.2s ease;
+}
+
+.editLink:hover {
+  border-color: var(--gold-dim);
 }
 
 .backLink {

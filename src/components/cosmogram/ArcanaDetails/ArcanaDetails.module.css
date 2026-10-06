@@ -1,0 +1,62 @@
+.panel {
+  width: 100%;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.number {
+  color: var(--gold);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.name {
+  color: var(--parchment);
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: 17px;
+}
+
+/* Звідки саме взявся цей аркан — центр, особистий, кармічний тощо */
+.source {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: right;
+}
+
+.meaning {
+  color: var(--parchment-dim);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+/* Поки нічого не обрано — підказка на тому самому місці,
+   щоб панель не з'являлась ривком і не зсувала вміст нижче */
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.hintPanel {
+  display: flex;
+  width: 100%;
+  min-height: 92px;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 20px;
+  border: 1px dashed var(--line);
+  border-radius: 3px;
+}

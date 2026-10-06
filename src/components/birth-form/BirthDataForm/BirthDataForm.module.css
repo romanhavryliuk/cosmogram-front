@@ -19,8 +19,38 @@
   gap: 16px;
 }
 
+.fieldWithHint {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldHint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
 .submit {
   align-self: flex-start;
+}
+
+.cancel {
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cancel:hover {
+  color: var(--parchment);
 }
 
 .note {

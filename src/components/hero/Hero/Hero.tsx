@@ -23,10 +23,12 @@ export const Hero = () => {
           </h1>
           <p className={styles.lead}>{t.hero.lead}</p>
           <div className={styles.actions}>
-            <Link href="/register" className={`${styles.btn} ${styles.btnPrimary}`}>
+            {/* Карту можна побудувати й без акаунта, тож ведемо одразу до форми,
+                а не на реєстрацію — зберегти результат запропонуємо вже після */}
+            <Link href="#form" className={`${styles.btn} ${styles.btnPrimary}`}>
               {t.hero.primaryCta}
             </Link>
-            <a href="#how" className={`${styles.btn} ${styles.btnGhost}`}>
+            <a href="#result" className={`${styles.btn} ${styles.btnGhost}`}>
               {t.hero.ghostCta}
             </a>
           </div>

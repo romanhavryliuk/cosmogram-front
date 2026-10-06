@@ -1,0 +1,12 @@
+/* Ім'я з профілю: чия це карта — єдиний «особистий» рядок на публічній сторінці */
+.owner {
+  margin-bottom: 20px;
+  color: var(--gold-soft);
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: 20px;
+}
+
+.cta {
+  display: flex;
+  margin-top: 28px;
+}

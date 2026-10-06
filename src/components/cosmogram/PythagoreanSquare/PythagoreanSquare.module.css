@@ -1,3 +1,9 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -7,20 +13,48 @@
   background: var(--line);
 }
 
+/* Клітинка-кнопка: зовні та сама клітинка, інтерактивність видно на
+   наведенні й у вибраному стані */
 .cell {
   position: relative;
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
   aspect-ratio: 1;
+  padding: 0;
+  border: none;
   background: var(--void-2);
   color: var(--teal);
   font-size: 14px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cell:hover {
+  background: rgba(217, 179, 77, 0.05);
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: -2px;
+}
+
+.cellSelected,
+.cellSelected:hover {
+  background: rgba(217, 179, 77, 0.09);
+  box-shadow: inset 0 0 0 1px var(--gold);
 }
 
 .count {
   color: var(--parchment);
   font-size: 20px;
+}
+
+.cellSelected .count {
+  color: var(--gold-soft);
 }
 
 .label {
@@ -29,4 +63,82 @@
   color: var(--muted);
   font-size: 8px;
   letter-spacing: 0.06em;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+}
+
+.linesTitle {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.lineRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.lineRow:last-child {
+  border-bottom: none;
+}
+
+.lineText {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lineName {
+  color: var(--parchment);
+  font-size: 14px;
+}
+
+.lineMeaning {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.lineValue {
+  display: flex;
+  flex-shrink: 0;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.lineTotal {
+  color: var(--parchment);
+  font-size: 16px;
+}
+
+/* Рівень лінії кольором: перекіс в обидва боки помітний, норма — спокійна */
+.lineLevel {
+  min-width: 68px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: right;
+}
+
+.low {
+  color: var(--muted);
+}
+
+.balanced {
+  color: var(--teal);
+}
+
+.high {
+  color: var(--gold-soft);
 }

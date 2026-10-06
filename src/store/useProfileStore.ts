@@ -7,6 +7,7 @@ import type {
   CreateProfilePayload,
   Profile,
   ProfileSummary,
+  UpdateProfilePayload,
 } from '@/types/profile.types';
 
 interface ProfileState {
@@ -18,6 +19,9 @@ interface ProfileState {
   fetchAll: () => Promise<void>;
   fetchById: (id: string) => Promise<void>;
   create: (payload: CreateProfilePayload) => Promise<Profile>;
+  update: (id: string, payload: UpdateProfilePayload) => Promise<Profile>;
+  /** null — доступ за посиланням закрито */
+  setShareId: (id: string, shareId: string | null) => void;
   remove: (id: string) => Promise<void>;
   reset: () => void;
 }
@@ -64,6 +68,32 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
       set({ isLoading: false });
     }
   },
+
+  update: async (id, payload) => {
+    const profile = await profileService.update(id, payload);
+    // Картка в кабінеті показує ім'я, дату й місце — тримаємо її в синхроні,
+    // щоб після повернення до списку не висіли старі дані
+    set((state) => ({
+      current: profile,
+      items: state.items.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              name: profile.name,
+              birthDate: profile.birthDate,
+              place: { label: profile.place.label },
+            }
+          : item,
+      ),
+    }));
+    return profile;
+  },
+
+  setShareId: (id, shareId) =>
+    set((state) => ({
+      current:
+        state.current?.id === id ? { ...state.current, shareId } : state.current,
+    })),
 
   remove: async (id) => {
     const previous = get().items;

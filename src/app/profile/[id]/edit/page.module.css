@@ -1,0 +1,12 @@
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 26px;
+  border-radius: 2px;
+  background: var(--gold);
+  color: var(--void);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--glow-gold);
+}

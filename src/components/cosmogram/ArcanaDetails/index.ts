@@ -1,0 +1,1 @@
+export { ArcanaDetails } from './ArcanaDetails';

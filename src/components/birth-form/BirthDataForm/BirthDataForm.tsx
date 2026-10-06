@@ -13,26 +13,42 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useLocale } from '@/i18n/LocaleProvider';
 import { useAuthStore } from '@/store/useAuthStore';
+import { usePreviewStore } from '@/store/usePreviewStore';
 import { useProfileStore } from '@/store/useProfileStore';
+import type { CreateProfilePayload, Profile } from '@/types/profile.types';
 import { todayAsInputValue } from '@/utils/dateHelpers';
 import { createBirthDataSchema } from '@/utils/validators';
 import type { BirthDataFormValues } from '@/utils/validators';
 
 import styles from './BirthDataForm.module.css';
 
-export const BirthDataForm = () => {
+type BirthDataFormProps = {
+  /** Переданий профіль вмикає режим редагування */
+  profile?: Profile;
+};
+
+// Порожнє поле часу у формі — це «час невідомий», бекенд чекає для нього null
+const toPayload = (values: BirthDataFormValues): CreateProfilePayload => ({
+  ...values,
+  birthTime: values.birthTime || null,
+});
+
+export const BirthDataForm = ({ profile }: BirthDataFormProps) => {
   const { t } = useLocale();
   const router = useRouter();
   const createProfile = useProfileStore((state) => state.create);
+  const updateProfile = useProfileStore((state) => state.update);
+  const calculatePreview = usePreviewStore((state) => state.calculate);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [isMounted, setIsMounted] = useState(false);
+
+  const isEdit = Boolean(profile);
 
   // Сесія лежить у localStorage, тому на сервері вона невідома. Показуємо
   // підказку лише після монтування — інакше SSR і гідратація розійдуться.
   useEffect(() => setIsMounted(true), []);
 
-  // Форма доступна завжди — гостю лише не даємо зберегти результат
-  const needsAuth = isMounted && !isAuthenticated;
+  const isGuest = isMounted && !isAuthenticated;
 
   const schema = useMemo(
     () => createBirthDataSchema(t.birthForm.validation),
@@ -47,23 +63,57 @@ export const BirthDataForm = () => {
     formState: { errors, isSubmitting },
   } = useForm<BirthDataFormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { name: '', birthDate: '', birthTime: '' },
+    defaultValues: profile
+      ? {
+          name: profile.name,
+          birthDate: profile.birthDate,
+          birthTime: profile.birthTime ?? '',
+          place: profile.place,
+        }
+      : { name: '', birthDate: '', birthTime: '' },
   });
 
   const onSubmit = async (values: BirthDataFormValues) => {
-    // Введене лишаємо в полях — юзер логіниться і тисне "Розрахувати" ще раз
+    const payload = toPayload(values);
+
+    if (profile) {
+      try {
+        await updateProfile(profile.id, payload);
+        toast.success(t.editProfile.success);
+        router.push(`/profile/${profile.id}`);
+      } catch {
+        toast.error(t.editProfile.error);
+      }
+      return;
+    }
+
+    // Гість бачить результат одразу, без акаунта; зберегти його можна
+    // після реєстрації — кабінет підхопить ці ж дані сам
     if (!isAuthenticated) {
-      toast.error(t.birthForm.authRequired);
+      try {
+        await calculatePreview(payload);
+        router.push('/preview');
+      } catch {
+        toast.error(t.guest.previewError);
+      }
       return;
     }
 
     try {
-      const profile = await createProfile(values);
-      router.push(`/profile/${profile.id}`);
+      const created = await createProfile(payload);
+      router.push(`/profile/${created.id}`);
     } catch {
       toast.error(t.birthForm.genericError);
     }
   };
+
+  const submitLabel = isEdit
+    ? isSubmitting
+      ? t.editProfile.savingCta
+      : t.editProfile.saveCta
+    : isSubmitting
+      ? t.birthForm.submitLoadingCta
+      : t.birthForm.submitCta;
 
   return (
     <div className={styles.panel}>
@@ -87,12 +137,18 @@ export const BirthDataForm = () => {
             error={errors.birthDate?.message}
             {...register('birthDate')}
           />
-          <Input
-            label={t.birthForm.timeLabel}
-            type="time"
-            error={errors.birthTime?.message}
-            {...register('birthTime')}
-          />
+          <div className={styles.fieldWithHint}>
+            <Input
+              label={t.birthForm.timeLabel}
+              type="time"
+              error={errors.birthTime?.message}
+              aria-describedby="birth-time-hint"
+              {...register('birthTime')}
+            />
+            <p id="birth-time-hint" className={styles.fieldHint}>
+              {t.birthForm.timeOptionalHint}
+            </p>
+          </div>
           <Controller
             control={control}
             name="place"
@@ -102,22 +158,29 @@ export const BirthDataForm = () => {
                 placeholder={t.birthForm.placePlaceholder}
                 searchingText={t.birthForm.placeSearching}
                 noResultsText={t.birthForm.placeNoResults}
+                errorText={t.birthForm.placeSearchError}
+                rateLimitedText={t.birthForm.placeRateLimited}
                 value={field.value ?? null}
                 onChange={field.onChange}
                 error={fieldState.error?.message}
               />
             )}
           />
-          <Button
-            type="submit"
-            className={styles.submit}
-            isLoading={isSubmitting}
-          >
-            {isSubmitting
-              ? t.birthForm.submitLoadingCta
-              : t.birthForm.submitCta}
-          </Button>
-          {needsAuth && (
+          <div className={styles.actions}>
+            <Button
+              type="submit"
+              className={styles.submit}
+              isLoading={isSubmitting}
+            >
+              {submitLabel}
+            </Button>
+            {profile && (
+              <Link href={`/profile/${profile.id}`} className={styles.cancel}>
+                {t.editProfile.cancelCta}
+              </Link>
+            )}
+          </div>
+          {isGuest && !isEdit && (
             <p className={styles.authNotice}>
               {t.birthForm.authRequired}{' '}
               <Link href="/login">{t.nav.login}</Link>
