@@ -1,1 +1,1 @@
-export { AspectList } from './AspectList';
+export { AspectList, getAspectKey } from './AspectList';

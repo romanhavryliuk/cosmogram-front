@@ -1,12 +1,11 @@
 'use client';
 
-import { AspectList } from '@/components/cosmogram/AspectList';
 import { ChartCarousel } from '@/components/cosmogram/ChartCarousel';
 import type { ChartSlide } from '@/components/cosmogram/ChartCarousel';
 import { DestinyMatrix } from '@/components/cosmogram/DestinyMatrix';
 import { ExportCard } from '@/components/cosmogram/ExportCard';
 import { NatalChartWheel } from '@/components/cosmogram/NatalChartWheel';
-import { PlanetList } from '@/components/cosmogram/PlanetList';
+import { NatalLists } from '@/components/cosmogram/NatalLists';
 import { PythagoreanSquare } from '@/components/cosmogram/PythagoreanSquare';
 import { useAstroLabels } from '@/hooks/useAstroLabels';
 import { useLocale } from '@/i18n/LocaleProvider';
@@ -55,8 +54,10 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
             <NatalChartWheel chart={profile.chart} label={t.result.wheelLabel} />
           </div>
           <div className={styles.lists}>
-            <PlanetList planets={profile.chart.planets} />
-            <AspectList aspects={profile.chart.aspects} />
+            <NatalLists
+              planets={profile.chart.planets}
+              aspects={profile.chart.aspects}
+            />
           </div>
         </div>
       ),

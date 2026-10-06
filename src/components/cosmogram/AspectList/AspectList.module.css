@@ -7,17 +7,46 @@
   letter-spacing: 0.08em;
 }
 
+.item {
+  border-bottom: 1px solid var(--line);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
 .row {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 8px 0;
-  border-bottom: 1px solid var(--line);
 }
 
-.row:last-child {
-  border-bottom: none;
+/* Той самий вигляд, що й у статичного рядка — як у списку планет */
+.rowButton {
+  border: none;
+  border-left: 2px solid transparent;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    padding 0.2s ease;
+}
+
+.rowButton:hover {
+  background: rgba(217, 179, 77, 0.04);
+}
+
+.rowSelected,
+.rowSelected:hover {
+  padding-left: 8px;
+  border-left-color: var(--gold);
+  background: rgba(217, 179, 77, 0.06);
 }
 
 .pair {

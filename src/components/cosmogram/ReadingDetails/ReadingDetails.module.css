@@ -1,0 +1,70 @@
+.panel {
+  width: 100%;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel);
+  /* Відступ від краю екрана, коли панель підтягується в поле зору */
+  scroll-margin: 24px;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-bottom: 12px;
+}
+
+.title {
+  color: var(--parchment);
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: 17px;
+}
+
+.meta {
+  color: var(--gold-soft);
+  font-size: 12px;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.line {
+  color: var(--parchment-dim);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Мітка «Що / Як / Де» — підказує, з чого складається тлумачення */
+.label {
+  display: inline-block;
+  min-width: 42px;
+  margin-right: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hintPanel {
+  display: flex;
+  width: 100%;
+  min-height: 72px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 20px;
+  border: 1px dashed var(--line);
+  border-radius: 3px;
+  scroll-margin: 24px;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}

@@ -1,11 +1,12 @@
 'use client';
 
-import { Fragment, useId, useRef, useState } from 'react';
+import { Fragment, useId, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import clsx from 'clsx';
 
 import { ArcanaDetails } from '@/components/cosmogram/ArcanaDetails';
 import { useArcanaLabels } from '@/hooks/useArcanaLabels';
+import { useRevealElement } from '@/hooks/useRevealElement';
 import { useLocale } from '@/i18n/LocaleProvider';
 import type {
   AncestralLine,
@@ -48,7 +49,7 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   const [selected, setSelected] = useState<MatrixNode | null>(null);
   const { purpose, ancestralPrograms, familyPower } = matrix;
 
-  const detailsRef = useRef<HTMLDivElement>(null);
+  const { ref: detailsRef, reveal } = useRevealElement<HTMLDivElement>();
 
   const isSelected = (node: MatrixNode) => selected?.key === node.key;
 
@@ -63,17 +64,7 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
    */
   const toggleAndReveal = (node: MatrixNode) => {
     toggle(node);
-    if (isSelected(node)) return;
-    const reduceMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches;
-    // Після рендеру панель уже містить тлумачення, тож міряємо правильну висоту
-    requestAnimationFrame(() =>
-      detailsRef.current?.scrollIntoView({
-        block: 'nearest',
-        behavior: reduceMotion ? 'auto' : 'smooth',
-      }),
-    );
+    if (!isSelected(node)) reveal();
   };
 
   // Скрінрідер має почути не лише число, а й назву аркана та позицію

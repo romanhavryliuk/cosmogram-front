@@ -131,6 +131,13 @@ export type Dictionary = {
     arcanaSourceCenter: string;
     arcanaSourcePersonal: string;
     arcanaSourceKarmic: string;
+    /** Тлумачення натальної карти: планета («що»), знак («як»), дім («де») */
+    readingHint: string;
+    readingWhat: string;
+    readingHow: string;
+    readingWhere: string;
+    readingRetrograde: string;
+    readingOrbNote: string;
     squareTitle: string;
     squareSubtitle: string;
     /** Заглушка в клітинці квадрата, якщо цифри немає в даті */
@@ -324,6 +331,14 @@ const en: Dictionary = {
     arcanaSourceCenter: 'Centre',
     arcanaSourcePersonal: 'Personal',
     arcanaSourceKarmic: 'Karmic',
+    readingHint: 'Tap a planet or an aspect to read what it means in your chart.',
+    readingWhat: 'What',
+    readingHow: 'How',
+    readingWhere: 'Where',
+    readingRetrograde:
+      'Retrograde: this energy turns inward and works through rethinking and returning to the past.',
+    readingOrbNote:
+      'Orb is the deviation from the exact angle — the smaller it is, the more strongly the aspect is felt.',
     squareTitle: 'Pythagorean Square',
     squareSubtitle: 'Digit frequency from your birth date',
     emptyCell: '—',
@@ -527,6 +542,14 @@ const uk: Dictionary = {
     arcanaSourceCenter: 'Центр',
     arcanaSourcePersonal: 'Особистий',
     arcanaSourceKarmic: 'Кармічний',
+    readingHint: 'Натисни на планету чи аспект, щоб прочитати, що вони означають у твоїй карті.',
+    readingWhat: 'Що',
+    readingHow: 'Як',
+    readingWhere: 'Де',
+    readingRetrograde:
+      'Ретроградність: ця енергія спрямована всередину й проявляється через переосмислення та повернення до минулого.',
+    readingOrbNote:
+      'Орб — відхилення від точного кута: що він менший, то сильніше відчувається аспект.',
     squareTitle: 'Квадрат Піфагора',
     squareSubtitle: 'Повторення цифр у даті народження',
     emptyCell: '—',
@@ -729,6 +752,14 @@ const pl: Dictionary = {
     arcanaSourceCenter: 'Centrum',
     arcanaSourcePersonal: 'Osobisty',
     arcanaSourceKarmic: 'Karmiczny',
+    readingHint: 'Dotknij planety lub aspektu, aby przeczytać, co oznaczają w twojej mapie.',
+    readingWhat: 'Co',
+    readingHow: 'Jak',
+    readingWhere: 'Gdzie',
+    readingRetrograde:
+      'Retrogradacja: ta energia kieruje się do wewnątrz i działa przez przemyślenie i powrót do przeszłości.',
+    readingOrbNote:
+      'Orb to odchylenie od dokładnego kąta — im mniejszy, tym silniej odczuwa się aspekt.',
     squareTitle: 'Kwadrat Pitagorasa',
     squareSubtitle: 'Częstotliwość cyfr w dacie urodzenia',
     emptyCell: '—',
