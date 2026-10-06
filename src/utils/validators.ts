@@ -52,7 +52,12 @@ export const createBirthDataSchema = (t: BirthValidationMessages) =>
       .regex(/^\d{4}-\d{2}-\d{2}$/, t.dateFormat)
       .refine((value) => !Number.isNaN(Date.parse(value)), t.dateInvalid)
       .refine((value) => new Date(value) <= new Date(), t.dateFuture),
-    birthTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, t.timeFormat),
+    // Порожньо = час невідомий; у null його перетворюємо вже при відправці,
+    // щоб форма лишалась на рядках і не роздвоювала тип полів
+    birthTime: z.union([
+      z.literal(''),
+      z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, t.timeFormat),
+    ]),
     place: createBirthPlaceSchema(t),
   });
 

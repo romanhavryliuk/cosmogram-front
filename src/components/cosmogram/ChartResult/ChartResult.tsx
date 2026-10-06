@@ -9,12 +9,13 @@ import { NatalLists } from '@/components/cosmogram/NatalLists';
 import { PythagoreanSquare } from '@/components/cosmogram/PythagoreanSquare';
 import { useAstroLabels } from '@/hooks/useAstroLabels';
 import { useLocale } from '@/i18n/LocaleProvider';
-import type { Profile } from '@/types/profile.types';
+import type { CosmogramView } from '@/types/profile.types';
 
 import styles from './ChartResult.module.css';
 
 type ChartResultProps = {
-  profile: Profile;
+  /** Власний профіль, гостьовий розрахунок або карта за посиланням */
+  profile: CosmogramView;
 };
 
 /** Результат розбитий на слайди (натальна карта, матриця долі, квадрат Піфагора) плюс картка-підпис під ними */
@@ -36,7 +37,9 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
       id: 'chart',
       tabLabel: t.result.chartTitle,
       title: t.result.chartTitle,
-      subtitle: ascendantSign && (
+      // Без часу народження доми, асцендент і MC не рахуються — замість
+      // них чесно кажемо, чому їх немає і що може бути неточним
+      subtitle: ascendantSign ? (
         <>
           {t.result.ascendantPrefix} {labels.sign[ascendantSign]}
           {midheavenSign && (
@@ -46,6 +49,8 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
             </>
           )}
         </>
+      ) : (
+        t.result.timeUnknownNote
       ),
       description: t.result.chartDescription,
       content: (

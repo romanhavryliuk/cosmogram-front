@@ -60,7 +60,9 @@ export const NatalLists = ({ planets, aspects }: NatalListsProps) => {
     const position = planets.find((item) => item.planet === planet);
     if (!position) return null;
 
-    const house = readings.getHouse(position.house);
+    // Без часу народження дому немає — тлумачення лишається з «що» і «як»
+    const house =
+      position.house === undefined ? null : readings.getHouse(position.house);
     const lines = [
       { label: t.result.readingWhat, text: readings.planet[planet] },
       { label: t.result.readingHow, text: readings.sign[position.sign] },
@@ -70,7 +72,10 @@ export const NatalLists = ({ planets, aspects }: NatalListsProps) => {
 
     return {
       title: labels.planet[planet],
-      meta: `${labels.sign[position.sign]} · ${houseToRoman(position.house)}`,
+      meta:
+        position.house === undefined
+          ? labels.sign[position.sign]
+          : `${labels.sign[position.sign]} · ${houseToRoman(position.house)}`,
       lines,
     };
   };

@@ -44,7 +44,8 @@ export interface PlanetPosition {
   degree: number;
   /** Абсолютна довгота на екліптиці, 0–359.99 — використовується для SVG-колеса */
   longitude: number;
-  house: number;
+  /** Немає, якщо час народження невідомий: дім залежить від часу */
+  house?: number;
   retrograde: boolean;
 }
 
@@ -62,12 +63,17 @@ export interface Aspect {
   orb: number;
 }
 
+/**
+ * Без часу народження бекенд рахує карту на місцевий полудень: планети
+ * є (Місяць може зсунутись до ~7°), а доми, асцендент і MC — ні.
+ */
 export interface NatalChart {
   planets: PlanetPosition[];
+  /** Порожній масив, якщо час народження невідомий */
   houses: HouseCusp[];
   aspects: Aspect[];
-  ascendant: number;
-  midheaven: number;
+  ascendant?: number;
+  midheaven?: number;
 }
 
 export interface AncestralLine {

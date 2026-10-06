@@ -4,12 +4,17 @@ import { useLocale } from '@/i18n/LocaleProvider';
 
 import styles from './CreateChartLink.module.css';
 
-export const CreateChartLink = () => {
+type CreateChartLinkProps = {
+  /** За замовчуванням «Побудувати нову карту» — для гостей і чужих карт свій текст */
+  label?: string;
+};
+
+export const CreateChartLink = ({ label }: CreateChartLinkProps) => {
   const { t } = useLocale();
 
   return (
     <Link href="/profile/new" className={styles.link}>
-      {t.profileActions.createNewCta}
+      {label ?? t.profileActions.createNewCta}
     </Link>
   );
 };

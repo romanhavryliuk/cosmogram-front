@@ -1,18 +1,18 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-import Link from 'next/link';
-
 import { ChartResult } from '@/components/cosmogram/ChartResult';
+import { ShareControls } from '@/components/cosmogram/ShareControls';
 import { CreateChartLink } from '@/components/dashboard/CreateChartLink';
 import { Section } from '@/components/layout/Section';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { ErrorState } from '@/components/ui/ErrorState';
-import { Loader } from '@/components/ui/Loader';
+import { PageLoader } from '@/components/ui/PageLoader';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import { useLocale } from '@/i18n/LocaleProvider';
@@ -23,13 +23,6 @@ import styles from './page.module.css';
 interface ProfileResultPageProps {
   params: { id: string };
 }
-
-// Дефолтний лоадер розрахований на золоту кнопку — на темній сторінці його не видно
-const LOADER_STYLE = {
-  ['--loader-size' as string]: '26px',
-  ['--loader-color' as string]: 'var(--gold)',
-  ['--loader-track' as string]: 'rgba(217, 179, 77, 0.2)',
-};
 
 export default function ProfileResultPage({ params }: ProfileResultPageProps) {
   const { t } = useLocale();
@@ -58,7 +51,11 @@ export default function ProfileResultPage({ params }: ProfileResultPageProps) {
       return (
         <>
           <ChartResult profile={profile} />
+          <ShareControls profileId={profile.id} shareId={profile.shareId} />
           <div className={styles.actions}>
+            <Link href={`/profile/${profile.id}/edit`} className={styles.editLink}>
+              {t.editProfile.editCta}
+            </Link>
             <Button variant="danger" onClick={() => setIsConfirmOpen(true)}>
               {t.profileActions.deleteCta}
             </Button>
@@ -68,13 +65,7 @@ export default function ProfileResultPage({ params }: ProfileResultPageProps) {
       );
     }
 
-    if (isLoading) {
-      return (
-        <div className={styles.loading}>
-          <Loader style={LOADER_STYLE} />
-        </div>
-      );
-    }
+    if (isLoading) return <PageLoader />;
 
     // Профіль не завантажився: видалений, чужий, або бекенд недоступний —
     // раніше тут лишалась порожня сторінка з самим заголовком

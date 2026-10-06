@@ -32,7 +32,10 @@ export const PlanetList = ({
           <>
             <span className={styles.name}>{labels.planet[position.planet]}</span>
             <span className={`${styles.value} mono`}>
-              {labels.sign[position.sign]} · {houseToRoman(position.house)}
+              {labels.sign[position.sign]}
+              {/* Без часу народження дому немає — показуємо лише знак */}
+              {position.house !== undefined &&
+                ` · ${houseToRoman(position.house)}`}
               {position.retrograde && (
                 <abbr className={styles.retrograde} title={t.result.retrograde}>
                   {RETROGRADE_GLYPH}
