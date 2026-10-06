@@ -14,7 +14,6 @@ import {
   getLineLevel,
 } from '@/i18n/pythagoreanReadings';
 import type { PythagoreanLine } from '@/i18n/pythagoreanReadings';
-import { PYTHAGOREAN_DIGITS } from '@/types/astrology.types';
 import type {
   PythagoreanDigit,
   PythagoreanSquare as PythagoreanSquareData,
@@ -27,6 +26,11 @@ type PythagoreanSquareProps = {
 };
 
 const LINE_KEYS = Object.keys(PYTHAGOREAN_LINES) as PythagoreanLine[];
+
+// Класичне розташування методу: цифри йдуть стовпцями, тож верхній рядок —
+// 1-4-7 (лінія цілеспрямованості), а не 1-2-3. Інакше рядки й стовпці на
+// екрані не збігаються з тим, як лінії описують у джерелах
+const GRID_ORDER: PythagoreanDigit[] = ['1', '4', '7', '2', '5', '8', '3', '6', '9'];
 
 export const PythagoreanSquare = ({ square }: PythagoreanSquareProps) => {
   const { t, locale } = useLocale();
@@ -59,7 +63,7 @@ export const PythagoreanSquare = ({ square }: PythagoreanSquareProps) => {
   return (
     <div className={styles.wrap}>
       <ul className={styles.grid}>
-        {PYTHAGOREAN_DIGITS.map((digit) => {
+        {GRID_ORDER.map((digit) => {
           const count = countOf(digit);
           const label = t.result.squareLabels[digit];
 

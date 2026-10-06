@@ -102,6 +102,8 @@ export type Dictionary = {
     chartTitle: string;
     ascendantPrefix: string;
     sunSignPrefix: string;
+    elementsTitle: string;
+    elementsDominant: string;
     wheelLabel: string;
     retrograde: string;
     midheavenPrefix: string;
@@ -344,6 +346,8 @@ const en: Dictionary = {
     chartTitle: 'Natal Chart',
     ascendantPrefix: 'Ascendant —',
     sunSignPrefix: 'Zodiac sign (Sun) —',
+    elementsTitle: 'Balance of elements',
+    elementsDominant: 'Dominant',
     wheelLabel: 'Natal chart with planet positions',
     retrograde: 'Retrograde',
     midheavenPrefix: 'Midheaven —',
@@ -599,6 +603,8 @@ const uk: Dictionary = {
     chartTitle: 'Натальна карта',
     ascendantPrefix: 'Асцендент —',
     sunSignPrefix: 'Знак зодіаку (Сонце) —',
+    elementsTitle: 'Баланс стихій',
+    elementsDominant: 'Переважає',
     wheelLabel: 'Натальна карта з позиціями планет',
     retrograde: 'Ретроградний',
     midheavenPrefix: 'Середина неба —',
@@ -853,6 +859,8 @@ const pl: Dictionary = {
     chartTitle: 'Mapa natalna',
     ascendantPrefix: 'Ascendent —',
     sunSignPrefix: 'Znak zodiaku (Słońce) —',
+    elementsTitle: 'Równowaga żywiołów',
+    elementsDominant: 'Przeważa',
     wheelLabel: 'Mapa natalna z pozycjami planet',
     retrograde: 'Retrogradacja',
     midheavenPrefix: 'Medium Coeli —',

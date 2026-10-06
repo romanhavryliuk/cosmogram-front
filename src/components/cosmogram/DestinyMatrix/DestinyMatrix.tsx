@@ -170,11 +170,14 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
     label: t.result.arcanaSourceCenter,
   };
 
+  // Класичне розташування Ладіні (0° — верх): A (день) ліворуч, B (місяць)
+  // угорі, C (рік) праворуч, D (сума) внизу. Кармічні кути — між сусідами,
+  // тож батьківська лінія E–G іде з верхнього лівого кута в нижній правий
   const personal = [
-    { key: 'a', value: matrix.personal.a, angle: 0 },
-    { key: 'b', value: matrix.personal.b, angle: 90 },
-    { key: 'c', value: matrix.personal.c, angle: 180 },
-    { key: 'd', value: matrix.personal.d, angle: 270 },
+    { key: 'a', value: matrix.personal.a, angle: 270 },
+    { key: 'b', value: matrix.personal.b, angle: 0 },
+    { key: 'c', value: matrix.personal.c, angle: 90 },
+    { key: 'd', value: matrix.personal.d, angle: 180 },
   ].map((item) => ({
     ...item,
     label: t.result.arcanaSourcePersonal,
@@ -182,10 +185,10 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   }));
 
   const karmic = [
-    { key: 'e', value: matrix.karmic.e, angle: 45 },
-    { key: 'f', value: matrix.karmic.f, angle: 135 },
-    { key: 'g', value: matrix.karmic.g, angle: 225 },
-    { key: 'h', value: matrix.karmic.h, angle: 315 },
+    { key: 'e', value: matrix.karmic.e, angle: 315 },
+    { key: 'f', value: matrix.karmic.f, angle: 45 },
+    { key: 'g', value: matrix.karmic.g, angle: 135 },
+    { key: 'h', value: matrix.karmic.h, angle: 225 },
   ].map((item) => ({
     ...item,
     label: t.result.arcanaSourceKarmic,

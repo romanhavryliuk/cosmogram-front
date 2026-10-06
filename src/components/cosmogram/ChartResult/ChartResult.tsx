@@ -3,6 +3,7 @@
 import { ChartCarousel } from '@/components/cosmogram/ChartCarousel';
 import type { ChartSlide } from '@/components/cosmogram/ChartCarousel';
 import { DestinyMatrix } from '@/components/cosmogram/DestinyMatrix';
+import { ElementBalance } from '@/components/cosmogram/ElementBalance';
 import { ExportCard } from '@/components/cosmogram/ExportCard';
 import { NatalChartWheel } from '@/components/cosmogram/NatalChartWheel';
 import { NatalLists } from '@/components/cosmogram/NatalLists';
@@ -78,6 +79,7 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
               planets={profile.chart.planets}
               aspects={profile.chart.aspects}
             />
+            <ElementBalance planets={profile.chart.planets} />
           </div>
         </div>
       ),
