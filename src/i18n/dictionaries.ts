@@ -9,6 +9,7 @@ export type Dictionary = {
     howItWorks: string;
     menu: string;
     logout: string;
+    skipToContent: string;
   };
   hero: {
     eyebrow: string;
@@ -192,6 +193,7 @@ const en: Dictionary = {
     howItWorks: 'How It Works',
     menu: 'Menu',
     logout: 'Log Out',
+    skipToContent: 'Skip to content',
   },
   hero: {
     eyebrow: 'Astrology + Numerology',
@@ -403,6 +405,7 @@ const uk: Dictionary = {
     howItWorks: 'Як це працює',
     menu: 'Меню',
     logout: 'Вийти',
+    skipToContent: 'Перейти до вмісту',
   },
   hero: {
     eyebrow: 'Астрологія + нумерологія',
@@ -613,6 +616,7 @@ const pl: Dictionary = {
     howItWorks: 'Jak to działa',
     menu: 'Menu',
     logout: 'Wyloguj się',
+    skipToContent: 'Przejdź do treści',
   },
   hero: {
     eyebrow: 'Astrologia + numerologia',

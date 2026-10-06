@@ -4,6 +4,7 @@ import { Fraunces, IBM_Plex_Mono, Inter } from 'next/font/google';
 import { CosmicBackground } from '@/components/layout/CosmicBackground';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
+import { SkipLink } from '@/components/layout/SkipLink';
 import { ToastProvider } from '@/components/ui/Toast';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 
@@ -69,9 +70,13 @@ export default function RootLayout({
     <html lang="en" className={`${fraunces.variable} ${inter.variable} ${plexMono.variable}`}>
       <body>
         <LocaleProvider>
+          <SkipLink />
           <CosmicBackground />
           <Header />
-          <main>{children}</main>
+          {/* tabIndex -1: після skip-link фокус переходить сюди, а не лишається на посиланні */}
+          <main id="main" tabIndex={-1}>
+            {children}
+          </main>
           <Footer />
           <ToastProvider />
         </LocaleProvider>

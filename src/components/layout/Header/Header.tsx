@@ -12,15 +12,37 @@ import { useLocale } from '@/i18n/LocaleProvider';
 
 import styles from './Header.module.css';
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export const Header = () => {
   const { t } = useLocale();
   const { user, isAuthenticated, isHydrating, logout } = useAuth();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!isMenuOpen) return undefined;
+
+    // На десктопі кнопки-бургера немає і меню завжди видно — фокусом
+    // керуємо лише тоді, коли воно справді відкривається поверх сторінки
+    const isMobileMenu = () =>
+      toggleRef.current !== null &&
+      getComputedStyle(toggleRef.current).display !== 'none';
+
+    const getFocusable = () =>
+      navRef.current
+        ? Array.from(
+            navRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+          )
+        : [];
+
+    if (isMobileMenu()) {
+      getFocusable()[0]?.focus();
+    }
 
     const handlePointerDown = (event: MouseEvent) => {
       if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
@@ -30,7 +52,29 @@ export const Header = () => {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        // Відкритий список мов закривається своїм обробником — меню
+        // при цьому лишаємо, Escape закриває лише найглибший рівень
+        if (navRef.current?.querySelector('[role="listbox"]')) return;
         setIsMenuOpen(false);
+        if (isMobileMenu()) toggleRef.current?.focus();
+        return;
+      }
+
+      // Утримуємо Tab усередині відкритого меню разом із кнопкою-бургером:
+      // інакше фокус тікає на сторінку, прикриту меню
+      if (event.key !== 'Tab' || !isMobileMenu() || !toggleRef.current) return;
+
+      const cycle = [toggleRef.current, ...getFocusable()];
+      const first = cycle[0];
+      const last = cycle[cycle.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
@@ -61,6 +105,7 @@ export const Header = () => {
       </Link>
 
       <button
+        ref={toggleRef}
         type="button"
         className={styles.menuToggle}
         aria-expanded={isMenuOpen}
@@ -86,7 +131,11 @@ export const Header = () => {
         </svg>
       </button>
 
-      <nav id="header-nav" className={clsx(styles.nav, isMenuOpen && styles.navOpen)}>
+      <nav
+        ref={navRef}
+        id="header-nav"
+        className={clsx(styles.nav, isMenuOpen && styles.navOpen)}
+      >
         {isHydrating ? (
           // Токен ще підіймається з localStorage — нейтральний плейсхолдер,
           // щоб не блимнути "не залогінений", а за мить — реальним станом
