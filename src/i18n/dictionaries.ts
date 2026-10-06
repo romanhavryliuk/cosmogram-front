@@ -148,6 +148,8 @@ export type Dictionary = {
     squareSubtitle: string;
     /** Заглушка в клітинці квадрата, якщо цифри немає в даті */
     emptyCell: string;
+    squareHint: string;
+    squareLinesTitle: string;
     squareLabels: Record<PythagoreanDigit, { short: string; full: string }>;
   };
   exportCard: {
@@ -389,6 +391,8 @@ const en: Dictionary = {
     squareTitle: 'Pythagorean Square',
     squareSubtitle: 'Digit frequency from your birth date',
     emptyCell: '—',
+    squareHint: 'Tap a cell to read what that number of repetitions means.',
+    squareLinesTitle: 'Lines of the square',
     squareLabels: {
       '1': { short: 'character', full: 'Character, will' },
       '2': { short: 'energy', full: 'Energy, bioenergetics' },
@@ -641,6 +645,8 @@ const uk: Dictionary = {
     squareTitle: 'Квадрат Піфагора',
     squareSubtitle: 'Повторення цифр у даті народження',
     emptyCell: '—',
+    squareHint: 'Натисни на клітинку, щоб прочитати, що означає така кількість повторень.',
+    squareLinesTitle: 'Лінії квадрата',
     squareLabels: {
       '1': { short: 'характер', full: "Характер, воля" },
       '2': { short: 'енергія', full: 'Енергія, біоенергетика' },
@@ -892,6 +898,8 @@ const pl: Dictionary = {
     squareTitle: 'Kwadrat Pitagorasa',
     squareSubtitle: 'Częstotliwość cyfr w dacie urodzenia',
     emptyCell: '—',
+    squareHint: 'Dotknij komórki, aby przeczytać, co oznacza taka liczba powtórzeń.',
+    squareLinesTitle: 'Linie kwadratu',
     squareLabels: {
       '1': { short: 'charakter', full: 'Charakter, wola' },
       '2': { short: 'energia', full: 'Energia, bioenergetyka' },
