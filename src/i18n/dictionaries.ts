@@ -353,7 +353,7 @@ const en: Dictionary = {
     matrixDescription:
       'Your birth date folded down into the 22 Major Arcana. The number in the centre is the core energy of the chart; the eight points around it alternate between personal and karmic arcana.',
     squareDescription:
-      'How often each digit from 1 to 9 appears in your birth date. The more repetitions in a cell, the more pronounced that quality is considered to be — a dash means the digit is absent. Hover a cell for its full meaning.',
+      'How often each digit from 1 to 9 appears in your birth date. The more repetitions in a cell, the more pronounced that quality is considered to be — a dash means the digit is absent.',
     carousel: {
       label: 'Result sections',
       previous: 'Previous section',
@@ -607,7 +607,7 @@ const uk: Dictionary = {
     matrixDescription:
       'Дата народження, згорнута до 22 Старших Арканів. Число в центрі — ключова енергія карти; вісім точок навколо нього чергують особисті та кармічні аркани.',
     squareDescription:
-      'Скільки разів кожна цифра від 1 до 9 трапляється в даті народження. Що більше повторень у клітинці, то виразнішою вважається ця якість — риска означає, що цифри немає. Наведи на клітинку, щоб побачити повне значення.',
+      'Скільки разів кожна цифра від 1 до 9 трапляється в даті народження. Що більше повторень у клітинці, то виразнішою вважається ця якість — риска означає, що цифри немає.',
     carousel: {
       label: 'Розділи результату',
       previous: 'Попередній розділ',
@@ -860,7 +860,7 @@ const pl: Dictionary = {
     matrixDescription:
       'Data urodzenia zwinięta do 22 Wielkich Arkanów. Liczba w środku to kluczowa energia mapy; osiem punktów wokół niej na przemian oznacza arkana osobiste i karmiczne.',
     squareDescription:
-      'Jak często każda cyfra od 1 do 9 pojawia się w dacie urodzenia. Im więcej powtórzeń w komórce, tym wyraźniejsza jest dana cecha — myślnik oznacza brak cyfry. Najedź na komórkę, aby zobaczyć pełne znaczenie.',
+      'Jak często każda cyfra od 1 do 9 pojawia się w dacie urodzenia. Im więcej powtórzeń w komórce, tym wyraźniejsza jest dana cecha — myślnik oznacza brak cyfry.',
     carousel: {
       label: 'Sekcje wyniku',
       previous: 'Poprzednia sekcja',

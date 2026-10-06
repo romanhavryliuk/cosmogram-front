@@ -1,13 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
 import { ZodiacWheel } from '@/components/cosmogram/ZodiacWheel';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
+import { ARCANA_LABELS } from '@/i18n/arcana';
+import { PLANET_LABELS, SIGN_LABELS } from '@/i18n/astroLabels';
 import { useLocale } from '@/i18n/LocaleProvider';
 import { useProfileStore } from '@/store/useProfileStore';
+import { isArcanaNumber } from '@/types/astrology.types';
 import type { ProfileSummary } from '@/types/profile.types';
 import { formatBirthDate } from '@/utils/dateHelpers';
 
@@ -23,7 +26,7 @@ export const ProfileCard = ({
   profile,
   interactive = true,
 }: ProfileCardProps) => {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const remove = useProfileStore((state) => state.remove);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -41,6 +44,16 @@ export const ProfileCard = ({
     }
   };
 
+  // Два найвпізнаваніші підсумки карти — щоб картки відрізнялись не лише
+  // ім'ям. Старіший бекенд полів не віддає — тоді рядка просто немає
+  const { sunSign, centralArcana } = profile;
+  const highlights = [
+    sunSign && `${PLANET_LABELS[locale].sun}: ${SIGN_LABELS[locale][sunSign]}`,
+    typeof centralArcana === 'number' &&
+      isArcanaNumber(centralArcana) &&
+      `${t.result.arcanaSourceCenter}: ${ARCANA_LABELS[locale][centralArcana].name}`,
+  ].filter((line): line is string => Boolean(line));
+
   const cardContent = (
     <>
       <ZodiacWheel
@@ -53,6 +66,18 @@ export const ProfileCard = ({
         <p className={`${styles.meta} mono`}>
           {formatBirthDate(profile.birthDate)} · {profile.place.label}
         </p>
+        {highlights.length > 0 && (
+          <p className={styles.highlights}>
+            {/* Кожна частина нерозривна: на вузьких екранах «Центр: Суд»
+                переноситься цілком, а не розривається після двокрапки */}
+            {highlights.map((line, index) => (
+              <Fragment key={line}>
+                {index > 0 && ' · '}
+                <span className={styles.highlight}>{line}</span>
+              </Fragment>
+            ))}
+          </p>
+        )}
       </div>
     </>
   );
