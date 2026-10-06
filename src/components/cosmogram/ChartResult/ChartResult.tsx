@@ -31,6 +31,11 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
   const midheavenSign = profile.chart.houses.find(
     (house) => house.house === 10,
   )?.sign;
+  // «Знак зодіаку» в побуті — це знак Сонця. Без нього в підзаголовку
+  // першим стояв асцендент, і його легко прийняти за «свій знак»
+  const sunSign = profile.chart.planets.find(
+    ({ planet }) => planet === 'sun',
+  )?.sign;
 
   const slides: ChartSlide[] = [
     {
@@ -39,18 +44,28 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
       title: t.result.chartTitle,
       // Без часу народження доми, асцендент і MC не рахуються — замість
       // них чесно кажемо, чому їх немає і що може бути неточним
-      subtitle: ascendantSign ? (
+      subtitle: (
         <>
-          {t.result.ascendantPrefix} {labels.sign[ascendantSign]}
-          {midheavenSign && (
+          {sunSign && (
             <>
+              {t.result.sunSignPrefix} {labels.sign[sunSign]}
               {' · '}
-              {t.result.midheavenPrefix} {labels.sign[midheavenSign]}
             </>
           )}
+          {ascendantSign ? (
+            <>
+              {t.result.ascendantPrefix} {labels.sign[ascendantSign]}
+              {midheavenSign && (
+                <>
+                  {' · '}
+                  {t.result.midheavenPrefix} {labels.sign[midheavenSign]}
+                </>
+              )}
+            </>
+          ) : (
+            t.result.timeUnknownNote
+          )}
         </>
-      ) : (
-        t.result.timeUnknownNote
       ),
       description: t.result.chartDescription,
       content: (
