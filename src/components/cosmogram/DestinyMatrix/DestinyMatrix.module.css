@@ -206,6 +206,13 @@
   fill: var(--teal);
 }
 
+/* Літери позицій — довідкові, тож тихі: помітні, але не сперечаються з числами */
+.pointLetter {
+  fill: var(--muted);
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
 .legend {
   display: flex;
   flex-wrap: wrap;

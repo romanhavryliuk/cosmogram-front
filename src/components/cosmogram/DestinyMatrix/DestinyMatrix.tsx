@@ -158,6 +158,8 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   const rRing = size * 0.26;
   const rCore = size * 0.135;
   const nodeR = size * 0.052;
+  // Між вузлом і краєм схеми: досить далеко, щоб не налізати на коло вузла
+  const rLetter = size * 0.468;
 
   /**
    * Класична матриця — це октаграма з двох накладених квадратів: прямого
@@ -315,6 +317,27 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
             >
               {matrix.center}
             </text>
+          </g>
+
+          {/* Літери позицій: пояснення в панелі посилаються на них
+              («Небо (B + D)», «Центр + рік (C)»), тож їх треба бачити на схемі */}
+          <g aria-hidden="true">
+            {[...personal, ...karmic].map((p) => {
+              const letter = point(c, c, rLetter, p.angle);
+              return (
+                <text
+                  key={p.key}
+                  x={letter.x}
+                  y={letter.y}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontSize={size * 0.04}
+                  className={`${styles.pointLetter} mono`}
+                >
+                  {p.key.toUpperCase()}
+                </text>
+              );
+            })}
           </g>
 
           {/* Кармічні вузли — бірюзові, трохи менші */}
