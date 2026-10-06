@@ -2,23 +2,15 @@
 
 import { useId } from 'react';
 
-import { ELEMENTS, ELEMENT_READINGS, SIGN_ELEMENT } from '@/i18n/elementReadings';
-import type { Element } from '@/i18n/elementReadings';
+import { ELEMENTS, ELEMENT_READINGS } from '@/i18n/elementReadings';
 import { useLocale } from '@/i18n/LocaleProvider';
 import type { PlanetPosition } from '@/types/astrology.types';
+import { countByElement, getDominantElements } from '@/utils/elementBalance';
 
 import styles from './ElementBalance.module.css';
 
 type ElementBalanceProps = {
   planets: PlanetPosition[];
-};
-
-const countByElement = (planets: PlanetPosition[]) => {
-  const counts: Record<Element, number> = { fire: 0, earth: 0, air: 0, water: 0 };
-  planets.forEach(({ sign }) => {
-    counts[SIGN_ELEMENT[sign]] += 1;
-  });
-  return counts;
 };
 
 export const ElementBalance = ({ planets }: ElementBalanceProps) => {
@@ -29,9 +21,8 @@ export const ElementBalance = ({ planets }: ElementBalanceProps) => {
   if (planets.length === 0) return null;
 
   const counts = countByElement(planets);
-  const max = Math.max(...ELEMENTS.map((element) => counts[element]));
   // При рівності показуємо всі лідерні стихії — вибрати одну було б нечесно
-  const dominant = ELEMENTS.filter((element) => counts[element] === max);
+  const dominant = getDominantElements(counts);
 
   return (
     <section className={styles.wrap} aria-labelledby={titleId}>

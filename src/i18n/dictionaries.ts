@@ -104,6 +104,11 @@ export type Dictionary = {
     sunSignPrefix: string;
     elementsTitle: string;
     elementsDominant: string;
+    summaryTitle: string;
+    summarySunLabel: string;
+    summaryElementLabel: string;
+    summaryCenterLabel: string;
+    summaryElementTie: string;
     wheelLabel: string;
     retrograde: string;
     midheavenPrefix: string;
@@ -348,6 +353,12 @@ const en: Dictionary = {
     sunSignPrefix: 'Zodiac sign (Sun) —',
     elementsTitle: 'Balance of elements',
     elementsDominant: 'Dominant',
+    summaryTitle: 'The chart at a glance',
+    summarySunLabel: 'Zodiac sign · Sun',
+    summaryElementLabel: 'Dominant element',
+    summaryCenterLabel: 'Destiny Matrix centre',
+    summaryElementTie:
+      'Several elements are equally strong — no single temperament leads. See the balance of elements under the natal chart.',
     wheelLabel: 'Natal chart with planet positions',
     retrograde: 'Retrograde',
     midheavenPrefix: 'Midheaven —',
@@ -605,6 +616,12 @@ const uk: Dictionary = {
     sunSignPrefix: 'Знак зодіаку (Сонце) —',
     elementsTitle: 'Баланс стихій',
     elementsDominant: 'Переважає',
+    summaryTitle: 'Коротко про карту',
+    summarySunLabel: 'Знак зодіаку · Сонце',
+    summaryElementLabel: 'Провідна стихія',
+    summaryCenterLabel: 'Центр матриці долі',
+    summaryElementTie:
+      'Кілька стихій однаково сильні — жоден темперамент не домінує. Деталі — у балансі стихій під натальною картою.',
     wheelLabel: 'Натальна карта з позиціями планет',
     retrograde: 'Ретроградний',
     midheavenPrefix: 'Середина неба —',
@@ -861,6 +878,12 @@ const pl: Dictionary = {
     sunSignPrefix: 'Znak zodiaku (Słońce) —',
     elementsTitle: 'Równowaga żywiołów',
     elementsDominant: 'Przeważa',
+    summaryTitle: 'Mapa w skrócie',
+    summarySunLabel: 'Znak zodiaku · Słońce',
+    summaryElementLabel: 'Dominujący żywioł',
+    summaryCenterLabel: 'Centrum Matrycy Przeznaczenia',
+    summaryElementTie:
+      'Kilka żywiołów jest równie silnych — żaden temperament nie dominuje. Szczegóły w równowadze żywiołów pod mapą natalną.',
     wheelLabel: 'Mapa natalna z pozycjami planet',
     retrograde: 'Retrogradacja',
     midheavenPrefix: 'Medium Coeli —',

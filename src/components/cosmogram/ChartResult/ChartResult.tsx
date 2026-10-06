@@ -2,6 +2,7 @@
 
 import { ChartCarousel } from '@/components/cosmogram/ChartCarousel';
 import type { ChartSlide } from '@/components/cosmogram/ChartCarousel';
+import { ChartSummary } from '@/components/cosmogram/ChartSummary';
 import { DestinyMatrix } from '@/components/cosmogram/DestinyMatrix';
 import { ElementBalance } from '@/components/cosmogram/ElementBalance';
 import { ExportCard } from '@/components/cosmogram/ExportCard';
@@ -112,6 +113,7 @@ export const ChartResult = ({ profile }: ChartResultProps) => {
 
   return (
     <>
+      <ChartSummary profile={profile} />
       <ChartCarousel slides={slides} />
 
       <ExportCard
