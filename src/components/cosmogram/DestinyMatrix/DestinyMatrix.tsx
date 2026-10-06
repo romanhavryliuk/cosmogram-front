@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { ArcanaDetails } from '@/components/cosmogram/ArcanaDetails';
 import { useArcanaLabels } from '@/hooks/useArcanaLabels';
 import { useRevealElement } from '@/hooks/useRevealElement';
+import { MATRIX_POSITION_NOTES, isMatrixPositionKey } from '@/i18n/arcana';
 import { useLocale } from '@/i18n/LocaleProvider';
 import type {
   AncestralLine,
@@ -54,7 +55,7 @@ const toPolygon = (points: { x: number; y: number }[]) =>
   points.map((p) => `${p.x},${p.y}`).join(' ');
 
 export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const gradientId = useId();
   const { getArcana } = useArcanaLabels();
   const [selected, setSelected] = useState<MatrixNode | null>(null);
@@ -400,6 +401,11 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
           <ArcanaDetails
             value={selected?.value ?? null}
             sourceLabel={selected?.label}
+            positionNote={
+              selected && isMatrixPositionKey(selected.key)
+                ? MATRIX_POSITION_NOTES[locale][selected.key]
+                : undefined
+            }
           />
         </div>
 

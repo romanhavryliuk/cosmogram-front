@@ -360,3 +360,75 @@ export const ARCANA_LABELS: Record<
     },
   },
 };
+
+export type MatrixPositionKey =
+  | 'center'
+  | 'a'
+  | 'b'
+  | 'c'
+  | 'd'
+  | 'e'
+  | 'f'
+  | 'g'
+  | 'h'
+  | 'money'
+  | 'love';
+
+/**
+ * Що означає сама позиція в матриці — незалежно від того, який аркан на
+ * ній випав. Без цього «Особистий» чи «Кармічний» нічого не пояснюють:
+ * незрозуміло, чому аркан тут і за яку сферу він відповідає.
+ * Звідки береться кожне число — так само, як рахує бекенд
+ * (numerology-service): A — день, B — місяць, C — рік, D — їхня сума,
+ * кармічні точки — суми сусідніх особистих.
+ */
+export const MATRIX_POSITION_NOTES: Record<
+  Locale,
+  Record<MatrixPositionKey, string>
+> = {
+  en: {
+    center:
+      'The sum of all four personal arcana — the core of the chart: the energy you feel most at home in.',
+    a: 'From your birth day — how you come across: your first impression and visible character.',
+    b: 'From your birth month — your talents and the inner resource you can lean on.',
+    c: 'From your birth year — the material side: how you act and build your life in the world.',
+    d: 'The sum of day, month and year — the main lesson of the chart, a quality that grows through effort.',
+    e: 'Day + month, part of the paternal line — attitudes and strengths passed down through your father’s side.',
+    f: 'Month + year, part of the maternal line — what you carry from your mother’s side.',
+    g: 'Year + lesson, part of the paternal line — the practical, worldly side of that inheritance.',
+    h: 'Lesson + day, part of the maternal line — the everyday, emotional side of that inheritance.',
+    money: 'Centre + lesson — how you relate to money and work, and what helps it flow.',
+    love: 'Centre + talents — how you love and what you look for in a close bond.',
+  },
+  uk: {
+    center:
+      'Сума всіх чотирьох особистих арканів — серце матриці: енергія, у якій тобі найкомфортніше.',
+    a: 'З дня народження — яким тебе бачать: перше враження й помітні риси характеру.',
+    b: 'З місяця народження — твої таланти й внутрішній ресурс, на який можна спертися.',
+    c: 'З року народження — матеріальний бік: як ти дієш і будуєш життя у світі.',
+    d: 'Сума дня, місяця й року — головний урок матриці, якість, що розвивається через зусилля.',
+    e: 'День + місяць, частина батьківської лінії — установки й сильні сторони, що прийшли з боку батька.',
+    f: 'Місяць + рік, частина материнської лінії — те, що ти несеш із боку матері.',
+    g: 'Рік + урок, частина батьківської лінії — практичний, «земний» бік цього спадку.',
+    h: 'Урок + день, частина материнської лінії — побутовий, емоційний бік цього спадку.',
+    money: 'Центр + урок — твоє ставлення до грошей і роботи та що допомагає їм приходити.',
+    love: 'Центр + таланти — як ти любиш і чого шукаєш у близьких стосунках.',
+  },
+  pl: {
+    center:
+      'Suma wszystkich czterech arkanów osobistych — serce matrycy: energia, w której czujesz się najswobodniej.',
+    a: 'Z dnia urodzenia — jak cię odbierają: pierwsze wrażenie i widoczne cechy charakteru.',
+    b: 'Z miesiąca urodzenia — twoje talenty i wewnętrzny zasób, na którym możesz się oprzeć.',
+    c: 'Z roku urodzenia — strona materialna: jak działasz i budujesz życie w świecie.',
+    d: 'Suma dnia, miesiąca i roku — główna lekcja matrycy, cecha, która rozwija się przez wysiłek.',
+    e: 'Dzień + miesiąc, część linii ojca — przekonania i mocne strony przekazane ze strony ojca.',
+    f: 'Miesiąc + rok, część linii matki — to, co niesiesz ze strony matki.',
+    g: 'Rok + lekcja, część linii ojca — praktyczna, „przyziemna” strona tego dziedzictwa.',
+    h: 'Lekcja + dzień, część linii matki — codzienna, emocjonalna strona tego dziedzictwa.',
+    money: 'Centrum + lekcja — twój stosunek do pieniędzy i pracy oraz to, co pomaga im napływać.',
+    love: 'Centrum + talenty — jak kochasz i czego szukasz w bliskiej relacji.',
+  },
+};
+
+export const isMatrixPositionKey = (key: string): key is MatrixPositionKey =>
+  key in MATRIX_POSITION_NOTES.en;
