@@ -26,7 +26,7 @@ export const Hero = () => {
             <Link href="/register" className={`${styles.btn} ${styles.btnPrimary}`}>
               {t.hero.primaryCta}
             </Link>
-            <a href="#how" className={`${styles.btn} ${styles.btnGhost}`}>
+            <a href="#result" className={`${styles.btn} ${styles.btnGhost}`}>
               {t.hero.ghostCta}
             </a>
           </div>

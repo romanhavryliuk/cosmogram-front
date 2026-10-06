@@ -1,13 +1,16 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { Fragment, useId, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import clsx from 'clsx';
 
 import { ArcanaDetails } from '@/components/cosmogram/ArcanaDetails';
 import { useArcanaLabels } from '@/hooks/useArcanaLabels';
 import { useLocale } from '@/i18n/LocaleProvider';
-import type { DestinyMatrix as DestinyMatrixData } from '@/types/astrology.types';
+import type {
+  AncestralLine,
+  DestinyMatrix as DestinyMatrixData,
+} from '@/types/astrology.types';
 import { roundCoord } from '@/utils/geometry';
 
 import styles from './DestinyMatrix.module.css';
@@ -17,14 +20,15 @@ type DestinyMatrixProps = {
   size?: number;
 };
 
-/** Яку позицію в матриці займає обраний аркан — показуємо в панелі тлумачення */
-type ArcanaSource = 'center' | 'personal' | 'karmic';
-
 /**
- * Вибір тримаємо за ключем вузла, а не за значенням: два вузли можуть мати
- * однакове число, і тоді підсвітились би обидва.
+ * Будь-яке число матриці, яке можна відкрити. Вибір тримаємо за ключем,
+ * а не за значенням: два вузли можуть мати однакове число, і тоді
+ * підсвітились би обидва. label — позиція, яку покаже панель тлумачення.
  */
-type MatrixNode = { key: string; value: number; source: ArcanaSource };
+type MatrixNode = { key: string; value: number; label: string };
+
+/** Родова лінія: два аркани й їхня сума — кожне число відкривається окремо */
+const LINE_PARTS = ['first', 'second', 'total'] as const;
 
 const point = (cx: number, cy: number, radius: number, degrees: number) => {
   const radians = ((degrees - 90) * Math.PI) / 180;
@@ -44,11 +48,7 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   const [selected, setSelected] = useState<MatrixNode | null>(null);
   const { purpose, ancestralPrograms, familyPower } = matrix;
 
-  const sourceLabels: Record<ArcanaSource, string> = {
-    center: t.result.arcanaSourceCenter,
-    personal: t.result.arcanaSourcePersonal,
-    karmic: t.result.arcanaSourceKarmic,
-  };
+  const detailsRef = useRef<HTMLDivElement>(null);
 
   const isSelected = (node: MatrixNode) => selected?.key === node.key;
 
@@ -57,12 +57,84 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   const toggle = (node: MatrixNode) =>
     setSelected((current) => (current?.key === node.key ? null : node));
 
+  /**
+   * Числа під схемою: панель тлумачення стоїть вище, і на телефоні
+   * вона відкрилась би поза екраном. Підтягуємо її в поле зору.
+   */
+  const toggleAndReveal = (node: MatrixNode) => {
+    toggle(node);
+    if (isSelected(node)) return;
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    // Після рендеру панель уже містить тлумачення, тож міряємо правильну висоту
+    requestAnimationFrame(() =>
+      detailsRef.current?.scrollIntoView({
+        block: 'nearest',
+        behavior: reduceMotion ? 'auto' : 'smooth',
+      }),
+    );
+  };
+
   // Скрінрідер має почути не лише число, а й назву аркана та позицію
   const nodeLabel = (node: MatrixNode) => {
     const name = getArcana(node.value)?.name;
-    const source = sourceLabels[node.source];
-    return name ? `${node.value} — ${name}, ${source}` : `${node.value}, ${source}`;
+    return name
+      ? `${node.value} — ${name}, ${node.label}`
+      : `${node.value}, ${node.label}`;
   };
+
+  // Числа під схемою — звичайні <button>, тож клавіатура працює нативно
+  const renderStat = (node: MatrixNode, caption: string = node.label) => (
+    <button
+      key={node.key}
+      type="button"
+      className={clsx(
+        styles.stat,
+        styles.statButton,
+        isSelected(node) && styles.statSelected,
+      )}
+      aria-pressed={isSelected(node)}
+      aria-label={nodeLabel(node)}
+      onClick={() => toggleAndReveal(node)}
+    >
+      <span className={`${styles.statValue} mono`}>{node.value}</span>
+      <span className={styles.statLabel}>{caption}</span>
+    </button>
+  );
+
+  const renderLine = (prefix: string, line: AncestralLine, lineLabel: string) => (
+    <span className={`${styles.ancestralLineValue} mono`}>
+      {LINE_PARTS.map((part, index) => {
+        const node: MatrixNode = {
+          key: `${prefix}-${part}`,
+          value: line[part],
+          label: lineLabel,
+        };
+        return (
+          <Fragment key={node.key}>
+            {index > 0 && (
+              <span className={styles.separator} aria-hidden="true">
+                ·
+              </span>
+            )}
+            <button
+              type="button"
+              className={clsx(
+                styles.lineValue,
+                isSelected(node) && styles.lineValueSelected,
+              )}
+              aria-pressed={isSelected(node)}
+              aria-label={nodeLabel(node)}
+              onClick={() => toggleAndReveal(node)}
+            >
+              {node.value}
+            </button>
+          </Fragment>
+        );
+      })}
+    </span>
+  );
 
   // <g role="button"> сам не реагує на клавіатуру — додаємо Enter і пробіл,
   // як у нативної кнопки
@@ -90,7 +162,7 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   const centerNode: MatrixNode = {
     key: 'center',
     value: matrix.center,
-    source: 'center',
+    label: t.result.arcanaSourceCenter,
   };
 
   const personal = [
@@ -100,7 +172,7 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
     { key: 'd', value: matrix.personal.d, angle: 270 },
   ].map((item) => ({
     ...item,
-    source: 'personal' as const,
+    label: t.result.arcanaSourcePersonal,
     ...point(c, c, rPoint, item.angle),
   }));
 
@@ -111,7 +183,7 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
     { key: 'h', value: matrix.karmic.h, angle: 315 },
   ].map((item) => ({
     ...item,
-    source: 'karmic' as const,
+    label: t.result.arcanaSourceKarmic,
     ...point(c, c, rPoint, item.angle),
   }));
 
@@ -293,10 +365,12 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
         ))}
       </svg>
 
-      <ArcanaDetails
-        value={selected?.value ?? null}
-        sourceLabel={selected ? sourceLabels[selected.source] : undefined}
-      />
+      <div ref={detailsRef} className={styles.details}>
+        <ArcanaDetails
+          value={selected?.value ?? null}
+          sourceLabel={selected?.label}
+        />
+      </div>
 
       <div className={styles.legend}>
         <span className={styles.legendItem}>
@@ -310,22 +384,22 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
       </div>
 
       <div className={styles.stats}>
-        <div className={styles.stat}>
-          <span className={`${styles.statValue} mono`}>{matrix.money}</span>
-          <span className={styles.statLabel}>{t.result.matrixMoneyLabel}</span>
-        </div>
-        <div className={styles.stat}>
-          <span className={`${styles.statValue} mono`}>{matrix.love}</span>
-          <span className={styles.statLabel}>{t.result.matrixLoveLabel}</span>
-        </div>
-        {typeof familyPower === 'number' && (
-          <div className={styles.stat}>
-            <span className={`${styles.statValue} mono`}>{familyPower}</span>
-            <span className={styles.statLabel}>
-              {t.result.matrixFamilyPowerLabel}
-            </span>
-          </div>
-        )}
+        {renderStat({
+          key: 'money',
+          value: matrix.money,
+          label: t.result.matrixMoneyLabel,
+        })}
+        {renderStat({
+          key: 'love',
+          value: matrix.love,
+          label: t.result.matrixLoveLabel,
+        })}
+        {typeof familyPower === 'number' &&
+          renderStat({
+            key: 'familyPower',
+            value: familyPower,
+            label: t.result.matrixFamilyPowerLabel,
+          })}
       </div>
 
       {purpose && (
@@ -334,30 +408,30 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
             {t.result.matrixPurposeLabel}
           </span>
           <div className={styles.stats}>
-            <div className={styles.stat}>
-              <span className={`${styles.statValue} mono`}>
-                {purpose.personal}
-              </span>
-              <span className={styles.statLabel}>
-                {t.result.matrixPurposePersonalLabel}
-              </span>
-            </div>
-            <div className={styles.stat}>
-              <span className={`${styles.statValue} mono`}>
-                {purpose.social}
-              </span>
-              <span className={styles.statLabel}>
-                {t.result.matrixPurposeSocialLabel}
-              </span>
-            </div>
-            <div className={styles.stat}>
-              <span className={`${styles.statValue} mono`}>
-                {purpose.spiritual}
-              </span>
-              <span className={styles.statLabel}>
-                {t.result.matrixPurposeSpiritualLabel}
-              </span>
-            </div>
+            {renderStat(
+              {
+                key: 'purposePersonal',
+                value: purpose.personal,
+                label: `${t.result.matrixPurposeLabel} · ${t.result.matrixPurposePersonalLabel}`,
+              },
+              t.result.matrixPurposePersonalLabel,
+            )}
+            {renderStat(
+              {
+                key: 'purposeSocial',
+                value: purpose.social,
+                label: `${t.result.matrixPurposeLabel} · ${t.result.matrixPurposeSocialLabel}`,
+              },
+              t.result.matrixPurposeSocialLabel,
+            )}
+            {renderStat(
+              {
+                key: 'purposeSpiritual',
+                value: purpose.spiritual,
+                label: `${t.result.matrixPurposeLabel} · ${t.result.matrixPurposeSpiritualLabel}`,
+              },
+              t.result.matrixPurposeSpiritualLabel,
+            )}
           </div>
         </div>
       )}
@@ -372,21 +446,13 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
               <span className={styles.ancestralLineLabel}>
                 {t.result.matrixPaternalLabel}
               </span>
-              <span className={`${styles.ancestralLineValue} mono`}>
-                {ancestralPrograms.paternal.first} ·{' '}
-                {ancestralPrograms.paternal.second} ·{' '}
-                {ancestralPrograms.paternal.total}
-              </span>
+              {renderLine('paternal', ancestralPrograms.paternal, t.result.matrixPaternalLabel)}
             </div>
             <div className={styles.ancestralLine}>
               <span className={styles.ancestralLineLabel}>
                 {t.result.matrixMaternalLabel}
               </span>
-              <span className={`${styles.ancestralLineValue} mono`}>
-                {ancestralPrograms.maternal.first} ·{' '}
-                {ancestralPrograms.maternal.second} ·{' '}
-                {ancestralPrograms.maternal.total}
-              </span>
+              {renderLine('maternal', ancestralPrograms.maternal, t.result.matrixMaternalLabel)}
             </div>
           </div>
         </div>

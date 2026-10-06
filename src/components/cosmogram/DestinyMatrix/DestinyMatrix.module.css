@@ -43,6 +43,66 @@
   filter: drop-shadow(0 0 6px rgba(240, 217, 138, 0.7));
 }
 
+.details {
+  width: 100%;
+  /* Відступ від краю екрана, коли панель підтягується в поле зору */
+  scroll-margin: 24px;
+}
+
+/* Числа під схемою — кнопки, але без кнопкового вигляду: виділяємо
+   лише рамкою, щоб не перетворити блок статистики на панель кнопок */
+.statButton {
+  padding: 8px 6px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.statButton:hover {
+  border-color: var(--line);
+}
+
+.statSelected,
+.statSelected:hover {
+  border-color: var(--gold-dim);
+  background: rgba(217, 179, 77, 0.06);
+}
+
+.statSelected .statValue {
+  color: var(--gold-soft);
+}
+
+.separator {
+  margin: 0 6px;
+  color: var(--muted);
+}
+
+.lineValue {
+  padding: 2px 5px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.lineValue:hover {
+  border-color: var(--line);
+}
+
+.lineValueSelected,
+.lineValueSelected:hover {
+  border-color: var(--gold-dim);
+  color: var(--gold-soft);
+}
+
 .center {
   fill: var(--parchment);
   font-weight: 500;
@@ -90,9 +150,11 @@
   border-color: var(--teal);
 }
 
+/* Кнопки чисел мають власний паддінг 6px з боків, тож проміжок менший:
+   візуальна відстань між числами лишається ~28px, як до інтерактивності */
 .stats {
   display: flex;
-  gap: 28px;
+  gap: 16px;
 }
 
 .stat {
