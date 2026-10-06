@@ -109,6 +109,7 @@ export type Dictionary = {
     summaryElementLabel: string;
     summaryCenterLabel: string;
     summaryElementTie: string;
+    summaryMoonUncertain: string;
     wheelLabel: string;
     retrograde: string;
     midheavenPrefix: string;
@@ -359,6 +360,7 @@ const en: Dictionary = {
     summaryCenterLabel: 'Destiny Matrix centre',
     summaryElementTie:
       'Several elements are equally strong — no single temperament leads. See the balance of elements under the natal chart.',
+    summaryMoonUncertain: '(birth time unknown — may be the neighbouring sign)',
     wheelLabel: 'Natal chart with planet positions',
     retrograde: 'Retrograde',
     midheavenPrefix: 'Midheaven —',
@@ -622,6 +624,7 @@ const uk: Dictionary = {
     summaryCenterLabel: 'Центр матриці долі',
     summaryElementTie:
       'Кілька стихій однаково сильні — жоден темперамент не домінує. Деталі — у балансі стихій під натальною картою.',
+    summaryMoonUncertain: '(час невідомий — можливо, сусідній знак)',
     wheelLabel: 'Натальна карта з позиціями планет',
     retrograde: 'Ретроградний',
     midheavenPrefix: 'Середина неба —',
@@ -884,6 +887,7 @@ const pl: Dictionary = {
     summaryCenterLabel: 'Centrum Matrycy Przeznaczenia',
     summaryElementTie:
       'Kilka żywiołów jest równie silnych — żaden temperament nie dominuje. Szczegóły w równowadze żywiołów pod mapą natalną.',
+    summaryMoonUncertain: '(godzina nieznana — możliwy sąsiedni znak)',
     wheelLabel: 'Mapa natalna z pozycjami planet',
     retrograde: 'Retrogradacja',
     midheavenPrefix: 'Medium Coeli —',

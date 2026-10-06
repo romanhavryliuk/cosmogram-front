@@ -12,6 +12,13 @@ import { countByElement, getDominantElements } from '@/utils/elementBalance';
 
 import styles from './ChartSummary.module.css';
 
+/**
+ * Без часу карту рахують на полудень, а Місяць проходить ~13° на добу —
+ * до ±6.5° похибки. Ближче цього до межі знака сам знак Місяця не певний
+ */
+const MOON_UNCERTAINTY_DEGREES = 6.5;
+const SIGN_DEGREES = 30;
+
 type ChartSummaryProps = {
   profile: CosmogramView;
 };
@@ -20,6 +27,8 @@ type SummaryItem = {
   key: string;
   label: string;
   value: string;
+  /** Короткі уточнення під значенням — напр. Місяць і Асцендент біля Сонця */
+  details?: string;
   text: string;
 };
 
@@ -39,10 +48,31 @@ export const ChartSummary = ({ profile }: ChartSummaryProps) => {
 
   const sun = planets.find(({ planet }) => planet === 'sun');
   if (sun) {
+    // «Велика трійка» астрології: Сонце, Місяць і Асцендент. Асцендент
+    // залежить від часу народження — без нього рядок просто коротший
+    const moon = planets.find(({ planet }) => planet === 'moon');
+    const ascendantSign = profile.chart.houses.find(
+      (house) => house.house === 1,
+    )?.sign;
+    const isMoonSignUncertain =
+      !ascendantSign &&
+      moon !== undefined &&
+      (moon.degree < MOON_UNCERTAINTY_DEGREES ||
+        moon.degree > SIGN_DEGREES - MOON_UNCERTAINTY_DEGREES);
+    const details = [
+      moon &&
+        `${labels.planet.moon} — ${labels.sign[moon.sign]}${
+          isMoonSignUncertain ? ` ${t.result.summaryMoonUncertain}` : ''
+        }`,
+      ascendantSign &&
+        `${t.result.ascendantPrefix} ${labels.sign[ascendantSign]}`,
+    ].filter((line): line is string => Boolean(line));
+
     items.push({
       key: 'sun',
       label: t.result.summarySunLabel,
       value: labels.sign[sun.sign],
+      details: details.join(' · ') || undefined,
       text: NATAL_READINGS[locale].sign[sun.sign],
     });
   }
@@ -84,6 +114,9 @@ export const ChartSummary = ({ profile }: ChartSummaryProps) => {
           <li key={item.key} className={styles.item}>
             <span className={styles.label}>{item.label}</span>
             <span className={styles.value}>{item.value}</span>
+            {item.details && (
+              <span className={styles.details}>{item.details}</span>
+            )}
             <p className={styles.text}>{item.text}</p>
           </li>
         ))}

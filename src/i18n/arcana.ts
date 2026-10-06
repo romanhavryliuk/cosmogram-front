@@ -407,8 +407,8 @@ export const MATRIX_POSITION_NOTES: Record<
     f: 'Month + year, the upper point of the maternal line — the spiritual programme from your mother’s side.',
     g: 'Year + lesson, the lower point of the paternal line — the material programme of your father’s side: money, work, ways of living.',
     h: 'Lesson + day, the lower point of the maternal line — the material programme of your mother’s side.',
-    money: 'Centre + lesson — how you relate to money and work, and what helps it flow.',
-    love: 'Centre + talents — how you love and what you look for in a close bond.',
+    money: 'Centre + year (C), the entry to the money channel — the kind of work and attitude through which income comes most naturally.',
+    love: 'Centre + lesson (D), the entry to the relationship channel — how you love and what you look for in a close bond.',
     familyPower:
       'The sum of the four karmic arcana — the support your family line gives you, the strength you can draw on from your roots.',
     purposePersonal:
@@ -441,8 +441,8 @@ export const MATRIX_POSITION_NOTES: Record<
     f: 'Місяць + рік, верхня точка материнської лінії — духовна програма з боку матері.',
     g: 'Рік + урок, нижня точка батьківської лінії — матеріальна програма роду батька: гроші, робота, уклад життя.',
     h: 'Урок + день, нижня точка материнської лінії — матеріальна програма роду матері.',
-    money: 'Центр + урок — твоє ставлення до грошей і роботи та що допомагає їм приходити.',
-    love: 'Центр + таланти — як ти любиш і чого шукаєш у близьких стосунках.',
+    money: 'Центр + рік (C), вхід у грошовий канал — справа й підхід, через які дохід приходить найприродніше.',
+    love: 'Центр + урок (D), вхід у канал стосунків — як ти любиш і чого шукаєш у близьких стосунках.',
     familyPower:
       'Сума чотирьох кармічних арканів — підтримка твого роду, сила, яку можна черпати з коріння.',
     purposePersonal:
@@ -475,8 +475,8 @@ export const MATRIX_POSITION_NOTES: Record<
     f: 'Miesiąc + rok, górny punkt linii matki — duchowy program ze strony matki.',
     g: 'Rok + lekcja, dolny punkt linii ojca — materialny program rodu ojca: pieniądze, praca, sposób życia.',
     h: 'Lekcja + dzień, dolny punkt linii matki — materialny program rodu matki.',
-    money: 'Centrum + lekcja — twój stosunek do pieniędzy i pracy oraz to, co pomaga im napływać.',
-    love: 'Centrum + talenty — jak kochasz i czego szukasz w bliskiej relacji.',
+    money: 'Centrum + rok (C), wejście do kanału pieniędzy — zajęcie i podejście, przez które dochód przychodzi najnaturalniej.',
+    love: 'Centrum + lekcja (D), wejście do kanału relacji — jak kochasz i czego szukasz w bliskiej relacji.',
     familyPower:
       'Suma czterech arkanów karmicznych — wsparcie twojego rodu, siła, którą możesz czerpać z korzeni.',
     purposePersonal:

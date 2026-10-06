@@ -44,6 +44,12 @@
   line-height: 1.25;
 }
 
+.details {
+  color: var(--teal);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .text {
   color: var(--parchment-dim);
   font-size: 13px;
