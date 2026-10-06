@@ -159,6 +159,11 @@ export type Dictionary = {
     profileText: string;
     retryCta: string;
     backToListCta: string;
+    /** Межа помилок: неперехоплений збій рендеру */
+    crashTitle: string;
+    crashText: string;
+    /** Підпис до error.digest — єдиного ідентифікатора збою, видимого в проді */
+    crashCodePrefix: string;
   };
   notFound: {
     title: string;
@@ -354,6 +359,10 @@ const en: Dictionary = {
       'It may have been deleted, or the server is unavailable right now.',
     retryCta: 'Try Again',
     backToListCta: 'Back to Saved Charts',
+    crashTitle: 'Something went wrong',
+    crashText:
+      'This section failed to render. Trying again usually helps — your saved charts are not affected.',
+    crashCodePrefix: 'Error code:',
   },
   notFound: {
     title: 'Page not found',
@@ -548,6 +557,10 @@ const uk: Dictionary = {
     profileText: 'Можливо, її видалено, або сервер зараз недоступний.',
     retryCta: 'Спробувати ще раз',
     backToListCta: 'До збережених карт',
+    crashTitle: 'Щось пішло не так',
+    crashText:
+      'Цей розділ не вдалося відобразити. Зазвичай допомагає повторна спроба — збережені карти не постраждали.',
+    crashCodePrefix: 'Код помилки:',
   },
   notFound: {
     title: 'Сторінку не знайдено',
@@ -742,6 +755,10 @@ const pl: Dictionary = {
     profileText: 'Mogła zostać usunięta lub serwer jest chwilowo niedostępny.',
     retryCta: 'Spróbuj ponownie',
     backToListCta: 'Wróć do zapisanych map',
+    crashTitle: 'Coś poszło nie tak',
+    crashText:
+      'Nie udało się wyświetlić tej sekcji. Zwykle pomaga ponowna próba — zapisane mapy są bezpieczne.',
+    crashCodePrefix: 'Kod błędu:',
   },
   notFound: {
     title: 'Nie znaleziono strony',

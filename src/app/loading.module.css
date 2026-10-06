@@ -1,0 +1,10 @@
+/* Фолбек на переходах між роутами: тримаємо помітну висоту, щоб шапка
+   й підвал не стрибали, поки сторінка не змонтувалась */
+.wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 55vh;
+  align-items: center;
+  justify-content: center;
+}

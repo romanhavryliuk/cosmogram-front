@@ -28,9 +28,36 @@ const plexMono = IBM_Plex_Mono({
   variable: '--font-mono',
 });
 
+const SITE_NAME = 'Cosmogram';
+const SITE_DESCRIPTION =
+  'Natal chart and numerology based on your birth date';
+
+/**
+ * Абсолютна база для OG-тегів: без неї Next не вміє зробити з відносних
+ * шляхів абсолютні URL, і прев'ю в соцмережах не збирається.
+ */
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+
 export const metadata: Metadata = {
-  title: 'Cosmogram',
-  description: 'Natal chart and numerology based on your birth date',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: SITE_NAME,
+    // Сторінки задають лише свою частину, суфікс бренду додається сам
+    template: `%s · ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  openGraph: {
+    type: 'website',
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({
