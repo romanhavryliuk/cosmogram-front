@@ -372,7 +372,17 @@ export type MatrixPositionKey =
   | 'g'
   | 'h'
   | 'money'
-  | 'love';
+  | 'love'
+  | 'familyPower'
+  | 'purposePersonal'
+  | 'purposeSocial'
+  | 'purposeSpiritual'
+  | 'paternal-first'
+  | 'paternal-second'
+  | 'paternal-total'
+  | 'maternal-first'
+  | 'maternal-second'
+  | 'maternal-total';
 
 /**
  * Що означає сама позиція в матриці — незалежно від того, який аркан на
@@ -399,6 +409,26 @@ export const MATRIX_POSITION_NOTES: Record<
     h: 'Lesson + day, part of the maternal line — the everyday, emotional side of that inheritance.',
     money: 'Centre + lesson — how you relate to money and work, and what helps it flow.',
     love: 'Centre + talents — how you love and what you look for in a close bond.',
+    familyPower:
+      'The sum of the four karmic arcana — the support your family line gives you, the strength you can draw on from your roots.',
+    purposePersonal:
+      'The same as the centre — finding yourself and your own path. Tradition links it to roughly ages 20–40.',
+    purposeSocial:
+      'The sum of the karmic arcana — your role among people: work, family, community. Tradition links it to roughly ages 40–60.',
+    purposeSpiritual:
+      'Personal + social purpose — what ties the two together and gives life meaning in its later years.',
+    'paternal-first':
+      'The first point of the paternal line (E, day + month) — attitudes and strengths from your father’s side.',
+    'paternal-second':
+      'The second point of the paternal line (G, year + lesson) — the practical side of that inheritance.',
+    'paternal-total':
+      'E + G — the overall programme of the paternal line: what it asks you to continue or rework.',
+    'maternal-first':
+      'The first point of the maternal line (F, month + year) — what you carry from your mother’s side.',
+    'maternal-second':
+      'The second point of the maternal line (H, lesson + day) — the everyday, emotional side of that inheritance.',
+    'maternal-total':
+      'F + H — the overall programme of the maternal line: what it asks you to continue or rework.',
   },
   uk: {
     center:
@@ -413,6 +443,26 @@ export const MATRIX_POSITION_NOTES: Record<
     h: 'Урок + день, частина материнської лінії — побутовий, емоційний бік цього спадку.',
     money: 'Центр + урок — твоє ставлення до грошей і роботи та що допомагає їм приходити.',
     love: 'Центр + таланти — як ти любиш і чого шукаєш у близьких стосунках.',
+    familyPower:
+      'Сума чотирьох кармічних арканів — підтримка твого роду, сила, яку можна черпати з коріння.',
+    purposePersonal:
+      'Те саме число, що й центр, — пошук себе й власного шляху. Традиція пов’язує його приблизно з віком 20–40 років.',
+    purposeSocial:
+      'Сума кармічних арканів — твоя роль серед людей: робота, сім’я, спільнота. Традиція пов’язує його приблизно з віком 40–60 років.',
+    purposeSpiritual:
+      'Особисте + соціальне призначення — те, що поєднує обидва й надає життю сенсу в зрілі роки.',
+    'paternal-first':
+      'Перша точка батьківської лінії (E, день + місяць) — установки й сильні сторони з боку батька.',
+    'paternal-second':
+      'Друга точка батьківської лінії (G, рік + урок) — практичний бік цього спадку.',
+    'paternal-total':
+      'E + G — загальна програма батьківської лінії: що вона пропонує продовжити чи переосмислити.',
+    'maternal-first':
+      'Перша точка материнської лінії (F, місяць + рік) — те, що ти несеш із боку матері.',
+    'maternal-second':
+      'Друга точка материнської лінії (H, урок + день) — побутовий, емоційний бік цього спадку.',
+    'maternal-total':
+      'F + H — загальна програма материнської лінії: що вона пропонує продовжити чи переосмислити.',
   },
   pl: {
     center:
@@ -427,6 +477,26 @@ export const MATRIX_POSITION_NOTES: Record<
     h: 'Lekcja + dzień, część linii matki — codzienna, emocjonalna strona tego dziedzictwa.',
     money: 'Centrum + lekcja — twój stosunek do pieniędzy i pracy oraz to, co pomaga im napływać.',
     love: 'Centrum + talenty — jak kochasz i czego szukasz w bliskiej relacji.',
+    familyPower:
+      'Suma czterech arkanów karmicznych — wsparcie twojego rodu, siła, którą możesz czerpać z korzeni.',
+    purposePersonal:
+      'To samo co centrum — odnalezienie siebie i własnej drogi. Tradycja wiąże je mniej więcej z wiekiem 20–40 lat.',
+    purposeSocial:
+      'Suma arkanów karmicznych — twoja rola wśród ludzi: praca, rodzina, społeczność. Tradycja wiąże je mniej więcej z wiekiem 40–60 lat.',
+    purposeSpiritual:
+      'Przeznaczenie osobiste + społeczne — to, co łączy oba i nadaje życiu sens w dojrzałych latach.',
+    'paternal-first':
+      'Pierwszy punkt linii ojca (E, dzień + miesiąc) — przekonania i mocne strony ze strony ojca.',
+    'paternal-second':
+      'Drugi punkt linii ojca (G, rok + lekcja) — praktyczna strona tego dziedzictwa.',
+    'paternal-total':
+      'E + G — ogólny program linii ojca: co proponuje kontynuować lub przemyśleć.',
+    'maternal-first':
+      'Pierwszy punkt linii matki (F, miesiąc + rok) — to, co niesiesz ze strony matki.',
+    'maternal-second':
+      'Drugi punkt linii matki (H, lekcja + dzień) — codzienna, emocjonalna strona tego dziedzictwa.',
+    'maternal-total':
+      'F + H — ogólny program linii matki: co proponuje kontynuować lub przemyśleć.',
   },
 };
 
