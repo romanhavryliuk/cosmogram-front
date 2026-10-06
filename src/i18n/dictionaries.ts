@@ -408,7 +408,7 @@ const en: Dictionary = {
     squareTitle: 'Pythagorean Square',
     squareSubtitle: 'Digit frequency from your birth date',
     emptyCell: '—',
-    squareHint: 'Tap a cell to read what that number of repetitions means.',
+    squareHint: 'Tap a cell or a line below to read what it means for you.',
     squareLinesTitle: 'Lines of the square',
     squareLabels: {
       '1': { short: 'character', full: 'Character, will' },
@@ -671,7 +671,7 @@ const uk: Dictionary = {
     squareTitle: 'Квадрат Піфагора',
     squareSubtitle: 'Повторення цифр у даті народження',
     emptyCell: '—',
-    squareHint: 'Натисни на клітинку, щоб прочитати, що означає така кількість повторень.',
+    squareHint: 'Натисни на клітинку або лінію нижче, щоб прочитати, що вона означає для тебе.',
     squareLinesTitle: 'Лінії квадрата',
     squareLabels: {
       '1': { short: 'характер', full: "Характер, воля" },
@@ -933,7 +933,7 @@ const pl: Dictionary = {
     squareTitle: 'Kwadrat Pitagorasa',
     squareSubtitle: 'Częstotliwość cyfr w dacie urodzenia',
     emptyCell: '—',
-    squareHint: 'Dotknij komórki, aby przeczytać, co oznacza taka liczba powtórzeń.',
+    squareHint: 'Dotknij komórki lub linii poniżej, aby przeczytać, co oznacza dla ciebie.',
     squareLinesTitle: 'Linie kwadratu',
     squareLabels: {
       '1': { short: 'charakter', full: 'Charakter, wola' },

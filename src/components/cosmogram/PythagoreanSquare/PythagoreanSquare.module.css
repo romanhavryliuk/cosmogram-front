@@ -79,17 +79,41 @@
   letter-spacing: 0.08em;
 }
 
+/* Рядок лінії — кнопка: вирівнювання й шрифт скидаємо до вигляду списку */
 .lineRow {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 10px 0;
+  padding: 10px 8px;
+  border: none;
   border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.lineRow:last-child {
+.lines li:last-child .lineRow {
   border-bottom: none;
+}
+
+.lineRow:hover {
+  background: rgba(217, 179, 77, 0.05);
+}
+
+.lineRow:focus-visible {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: -2px;
+}
+
+.lineRowSelected,
+.lineRowSelected:hover {
+  background: rgba(217, 179, 77, 0.09);
+  box-shadow: inset 2px 0 0 var(--gold);
 }
 
 .lineText {
