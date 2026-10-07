@@ -10,9 +10,14 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   pl: 'Polski',
 };
 
+/**
+ * Підписи для людей, не коди. Код української мови за ISO 639-1 — `uk`,
+ * і він лишається в коді (lang, Intl, hreflang). Але «UK» у перемикачі
+ * читається як United Kingdom, тож показуємо звичне «UA»
+ */
 export const LOCALE_SHORT_LABELS: Record<Locale, string> = {
   en: 'EN',
-  uk: 'UK',
+  uk: 'UA',
   pl: 'PL',
 };
 
