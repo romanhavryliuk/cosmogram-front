@@ -86,7 +86,7 @@ export const NATAL_READINGS: Record<Locale, NatalReadings> = {
       pluto: 'Глибина й перетворення: де стикаєшся з владою, кризою і відродженням.',
     },
     sign: {
-      aries: 'Прямо й сміливо — першим починаєш, не любиш чекати.',
+      aries: 'Прямо й сміливо — через ініціативу, швидкий старт і нетерплячість до чекання.',
       taurus: 'Неспішно й чуттєво — через стабільність, комфорт і наполегливість.',
       gemini: 'Допитливо й легко — через слова, різноманіття й швидкі зв\'язки.',
       cancer: 'Дбайливо й емоційно — через турботу, дім і пам\'ять.',
@@ -136,7 +136,7 @@ export const NATAL_READINGS: Record<Locale, NatalReadings> = {
       pluto: 'Głębia i przemiana: gdzie spotykasz władzę, kryzys i odrodzenie.',
     },
     sign: {
-      aries: 'Wprost i odważnie — pierwszy zaczynasz, nie lubisz czekać.',
+      aries: 'Wprost i odważnie — przez inicjatywę, szybki start i niecierpliwość wobec czekania.',
       taurus: 'Spokojnie i zmysłowo — przez stabilność, komfort i wytrwałość.',
       gemini: 'Ciekawie i lekko — przez słowa, różnorodność i szybkie połączenia.',
       cancer: 'Opiekuńczo i emocjonalnie — przez troskę, dom i pamięć.',

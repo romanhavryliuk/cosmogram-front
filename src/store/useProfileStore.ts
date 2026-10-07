@@ -71,8 +71,9 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
 
   update: async (id, payload) => {
     const profile = await profileService.update(id, payload);
-    // Картка в кабінеті показує ім'я, дату й місце — тримаємо її в синхроні,
-    // щоб після повернення до списку не висіли старі дані
+    // Картка в кабінеті показує ім'я, дату, місце, Сонце й центр матриці —
+    // тримаємо її в синхроні, щоб після повернення до списку не висіли старі дані
+    const sun = profile.chart.planets.find(({ planet }) => planet === 'sun');
     set((state) => ({
       current: profile,
       items: state.items.map((item) =>
@@ -82,6 +83,8 @@ export const useProfileStore = create<ProfileState>((set, get) => ({
               name: profile.name,
               birthDate: profile.birthDate,
               place: { label: profile.place.label },
+              sunSign: sun?.sign ?? null,
+              centralArcana: profile.destinyMatrix.center,
             }
           : item,
       ),

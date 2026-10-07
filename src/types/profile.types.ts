@@ -2,6 +2,7 @@ import type {
   DestinyMatrix,
   NatalChart,
   PythagoreanSquare,
+  ZodiacSign,
 } from './astrology.types';
 
 export interface BirthPlace {
@@ -63,6 +64,9 @@ export type ProfileSummary = Pick<
   'id' | 'name' | 'birthDate' | 'createdAt'
 > & {
   place: Pick<BirthPlace, 'label'>;
+  /** Короткий підсумок для картки; старіший бекенд їх не віддає */
+  sunSign?: ZodiacSign | null;
+  centralArcana?: number | null;
 };
 
 export type CreateProfilePayload = BirthData;

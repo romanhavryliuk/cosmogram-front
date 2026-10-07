@@ -1,0 +1,80 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.title {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 84px 1fr 20px;
+  align-items: center;
+  gap: 12px;
+}
+
+.name {
+  color: var(--parchment);
+  font-size: 13px;
+}
+
+.track {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(237, 230, 214, 0.06);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* Традиційні кольори стихій, приглушені під палітру сайту */
+.fire {
+  background: #d9774d;
+}
+
+.earth {
+  background: var(--gold);
+}
+
+.air {
+  background: var(--muted);
+}
+
+.water {
+  background: var(--teal);
+}
+
+.count {
+  color: var(--parchment);
+  font-size: 13px;
+  text-align: right;
+}
+
+.reading {
+  color: var(--parchment-dim);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.dominant {
+  color: var(--gold-soft);
+}

@@ -360,3 +360,145 @@ export const ARCANA_LABELS: Record<
     },
   },
 };
+
+export type MatrixPositionKey =
+  | 'center'
+  | 'a'
+  | 'b'
+  | 'c'
+  | 'd'
+  | 'e'
+  | 'f'
+  | 'g'
+  | 'h'
+  | 'money'
+  | 'love'
+  | 'familyPower'
+  | 'purposePersonal'
+  | 'purposeSocial'
+  | 'purposeSpiritual'
+  | 'paternal-first'
+  | 'paternal-second'
+  | 'paternal-total'
+  | 'maternal-first'
+  | 'maternal-second'
+  | 'maternal-total';
+
+/**
+ * Що означає сама позиція в матриці — незалежно від того, який аркан на
+ * ній випав. Без цього «Особистий» чи «Кармічний» нічого не пояснюють:
+ * незрозуміло, чому аркан тут і за яку сферу він відповідає.
+ * Звідки береться кожне число — так само, як рахує бекенд
+ * (numerology-service): A — день, B — місяць, C — рік, D — їхня сума,
+ * кармічні точки — суми сусідніх особистих.
+ */
+export const MATRIX_POSITION_NOTES: Record<
+  Locale,
+  Record<MatrixPositionKey, string>
+> = {
+  en: {
+    center:
+      'The sum of all four personal arcana — the core of the chart: the energy you feel most at home in.',
+    a: 'From your birth day — how you come across: your first impression and visible character.',
+    b: 'From your birth month — spiritual potential, intuition and the talents you can lean on.',
+    c: 'From your birth year — the material side: money, work and how you build your life in the world.',
+    d: 'The sum of day, month and year — the main lesson of the chart, a quality that grows through effort.',
+    e: 'Day + month, the upper point of the paternal line — the spiritual programme passed down through your father’s side.',
+    f: 'Month + year, the upper point of the maternal line — the spiritual programme from your mother’s side.',
+    g: 'Year + lesson, the lower point of the paternal line — the material programme of your father’s side: money, work, ways of living.',
+    h: 'Lesson + day, the lower point of the maternal line — the material programme of your mother’s side.',
+    money: 'Centre + year (C), the entry to the money channel — the kind of work and attitude through which income comes most naturally.',
+    love: 'Centre + lesson (D), the entry to the relationship channel — how you love and what you look for in a close bond.',
+    familyPower:
+      'The sum of the four karmic arcana — the support your family line gives you, the strength you can draw on from your roots.',
+    purposePersonal:
+      'Sky (B + D) + Earth (A + C) — finding yourself and your own path. Tradition links it to roughly ages 20–40.',
+    purposeSocial:
+      'Paternal line + maternal line — your role among people: work, family, community. Tradition links it to roughly ages 40–60.',
+    purposeSpiritual:
+      'Personal + social purpose — what ties the two together and gives life meaning in its later years.',
+    'paternal-first':
+      'The upper point of the paternal line (E, day + month) — the spiritual programme from your father’s side.',
+    'paternal-second':
+      'The lower point of the paternal line (G, year + lesson) — the material programme from your father’s side.',
+    'paternal-total':
+      'E + G — the overall programme of the paternal line: what it asks you to continue or rework.',
+    'maternal-first':
+      'The upper point of the maternal line (F, month + year) — the spiritual programme from your mother’s side.',
+    'maternal-second':
+      'The lower point of the maternal line (H, lesson + day) — the material programme from your mother’s side.',
+    'maternal-total':
+      'F + H — the overall programme of the maternal line: what it asks you to continue or rework.',
+  },
+  uk: {
+    center:
+      'Сума всіх чотирьох особистих арканів — серце матриці: енергія, у якій тобі найкомфортніше.',
+    a: 'З дня народження — як тебе бачать інші: перше враження й помітні риси характеру.',
+    b: 'З місяця народження — духовний потенціал, інтуїція й таланти, на які можна спертися.',
+    c: 'З року народження — матеріальний бік: гроші, робота й те, як ти будуєш життя у світі.',
+    d: 'Сума дня, місяця й року — головний урок матриці, якість, що розвивається через зусилля.',
+    e: 'День + місяць, верхня точка батьківської лінії — духовна програма, що прийшла з боку батька.',
+    f: 'Місяць + рік, верхня точка материнської лінії — духовна програма з боку матері.',
+    g: 'Рік + урок, нижня точка батьківської лінії — матеріальна програма роду батька: гроші, робота, уклад життя.',
+    h: 'Урок + день, нижня точка материнської лінії — матеріальна програма роду матері.',
+    money: 'Центр + рік (C), вхід у грошовий канал — справа й підхід, через які дохід приходить найприродніше.',
+    love: 'Центр + урок (D), вхід у канал стосунків — як ти любиш і чого шукаєш у близьких стосунках.',
+    familyPower:
+      'Сума чотирьох кармічних арканів — підтримка твого роду, сила, яку можна черпати з коріння.',
+    purposePersonal:
+      'Небо (B + D) + Земля (A + C) — пошук себе й власного шляху. Традиція пов’язує його приблизно з віком 20–40 років.',
+    purposeSocial:
+      'Батьківська лінія + материнська — твоя роль серед людей: робота, сім’я, спільнота. Традиція пов’язує його приблизно з віком 40–60 років.',
+    purposeSpiritual:
+      'Особисте + соціальне призначення — те, що поєднує обидва й надає життю сенсу в зрілі роки.',
+    'paternal-first':
+      'Верхня точка батьківської лінії (E, день + місяць) — духовна програма з боку батька.',
+    'paternal-second':
+      'Нижня точка батьківської лінії (G, рік + урок) — матеріальна програма з боку батька.',
+    'paternal-total':
+      'E + G — загальна програма батьківської лінії: що вона пропонує продовжити чи переосмислити.',
+    'maternal-first':
+      'Верхня точка материнської лінії (F, місяць + рік) — духовна програма з боку матері.',
+    'maternal-second':
+      'Нижня точка материнської лінії (H, урок + день) — матеріальна програма з боку матері.',
+    'maternal-total':
+      'F + H — загальна програма материнської лінії: що вона пропонує продовжити чи переосмислити.',
+  },
+  pl: {
+    center:
+      'Suma wszystkich czterech arkanów osobistych — serce matrycy: energia, w której czujesz się najswobodniej.',
+    a: 'Z dnia urodzenia — jak cię odbierają: pierwsze wrażenie i widoczne cechy charakteru.',
+    b: 'Z miesiąca urodzenia — potencjał duchowy, intuicja i talenty, na których możesz się oprzeć.',
+    c: 'Z roku urodzenia — strona materialna: pieniądze, praca i to, jak budujesz życie w świecie.',
+    d: 'Suma dnia, miesiąca i roku — główna lekcja matrycy, cecha, która rozwija się przez wysiłek.',
+    e: 'Dzień + miesiąc, górny punkt linii ojca — duchowy program przekazany ze strony ojca.',
+    f: 'Miesiąc + rok, górny punkt linii matki — duchowy program ze strony matki.',
+    g: 'Rok + lekcja, dolny punkt linii ojca — materialny program rodu ojca: pieniądze, praca, sposób życia.',
+    h: 'Lekcja + dzień, dolny punkt linii matki — materialny program rodu matki.',
+    money: 'Centrum + rok (C), wejście do kanału pieniędzy — zajęcie i podejście, przez które dochód przychodzi najnaturalniej.',
+    love: 'Centrum + lekcja (D), wejście do kanału relacji — jak kochasz i czego szukasz w bliskiej relacji.',
+    familyPower:
+      'Suma czterech arkanów karmicznych — wsparcie twojego rodu, siła, którą możesz czerpać z korzeni.',
+    purposePersonal:
+      'Niebo (B + D) + Ziemia (A + C) — odnalezienie siebie i własnej drogi. Tradycja wiąże je mniej więcej z wiekiem 20–40 lat.',
+    purposeSocial:
+      'Linia ojca + linia matki — twoja rola wśród ludzi: praca, rodzina, społeczność. Tradycja wiąże je mniej więcej z wiekiem 40–60 lat.',
+    purposeSpiritual:
+      'Przeznaczenie osobiste + społeczne — to, co łączy oba i nadaje życiu sens w dojrzałych latach.',
+    'paternal-first':
+      'Górny punkt linii ojca (E, dzień + miesiąc) — duchowy program ze strony ojca.',
+    'paternal-second':
+      'Dolny punkt linii ojca (G, rok + lekcja) — materialny program ze strony ojca.',
+    'paternal-total':
+      'E + G — ogólny program linii ojca: co proponuje kontynuować lub przemyśleć.',
+    'maternal-first':
+      'Górny punkt linii matki (F, miesiąc + rok) — duchowy program ze strony matki.',
+    'maternal-second':
+      'Dolny punkt linii matki (H, lekcja + dzień) — materialny program ze strony matki.',
+    'maternal-total':
+      'F + H — ogólny program linii matki: co proponuje kontynuować lub przemyśleć.',
+  },
+};
+
+export const isMatrixPositionKey = (key: string): key is MatrixPositionKey =>
+  key in MATRIX_POSITION_NOTES.en;

@@ -35,6 +35,17 @@
   text-align: right;
 }
 
+/* Спершу «що це за місце», потім «що за енергія» — інакше тлумачення
+   аркана висить без контексту */
+.position {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  color: var(--gold-soft);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 .meaning {
   color: var(--parchment-dim);
   font-size: 13px;

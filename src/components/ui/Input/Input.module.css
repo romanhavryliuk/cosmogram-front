@@ -31,6 +31,27 @@
   color: var(--muted);
 }
 
+/* iOS Safari малює date/time нативним контролом зі своєю мінімальною
+   шириною (ігнорує width: 100% — поле вилазить за картку) і своєю
+   висотою. Знімаємо нативний вигляд, дозволяємо стискатись і задаємо
+   ту саму висоту, що в текстових полів: 14px * ~1.3 + padding + border */
+.field[type='date'],
+.field[type='time'] {
+  --field-height: 48px;
+
+  display: block;
+  min-width: 0;
+  height: var(--field-height);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Без цього iOS центрує значення, а порожнє поле сплющує по висоті */
+.field::-webkit-date-and-time-value {
+  min-height: 1.2em;
+  text-align: left;
+}
+
 .field:focus-visible {
   outline: 2px solid var(--gold-soft);
   outline-offset: 2px;

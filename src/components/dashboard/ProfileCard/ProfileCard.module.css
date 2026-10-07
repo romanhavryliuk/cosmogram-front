@@ -40,6 +40,17 @@
   font-size: 11px;
 }
 
+.highlights {
+  margin-top: 6px;
+  color: var(--gold-soft);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.highlight {
+  white-space: nowrap;
+}
+
 .deleteBtn {
   position: absolute;
   top: 12px;

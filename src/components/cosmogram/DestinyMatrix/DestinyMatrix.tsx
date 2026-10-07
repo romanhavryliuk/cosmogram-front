@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { ArcanaDetails } from '@/components/cosmogram/ArcanaDetails';
 import { useArcanaLabels } from '@/hooks/useArcanaLabels';
 import { useRevealElement } from '@/hooks/useRevealElement';
+import { MATRIX_POSITION_NOTES, isMatrixPositionKey } from '@/i18n/arcana';
 import { useLocale } from '@/i18n/LocaleProvider';
 import type {
   AncestralLine,
@@ -54,7 +55,7 @@ const toPolygon = (points: { x: number; y: number }[]) =>
   points.map((p) => `${p.x},${p.y}`).join(' ');
 
 export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const gradientId = useId();
   const { getArcana } = useArcanaLabels();
   const [selected, setSelected] = useState<MatrixNode | null>(null);
@@ -157,6 +158,8 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   const rRing = size * 0.26;
   const rCore = size * 0.135;
   const nodeR = size * 0.052;
+  // Між вузлом і краєм схеми: досить далеко, щоб не налізати на коло вузла
+  const rLetter = size * 0.468;
 
   /**
    * Класична матриця — це октаграма з двох накладених квадратів: прямого
@@ -169,11 +172,14 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
     label: t.result.arcanaSourceCenter,
   };
 
+  // Класичне розташування Ладіні (0° — верх): A (день) ліворуч, B (місяць)
+  // угорі, C (рік) праворуч, D (сума) внизу. Кармічні кути — між сусідами,
+  // тож батьківська лінія E–G іде з верхнього лівого кута в нижній правий
   const personal = [
-    { key: 'a', value: matrix.personal.a, angle: 0 },
-    { key: 'b', value: matrix.personal.b, angle: 90 },
-    { key: 'c', value: matrix.personal.c, angle: 180 },
-    { key: 'd', value: matrix.personal.d, angle: 270 },
+    { key: 'a', value: matrix.personal.a, angle: 270 },
+    { key: 'b', value: matrix.personal.b, angle: 0 },
+    { key: 'c', value: matrix.personal.c, angle: 90 },
+    { key: 'd', value: matrix.personal.d, angle: 180 },
   ].map((item) => ({
     ...item,
     label: t.result.arcanaSourcePersonal,
@@ -181,10 +187,10 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
   }));
 
   const karmic = [
-    { key: 'e', value: matrix.karmic.e, angle: 45 },
-    { key: 'f', value: matrix.karmic.f, angle: 135 },
-    { key: 'g', value: matrix.karmic.g, angle: 225 },
-    { key: 'h', value: matrix.karmic.h, angle: 315 },
+    { key: 'e', value: matrix.karmic.e, angle: 315 },
+    { key: 'f', value: matrix.karmic.f, angle: 45 },
+    { key: 'g', value: matrix.karmic.g, angle: 135 },
+    { key: 'h', value: matrix.karmic.h, angle: 225 },
   ].map((item) => ({
     ...item,
     label: t.result.arcanaSourceKarmic,
@@ -313,6 +319,27 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
             </text>
           </g>
 
+          {/* Літери позицій: пояснення в панелі посилаються на них
+              («Небо (B + D)», «Центр + рік (C)»), тож їх треба бачити на схемі */}
+          <g aria-hidden="true">
+            {[...personal, ...karmic].map((p) => {
+              const letter = point(c, c, rLetter, p.angle);
+              return (
+                <text
+                  key={p.key}
+                  x={letter.x}
+                  y={letter.y}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontSize={size * 0.04}
+                  className={`${styles.pointLetter} mono`}
+                >
+                  {p.key.toUpperCase()}
+                </text>
+              );
+            })}
+          </g>
+
           {/* Кармічні вузли — бірюзові, трохи менші */}
           {karmic.map((p, index) => (
             <g
@@ -400,6 +427,11 @@ export const DestinyMatrix = ({ matrix, size = 260 }: DestinyMatrixProps) => {
           <ArcanaDetails
             value={selected?.value ?? null}
             sourceLabel={selected?.label}
+            positionNote={
+              selected && isMatrixPositionKey(selected.key)
+                ? MATRIX_POSITION_NOTES[locale][selected.key]
+                : undefined
+            }
           />
         </div>
 

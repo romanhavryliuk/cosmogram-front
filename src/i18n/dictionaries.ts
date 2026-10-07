@@ -101,6 +101,15 @@ export type Dictionary = {
     heading: string;
     chartTitle: string;
     ascendantPrefix: string;
+    sunSignPrefix: string;
+    elementsTitle: string;
+    elementsDominant: string;
+    summaryTitle: string;
+    summarySunLabel: string;
+    summaryElementLabel: string;
+    summaryCenterLabel: string;
+    summaryElementTie: string;
+    summaryMoonUncertain: string;
     wheelLabel: string;
     retrograde: string;
     midheavenPrefix: string;
@@ -241,7 +250,7 @@ const en: Dictionary = {
     titleBefore: 'The sky at the moment of your ',
     titleEmphasis: 'birth',
     titleAfter: ', broken down into numbers.',
-    lead: 'Enter your birth date, time, and place — get your natal chart and Destiny Matrix in one card, saved to your dashboard.',
+    lead: 'Enter your birth date, place and — if you know it — time. Get a natal chart, a Destiny Matrix and a Pythagorean Square in one card, each explained in plain words.',
     primaryCta: 'Build My Chart',
     ghostCta: 'See Example Result',
   },
@@ -252,17 +261,17 @@ const en: Dictionary = {
       {
         num: '01',
         title: 'Date, Time, Place',
-        text: 'Enter your birth details — accuracy to the minute affects your ascendant and houses.',
+        text: 'Only the date and city are required. The exact time adds houses and the ascendant — the parts that depend on the minute of birth.',
       },
       {
         num: '02',
-        title: 'Calculation',
-        text: 'The server computes planetary positions and the Destiny Matrix simultaneously, in parallel requests.',
+        title: 'Three Systems',
+        text: 'Astrology shows where the planets stood; the Destiny Matrix turns the date into 22 archetypes; the Pythagorean Square counts how often each digit repeats.',
       },
       {
         num: '03',
-        title: 'Card to Keep',
-        text: 'Get a visual card with your natal chart, Destiny Matrix and Pythagorean Square — saved to your dashboard.',
+        title: 'A Reading to Keep',
+        text: 'Tap any planet, arcanum or cell to read what it means. Sign up to save charts to your dashboard and share them by link.',
       },
     ],
   },
@@ -342,6 +351,16 @@ const en: Dictionary = {
     heading: 'Result',
     chartTitle: 'Natal Chart',
     ascendantPrefix: 'Ascendant —',
+    sunSignPrefix: 'Zodiac sign (Sun) —',
+    elementsTitle: 'Balance of elements',
+    elementsDominant: 'Dominant',
+    summaryTitle: 'The chart at a glance',
+    summarySunLabel: 'Zodiac sign · Sun',
+    summaryElementLabel: 'Dominant element',
+    summaryCenterLabel: 'Destiny Matrix centre',
+    summaryElementTie:
+      'Several elements are equally strong — no single temperament leads. See the balance of elements under the natal chart.',
+    summaryMoonUncertain: '(birth time unknown — may be the neighbouring sign)',
     wheelLabel: 'Natal chart with planet positions',
     retrograde: 'Retrograde',
     midheavenPrefix: 'Midheaven —',
@@ -349,11 +368,11 @@ const en: Dictionary = {
       'Birth time unknown — houses, ascendant and midheaven are not calculated; the Moon may be off by a few degrees.',
     aspectsTitle: 'Aspects',
     chartDescription:
-      'A snapshot of the sky at the moment you were born. The outer ring carries the twelve zodiac signs, the thin spokes mark the house cusps, and the lines crossing the centre are aspects — the angles between planets. Teal lines are harmonious, red ones are tense.',
+      'Your zodiac sign is the sign the Sun was in. The ascendant is a different point — the sign rising on the horizon at the minute of birth — so it often differs from your zodiac sign. The chart itself is a snapshot of the sky at the moment you were born. The outer ring carries the twelve zodiac signs, the thin spokes mark the house cusps, and the lines crossing the centre are aspects — the angles between planets. Teal lines are harmonious, red ones are tense.',
     matrixDescription:
       'Your birth date folded down into the 22 Major Arcana. The number in the centre is the core energy of the chart; the eight points around it alternate between personal and karmic arcana.',
     squareDescription:
-      'How often each digit from 1 to 9 appears in your birth date. The more repetitions in a cell, the more pronounced that quality is considered to be — a dash means the digit is absent. Hover a cell for its full meaning.',
+      'How often each digit from 1 to 9 appears in your birth date. The more repetitions in a cell, the more pronounced that quality is considered to be — a dash means the digit is absent.',
     carousel: {
       label: 'Result sections',
       previous: 'Previous section',
@@ -391,7 +410,7 @@ const en: Dictionary = {
     squareTitle: 'Pythagorean Square',
     squareSubtitle: 'Digit frequency from your birth date',
     emptyCell: '—',
-    squareHint: 'Tap a cell to read what that number of repetitions means.',
+    squareHint: 'Tap a cell or a line below to read what it means for you.',
     squareLinesTitle: 'Lines of the square',
     squareLabels: {
       '1': { short: 'character', full: 'Character, will' },
@@ -495,7 +514,7 @@ const uk: Dictionary = {
     titleBefore: 'Небо в момент свого ',
     titleEmphasis: 'народження',
     titleAfter: ', розкладене на цифри.',
-    lead: 'Вкажи дату, час і місце народження — отримаєш натальну карту та Матрицю Долі в одній картці, яка збережеться в кабінеті.',
+    lead: 'Вкажи дату й місце народження, а якщо знаєш — і час. Отримаєш натальну карту, Матрицю Долі та Квадрат Піфагора в одній картці, кожну з поясненням простими словами.',
     primaryCta: 'Побудувати мою карту',
     ghostCta: 'Приклад результату',
   },
@@ -506,17 +525,17 @@ const uk: Dictionary = {
       {
         num: '01',
         title: 'Дата, час, місце',
-        text: 'Вводиш дані народження — точність до хвилини впливає на асцендент і будинки.',
+        text: 'Обов’язкові лише дата й місто. Точний час додає доми й асцендент — те, що залежить від хвилини народження.',
       },
       {
         num: '02',
-        title: 'Розрахунок',
-        text: 'Сервер рахує позиції планет та Матрицю Долі одночасно, паралельними запитами.',
+        title: 'Три системи',
+        text: 'Астрологія показує, де стояли планети; Матриця Долі перетворює дату на 22 архетипи; Квадрат Піфагора рахує, скільки разів повторюється кожна цифра.',
       },
       {
         num: '03',
-        title: 'Картка на збереження',
-        text: 'Отримуєш візуальну картку з натальною картою, Матрицею Долі та Квадратом Піфагора — вона лишається в кабінеті.',
+        title: 'Тлумачення, яке лишається',
+        text: 'Натисни на планету, аркан чи клітинку — і прочитаєш, що вони означають. Зареєструйся, щоб зберігати карти в кабінеті й ділитися ними за посиланням.',
       },
     ],
   },
@@ -596,6 +615,16 @@ const uk: Dictionary = {
     heading: 'Результат',
     chartTitle: 'Натальна карта',
     ascendantPrefix: 'Асцендент —',
+    sunSignPrefix: 'Знак зодіаку (Сонце) —',
+    elementsTitle: 'Баланс стихій',
+    elementsDominant: 'Переважає',
+    summaryTitle: 'Коротко про карту',
+    summarySunLabel: 'Знак зодіаку · Сонце',
+    summaryElementLabel: 'Провідна стихія',
+    summaryCenterLabel: 'Центр матриці долі',
+    summaryElementTie:
+      'Кілька стихій однаково сильні — жоден темперамент не домінує. Деталі — у балансі стихій під натальною картою.',
+    summaryMoonUncertain: '(час невідомий — можливо, сусідній знак)',
     wheelLabel: 'Натальна карта з позиціями планет',
     retrograde: 'Ретроградний',
     midheavenPrefix: 'Середина неба —',
@@ -603,11 +632,11 @@ const uk: Dictionary = {
       'Час народження невідомий — доми, асцендент і середину неба не розраховано; Місяць може зсунутись на кілька градусів.',
     aspectsTitle: 'Аспекти',
     chartDescription:
-      'Знімок неба в момент твого народження. Зовнішнє коло — дванадцять знаків зодіаку, тонкі промені позначають межі будинків, а лінії через центр — це аспекти, кути між планетами. Бірюзові лінії гармонійні, червоні — напружені.',
+      'Твій знак зодіаку — це знак, у якому стояло Сонце. Асцендент — інший показник: знак, що сходив на горизонті в хвилину народження, тому він часто не збігається зі знаком зодіаку. Сама карта — знімок неба в момент твого народження. Зовнішнє коло — дванадцять знаків зодіаку, тонкі промені позначають межі домів, а лінії через центр — це аспекти, кути між планетами. Бірюзові лінії гармонійні, червоні — напружені.',
     matrixDescription:
       'Дата народження, згорнута до 22 Старших Арканів. Число в центрі — ключова енергія карти; вісім точок навколо нього чергують особисті та кармічні аркани.',
     squareDescription:
-      'Скільки разів кожна цифра від 1 до 9 трапляється в даті народження. Що більше повторень у клітинці, то виразнішою вважається ця якість — риска означає, що цифри немає. Наведи на клітинку, щоб побачити повне значення.',
+      'Скільки разів кожна цифра від 1 до 9 трапляється в даті народження. Що більше повторень у клітинці, то виразнішою вважається ця якість — риска означає, що цифри немає.',
     carousel: {
       label: 'Розділи результату',
       previous: 'Попередній розділ',
@@ -645,7 +674,7 @@ const uk: Dictionary = {
     squareTitle: 'Квадрат Піфагора',
     squareSubtitle: 'Повторення цифр у даті народження',
     emptyCell: '—',
-    squareHint: 'Натисни на клітинку, щоб прочитати, що означає така кількість повторень.',
+    squareHint: 'Натисни на клітинку або лінію нижче, щоб прочитати, що вона означає для тебе.',
     squareLinesTitle: 'Лінії квадрата',
     squareLabels: {
       '1': { short: 'характер', full: "Характер, воля" },
@@ -748,7 +777,7 @@ const pl: Dictionary = {
     titleBefore: 'Niebo w chwili twoich ',
     titleEmphasis: 'narodzin',
     titleAfter: ', rozłożone na liczby.',
-    lead: 'Podaj datę, godzinę i miejsce urodzenia — otrzymasz mapę natalną i Matrycę Przeznaczenia w jednej karcie, zapisanej w panelu.',
+    lead: 'Podaj datę i miejsce urodzenia, a jeśli znasz — także godzinę. Otrzymasz mapę natalną, Matrycę Przeznaczenia i Kwadrat Pitagorasa w jednej karcie, każde z objaśnieniem prostymi słowami.',
     primaryCta: 'Zbuduj moją mapę',
     ghostCta: 'Zobacz przykładowy wynik',
   },
@@ -759,17 +788,17 @@ const pl: Dictionary = {
       {
         num: '01',
         title: 'Data, godzina, miejsce',
-        text: 'Wprowadzasz dane urodzenia — dokładność co do minuty wpływa na ascendent i domy.',
+        text: 'Wymagane są tylko data i miasto. Dokładna godzina dodaje domy i ascendent — to, co zależy od minuty urodzenia.',
       },
       {
         num: '02',
-        title: 'Obliczenia',
-        text: 'Serwer oblicza pozycje planet i Matrycę Przeznaczenia jednocześnie, równoległymi zapytaniami.',
+        title: 'Trzy systemy',
+        text: 'Astrologia pokazuje, gdzie stały planety; Matryca Przeznaczenia zamienia datę w 22 archetypy; Kwadrat Pitagorasa liczy, ile razy powtarza się każda cyfra.',
       },
       {
         num: '03',
-        title: 'Karta do zachowania',
-        text: 'Otrzymujesz wizualną kartę z mapą natalną, Matrycą Przeznaczenia i Kwadratem Pitagorasa — zostaje w panelu.',
+        title: 'Interpretacja na później',
+        text: 'Dotknij planety, arkanu lub komórki, aby przeczytać, co oznacza. Załóż konto, aby zapisywać mapy w panelu i udostępniać je linkiem.',
       },
     ],
   },
@@ -849,6 +878,16 @@ const pl: Dictionary = {
     heading: 'Wynik',
     chartTitle: 'Mapa natalna',
     ascendantPrefix: 'Ascendent —',
+    sunSignPrefix: 'Znak zodiaku (Słońce) —',
+    elementsTitle: 'Równowaga żywiołów',
+    elementsDominant: 'Przeważa',
+    summaryTitle: 'Mapa w skrócie',
+    summarySunLabel: 'Znak zodiaku · Słońce',
+    summaryElementLabel: 'Dominujący żywioł',
+    summaryCenterLabel: 'Centrum Matrycy Przeznaczenia',
+    summaryElementTie:
+      'Kilka żywiołów jest równie silnych — żaden temperament nie dominuje. Szczegóły w równowadze żywiołów pod mapą natalną.',
+    summaryMoonUncertain: '(godzina nieznana — możliwy sąsiedni znak)',
     wheelLabel: 'Mapa natalna z pozycjami planet',
     retrograde: 'Retrogradacja',
     midheavenPrefix: 'Medium Coeli —',
@@ -856,11 +895,11 @@ const pl: Dictionary = {
       'Godzina urodzenia nieznana — domów, ascendentu i Medium Coeli nie obliczono; Księżyc może się przesunąć o kilka stopni.',
     aspectsTitle: 'Aspekty',
     chartDescription:
-      'Zdjęcie nieba z chwili twoich narodzin. Zewnętrzny pierścień to dwanaście znaków zodiaku, cienkie promienie wyznaczają granice domów, a linie przecinające środek to aspekty — kąty między planetami. Turkusowe linie są harmonijne, czerwone napięte.',
+      'Twój znak zodiaku to znak, w którym stało Słońce. Ascendent to inny punkt — znak wschodzący na horyzoncie w minucie narodzin — dlatego często różni się od znaku zodiaku. Sama mapa to zdjęcie nieba z chwili twoich narodzin. Zewnętrzny pierścień to dwanaście znaków zodiaku, cienkie promienie wyznaczają granice domów, a linie przecinające środek to aspekty — kąty między planetami. Turkusowe linie są harmonijne, czerwone napięte.',
     matrixDescription:
       'Data urodzenia zwinięta do 22 Wielkich Arkanów. Liczba w środku to kluczowa energia mapy; osiem punktów wokół niej na przemian oznacza arkana osobiste i karmiczne.',
     squareDescription:
-      'Jak często każda cyfra od 1 do 9 pojawia się w dacie urodzenia. Im więcej powtórzeń w komórce, tym wyraźniejsza jest dana cecha — myślnik oznacza brak cyfry. Najedź na komórkę, aby zobaczyć pełne znaczenie.',
+      'Jak często każda cyfra od 1 do 9 pojawia się w dacie urodzenia. Im więcej powtórzeń w komórce, tym wyraźniejsza jest dana cecha — myślnik oznacza brak cyfry.',
     carousel: {
       label: 'Sekcje wyniku',
       previous: 'Poprzednia sekcja',
@@ -898,7 +937,7 @@ const pl: Dictionary = {
     squareTitle: 'Kwadrat Pitagorasa',
     squareSubtitle: 'Częstotliwość cyfr w dacie urodzenia',
     emptyCell: '—',
-    squareHint: 'Dotknij komórki, aby przeczytać, co oznacza taka liczba powtórzeń.',
+    squareHint: 'Dotknij komórki lub linii poniżej, aby przeczytać, co oznacza dla ciebie.',
     squareLinesTitle: 'Linie kwadratu',
     squareLabels: {
       '1': { short: 'charakter', full: 'Charakter, wola' },

@@ -45,6 +45,8 @@ type PythagoreanReadings = {
   cells: Record<PythagoreanDigit, Record<CellLevel, string>>;
   lines: Record<PythagoreanLine, { name: string; meaning: string }>;
   lineLevels: Record<LineLevel, string>;
+  /** Що означає саме цей рівень саме цієї лінії — «слабка сім'я» ≠ «слабкий талант» */
+  lineReadings: Record<PythagoreanLine, Record<LineLevel, string>>;
 };
 
 export const PYTHAGOREAN_READINGS: Record<Locale, PythagoreanReadings> = {
@@ -111,6 +113,48 @@ export const PYTHAGOREAN_READINGS: Record<Locale, PythagoreanReadings> = {
       balanced: 'Balanced',
       high: 'Strong',
     },
+    lineReadings: {
+      purpose: {
+        low: 'Goals tend to shift with circumstances — it helps to break big aims into short, concrete steps.',
+        balanced: 'You set goals and reach them at a steady pace, without burning out.',
+        high: 'A strong drive toward goals — results come; the risk is forgetting rest and other people’s pace.',
+      },
+      family: {
+        low: 'Family life is not the centre of gravity: independence and personal space matter more.',
+        balanced: 'Family and close bonds matter, in balance with your own interests.',
+        high: 'Family comes first: a strong urge to create and protect a home, sometimes at your own expense.',
+      },
+      stability: {
+        low: 'Change comes easier than routine: novelty energises you, while habits take conscious effort.',
+        balanced: 'You value a settled rhythm but adapt when needed.',
+        high: 'A strong attachment to habits and order: reliability, though change can feel hard.',
+      },
+      selfEsteem: {
+        low: 'Self-worth leans on other people’s opinion — it grows as you notice your own achievements.',
+        balanced: 'A healthy sense of your own worth, without arrogance.',
+        high: 'Strong self-belief — it helps to lead; the task is not to shut out criticism.',
+      },
+      earning: {
+        low: 'Money comes through meaning rather than routine — it pays to look for work that truly engages you.',
+        balanced: 'Enough drive to provide for yourself and those close to you.',
+        high: 'A strong practical streak: earning and providing come naturally.',
+      },
+      talent: {
+        low: 'Abilities grow through practice rather than appearing on their own — steady effort pays off.',
+        balanced: 'Clear abilities that show once you invest in them.',
+        high: 'A pronounced talent — the main thing is to find where to apply it.',
+      },
+      spirituality: {
+        low: 'The inner search is not in the foreground: you lean on what is practical and tangible.',
+        balanced: 'An interest in meaning and inner growth, in balance with everyday life.',
+        high: 'A strong pull toward inner search, beliefs and meaning.',
+      },
+      temperament: {
+        low: 'A calm temperament: feelings are expressed quietly and open up through trust.',
+        balanced: 'A balanced temperament: warmth and restraint in good proportion.',
+        high: 'An intense temperament: strong feelings and sensuality, and a need for a relationship of matching depth.',
+      },
+    },
   },
 
   uk: {
@@ -176,6 +220,48 @@ export const PYTHAGOREAN_READINGS: Record<Locale, PythagoreanReadings> = {
       balanced: 'Рівновага',
       high: 'Сильна',
     },
+    lineReadings: {
+      purpose: {
+        low: 'Цілі часто змінюються з обставинами — допомагає ділити великі задачі на короткі конкретні кроки.',
+        balanced: 'Ти ставиш цілі й досягаєш їх у рівному темпі, без вигорання.',
+        high: 'Сильний потяг до цілей — результат приходить; ризик у тому, щоб забути про відпочинок і чужий темп.',
+      },
+      family: {
+        low: 'Сімейне життя не в центрі: важливіші незалежність і особистий простір.',
+        balanced: 'Сім’я й близькі важливі — у рівновазі з власними інтересами.',
+        high: 'Сім’я на першому місці: сильне бажання створити й берегти дім, часом коштом себе.',
+      },
+      stability: {
+        low: 'Зміни даються легше за рутину: новизна надихає, а звички потребують свідомих зусиль.',
+        balanced: 'Ти цінуєш усталений ритм, але підлаштовуєшся, коли треба.',
+        high: 'Сильна прив’язаність до звичок і порядку: надійність, хоча зміни можуть даватися важко.',
+      },
+      selfEsteem: {
+        low: 'Самооцінка спирається на думку інших — вона зростає, коли помічаєш власні досягнення.',
+        balanced: 'Здорове відчуття власної цінності без зверхності.',
+        high: 'Сильна віра в себе — допомагає вести за собою; завдання — не закриватися від критики.',
+      },
+      earning: {
+        low: 'Гроші приходять через сенс, а не рутину — варто шукати роботу, яка справді захоплює.',
+        balanced: 'Вистачає сил забезпечити себе й близьких.',
+        high: 'Сильна практична жилка: заробляти й забезпечувати виходить природно.',
+      },
+      talent: {
+        low: 'Здібності розвиваються через практику, а не з’являються самі — регулярні зусилля окупаються.',
+        balanced: 'Помітні здібності, які розкриваються, коли в них вкладаєшся.',
+        high: 'Виразний талант — головне знайти, де його застосувати.',
+      },
+      spirituality: {
+        low: 'Внутрішній пошук не на першому плані: опора на практичне й відчутне.',
+        balanced: 'Інтерес до сенсу й внутрішнього зростання — у рівновазі з повсякденням.',
+        high: 'Сильний потяг до внутрішнього пошуку, переконань і сенсу.',
+      },
+      temperament: {
+        low: 'Спокійний темперамент: почуття виявляються стримано й розкриваються через довіру.',
+        balanced: 'Врівноважений темперамент: тепло й стриманість у добрій пропорції.',
+        high: 'Інтенсивний темперамент: сильні почуття й чуттєвість, потреба в стосунках такої ж глибини.',
+      },
+    },
   },
 
   pl: {
@@ -240,6 +326,48 @@ export const PYTHAGOREAN_READINGS: Record<Locale, PythagoreanReadings> = {
       low: 'Słaba',
       balanced: 'Równowaga',
       high: 'Silna',
+    },
+    lineReadings: {
+      purpose: {
+        low: 'Cele często zmieniają się z okolicznościami — pomaga dzielenie dużych zadań na krótkie, konkretne kroki.',
+        balanced: 'Stawiasz cele i osiągasz je w równym tempie, bez wypalenia.',
+        high: 'Silne dążenie do celu — wyniki przychodzą; ryzykiem jest zapominanie o odpoczynku i cudzym tempie.',
+      },
+      family: {
+        low: 'Życie rodzinne nie jest w centrum: ważniejsze są niezależność i przestrzeń osobista.',
+        balanced: 'Rodzina i bliscy są ważni — w równowadze z własnymi sprawami.',
+        high: 'Rodzina na pierwszym miejscu: silna potrzeba tworzenia i ochrony domu, czasem kosztem siebie.',
+      },
+      stability: {
+        low: 'Zmiany przychodzą łatwiej niż rutyna: nowość dodaje energii, a nawyki wymagają świadomego wysiłku.',
+        balanced: 'Cenisz ustalony rytm, ale dostosowujesz się, gdy trzeba.',
+        high: 'Silne przywiązanie do nawyków i porządku: niezawodność, choć zmiany mogą być trudne.',
+      },
+      selfEsteem: {
+        low: 'Poczucie własnej wartości opiera się na opinii innych — rośnie, gdy zauważasz własne osiągnięcia.',
+        balanced: 'Zdrowe poczucie własnej wartości bez wyniosłości.',
+        high: 'Silna wiara w siebie — pomaga prowadzić innych; zadaniem jest nie zamykać się na krytykę.',
+      },
+      earning: {
+        low: 'Pieniądze przychodzą przez sens, a nie rutynę — warto szukać pracy, która naprawdę angażuje.',
+        balanced: 'Wystarcza sił, by zapewnić byt sobie i bliskim.',
+        high: 'Silna żyłka praktyczna: zarabianie i zapewnianie bytu przychodzą naturalnie.',
+      },
+      talent: {
+        low: 'Zdolności rozwijają się przez praktykę, a nie pojawiają się same — regularny wysiłek się opłaca.',
+        balanced: 'Wyraźne zdolności, które ujawniają się, gdy w nie inwestujesz.',
+        high: 'Wyraźny talent — najważniejsze to znaleźć, gdzie go zastosować.',
+      },
+      spirituality: {
+        low: 'Wewnętrzne poszukiwania nie są na pierwszym planie: oparciem jest to, co praktyczne i namacalne.',
+        balanced: 'Zainteresowanie sensem i rozwojem wewnętrznym — w równowadze z codziennością.',
+        high: 'Silne ciążenie ku wewnętrznym poszukiwaniom, przekonaniom i sensowi.',
+      },
+      temperament: {
+        low: 'Spokojny temperament: uczucia wyrażane są powściągliwie i otwierają się dzięki zaufaniu.',
+        balanced: 'Zrównoważony temperament: ciepło i powściągliwość w dobrych proporcjach.',
+        high: 'Intensywny temperament: silne uczucia i zmysłowość, potrzeba relacji o podobnej głębi.',
+      },
     },
   },
 };

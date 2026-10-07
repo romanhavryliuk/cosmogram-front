@@ -10,9 +10,15 @@ type ArcanaDetailsProps = {
   value: number | null;
   /** Підпис позиції: «Центр», «Особистий аркан» тощо */
   sourceLabel?: string;
+  /** Що означає сама позиція — за яку сферу відповідає аркан у цьому місці */
+  positionNote?: string;
 };
 
-export const ArcanaDetails = ({ value, sourceLabel }: ArcanaDetailsProps) => {
+export const ArcanaDetails = ({
+  value,
+  sourceLabel,
+  positionNote,
+}: ArcanaDetailsProps) => {
   const { t } = useLocale();
   const { getArcana } = useArcanaLabels();
 
@@ -33,6 +39,7 @@ export const ArcanaDetails = ({ value, sourceLabel }: ArcanaDetailsProps) => {
         <span className={styles.name}>{entry.name}</span>
         {sourceLabel && <span className={styles.source}>{sourceLabel}</span>}
       </div>
+      {positionNote && <p className={styles.position}>{positionNote}</p>}
       <p className={styles.meaning}>{entry.meaning}</p>
     </div>
   );
